@@ -1,0 +1,116 @@
+:root {
+  --aside-bg-color: #252831;
+  --item-selected: #333333;
+  --sub-item-selected: #35ada7;
+  --bg-sub-item: #414757;
+  --border-menu: #59C3C3;
+  --color-sub-item: #f5f5f5;
+  --white: #ffffff;
+  
+  --font-lato: 'Lato', sans-serif;
+  --random: #252831
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-lato);
+}
+
+/* Para cada componente */
+h1 {
+  text-align: center;
+}
+
+.header {
+  background: var(--aside-bg-color);
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav-icon {
+  margin-left: .7em;
+  font-size: 2em;
+  color: var(--white);
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left {
+  width: 250px;
+  height: 100vh;
+  background: var(--aside-bg-color);
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  transition: 350ms;
+  z-index: 100;
+}
+
+.navbar1 {
+  left: 0 
+}
+
+.navbar2 {
+  left: -100%;
+}
+
+.sidebar {
+  width: 100%;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: start;
+}
+
+
+.nav-item {
+  display: flex;
+  color: var(--white);
+  text-decoration: none;
+  height: 50px;
+  margin-top: 1em;
+  padding-left: 1.5em;
+}
+
+.nav-item:hover {
+  border-radius: .5em;
+  background-color: var(--item-selected);
+  overflow: hidden;
+  border-left: 4px solid var(--border-menu);
+}
+
+.nav-item div {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item div svg {
+  width: 2.5em;
+  height: 2.5em;
+}
+
+.nav-item div span {
+  padding-left: 1em;
+}
+
+.nav-subItem {
+  background: var(--bg-sub-item);
+  height: 60px;
+  padding-left: 3.5em;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-sub-item);
+  font-size: 18px;
+}
+
+.nav-subItem:hover {
+  background: var(--sub-item-selected);
+}
