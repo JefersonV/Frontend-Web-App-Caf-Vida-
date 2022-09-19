@@ -3,10 +3,9 @@ import '../assets/styles/Navbar.css'
 
 const Home = () => {
   return (
-    <div className="Home">
-      <h1>Home</h1>
-      
-    </div>
+    <>
+      <h1>Inicio, gráficas</h1>
+    </>
   )
 }
 

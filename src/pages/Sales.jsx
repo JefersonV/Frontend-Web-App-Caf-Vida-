@@ -2,11 +2,11 @@ import React from 'react'
 
 const Sales = () => {
   return (
-    <div>
+    <>
       <h1>
-        Sales
+        Página de Ventas
       </h1>
-    </div>
+    </>
   )
 }
 
