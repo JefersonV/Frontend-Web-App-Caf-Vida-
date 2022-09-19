@@ -1,92 +1,67 @@
 import React from 'react'
 import * as FaIcons from 'react-icons/fa'
-import * as AiIcons from 'react-icons/ai'
+import * as GoIcons from 'react-icons/go'
 import * as IoIcons from 'react-icons/io'
 import * as RiIcons from 'react-icons/ri'
+import * as TiIcons from 'react-icons/ti'
+import * as GiIcons from 'react-icons/gi'
+import * as BiIcons from 'react-icons/bi'
 
 export const SideBarTypes = [
   {
-    title: 'Overview',
-    path: '/overview',
-    icon: <AiIcons.AiFillHome />,
+    title: 'Ventas',
+    path: '/sales',
+    icon: <FaIcons.FaCartPlus />
+  },
+  {
+    title: 'Inventario',
+    path: '/inventory',
+    icon: <TiIcons.TiDropbox/>,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
-        title: 'Users',
-        path: '/overview/users',
+        title: 'Producto Terminado',
+        path: '/inventory/products',
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: 'Revenue',
-        path: 'overview/revenue',
+        title: 'Proveedores',
+        path: 'inventory/providers',
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: 'Compras',
+        path: 'inventory/shopping',
         icon: <IoIcons.IoIosPaper />,
       }
     ]
   },  //1
+  /* Devoluciones -> /inventory/shopping_returns */
   {
-    title: 'Reports',
-    path: '/reports',
-    icon: <AiIcons.AiFillHome />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    subNav: [
-      {
-        title: 'Reports',
-        path: 'reports/reports1',
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: 'Reports 2',
-        path: 'reports/reports2',
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: 'Reports 3',
-        path: 'reports/reports3',
-        icon: <IoIcons.IoIosPaper />,
-      }
-    ]
+    title: 'Pedidos',
+    path: '/orders',
+    icon: <FaIcons.FaClipboardList />
   }, //2
   {
-    title: 'Products',
-    path: 'products',
-    icon: <FaIcons.FaCartPlus />
+    title: 'Producción',
+    path: 'production_cost',
+    icon: <GiIcons.GiCoffeeBeans />
   }, //3
   {
-    title: 'Team',
-    path: 'team',
-    icon: <IoIcons.IoMdPeople />
+    title: 'Clientes',
+    path: 'customers',
+    icon: <FaIcons.FaHouseUser />
   }, //4
   {
-    title: 'Messsages',
-    path: '/messages',
-    icon: <FaIcons.FaEnvelopeOpenText />,
-
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-
-    subNav: [
-      {
-        title: 'Message 1',
-        path: '/messages/message1',
-        icon: <IoIcons.IoIosPaper />
-      },
-      {
-        title: 'Message 2',
-        path: '/messages/message2',
-        icon: <IoIcons.IoIosPaper />
-      },
-    ]
+    title: 'Usuarios',
+    path: '/users',
+    icon: <BiIcons.BiUserCircle />,
+    
   },
   {
-    title: 'Support',
-    path: '/support',
-    icon: <IoIcons.IoMdHelpCircle />
-  },
-  {
-    title: 'final',
-    path: '/final',
-    icon: <IoIcons.IoIosAddCircle />
+    title: 'Reportes',
+    path: '/reports',
+    icon: <GoIcons.GoGraph />
   }
 ]

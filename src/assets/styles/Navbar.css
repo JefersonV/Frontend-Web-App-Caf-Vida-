@@ -62,6 +62,10 @@ h1 {
   width: 100%;
 }
 
+.icon-hide {
+  display: none;
+}
+
 .sidebar-items {
   display: flex;
   flex-direction: column;
@@ -99,7 +103,7 @@ h1 {
 .nav-item div span {
   padding-left: 1em;
 }
-
+/* Sub items */
 .nav-subItem {
   background: var(--bg-sub-item);
   height: 60px;
@@ -109,6 +113,14 @@ h1 {
   text-decoration: none;
   color: var(--color-sub-item);
   font-size: 18px;
+}
+
+.nav-subItem svg {
+  font-size: 18px;
+}
+
+.nav-subItem span {
+  font-size: 14px;
 }
 
 .nav-subItem:hover {

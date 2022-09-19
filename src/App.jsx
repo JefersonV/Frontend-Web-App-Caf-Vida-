@@ -1,5 +1,4 @@
 import SideBarMenu from "./components/SideBarMenu"
-import Product from './components/Product'
 import { BrowserRouter,Routes,Route} from "react-router-dom";
 import Sales from "./pages/Sales";
 import Home from "./pages/Home";
@@ -9,6 +8,9 @@ import Inventory from "./pages/Inventory";
 import Customers from "./pages/Customers";
 import AdminUsers from "./pages/AdminUsers";
 import Reports from "./pages/Reports";
+import Products from "./pages/Products";
+import Providers from "./pages/Providers";
+import Shopping from "./pages/Shopping";
 
 function App() {
   return (
@@ -17,13 +19,16 @@ function App() {
       <SideBarMenu/>
         <Routes>
           <Route exact path="/" element={ <Home/> }/>
-          <Route path="/overview" element={<Sales/>}/>
-          <Route path="/reports" element={<Inventory/>} />
-          <Route path="/products" element={<Orders />} />
-          <Route path="/team" element={<Production/>} />
-          <Route path="/messages" element={<Customers/>} />
-          <Route path="/support" element={<AdminUsers/>} />
-          <Route path="/final" element={<Reports/>} />
+          <Route path="/sales" element={<Sales/>}/>
+          <Route path="/inventory" element={<Inventory/>} />
+          <Route path="/inventory/products" element={<Products/>} />
+          <Route path="/inventory/providers" element={<Providers/>} />
+          <Route path="/inventory/shopping" element={<Shopping/>} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/production_cost" element={<Production/>} />
+          <Route path="/customers" element={<Customers/>} />
+          <Route path="/users" element={<AdminUsers/>} />
+          <Route path="/reports" element={<Reports/>} />
         </Routes>
     </BrowserRouter>
   </>

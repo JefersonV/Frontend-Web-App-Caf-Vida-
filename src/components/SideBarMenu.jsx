@@ -38,7 +38,7 @@ function SideBarMenu() {
           <aside className="navbar-left navbar2">
             <div className="sidebar">
               <Link to="#">
-                <AiIcons.AiOutlineClose />
+                <AiIcons.AiOutlineClose className="icon-hide"/>
               </Link>
             </div>
           </aside>
