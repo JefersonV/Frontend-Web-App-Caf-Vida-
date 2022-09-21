@@ -1,13 +1,25 @@
 import React from 'react'
-
+import { useEffect, useState } from 'react'
+import Table from '../components/Table'
 const Sales = () => {
+  const [dataApi, setDataApi] = useState([])
+  const url = 'https://rickandmortyapi.com/api/character'
+  const fetchDataApi = (url) => {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => setDataApi(data.results))
+      .catch(err => console.log(err)) 
+      
+  }
+
+  useEffect(() => {
+    fetchDataApi(url)
+  }, [])
   return (
     <>
-      <h1>
-        Página de Ventas
-      </h1>
+      <Table dataApi={dataApi} /> 
     </>
-  )
+  );
 }
 
 export default Sales
