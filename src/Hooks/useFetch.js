@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Table from "../components/Table";
+
 const useFetch = url => {
 	const [dataApi, setDataApi] = useState([])
 	useEffect(() => {

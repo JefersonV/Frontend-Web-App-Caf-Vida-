@@ -21,6 +21,7 @@ const Table = ({dataApi = []}) => {
           </tr>
         </thead>
         <tbody>
+          {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
           {dataApi.map((item, index) => {
             return (
             <tr key={index}>
