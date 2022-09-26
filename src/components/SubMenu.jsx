@@ -21,16 +21,8 @@ const SubMenu = ( {item} ) => {
             ? item.iconClosed  
             : null}
         </div>
-        {/*    <Link to={item.}>Productos</Link>
-        <div>
-          {item.subSubNav && subSubNav
-            ? item.subSubNav.iconOpened
-            : item.subSubNav
-            ? item.iconClosed
-            : null
-          }    
-        </div> */}
       </Link>
+      
       { subnav && item.subNav.map((item, index) => {
         return (
           <Link to={item.path} key={index} className="nav-subItem">

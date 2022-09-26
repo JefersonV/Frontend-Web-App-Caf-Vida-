@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../assets/styles/Table.css'
 import * as AiIcons from 'react-icons/ai'
 import * as FcIcons from 'react-icons/fc'
@@ -6,7 +7,6 @@ import * as FcIcons from 'react-icons/fc'
 const Table = ({dataApi = []}) => {
   return (
     <>
-    <div className="wrapper">
       <table className="table table-striped w-80 thead-light">
         <thead>
           <tr>
@@ -33,8 +33,12 @@ const Table = ({dataApi = []}) => {
               <td>{item.status}</td>
               <td>{item.name}</td>
               <td>
-                <AiIcons.AiOutlineEye className="icon-eye icon-table" title="Ver detalles de la venta"/>
-                <FcIcons.FcPrint className="icon-print icon-table" title="Imprimir factura de la venta" />
+                <Link to="#">
+                  <AiIcons.AiOutlineEye className="icon-eye icon-table" title="Ver detalles de la venta"/>
+                </Link>
+                <Link to="#">
+                  <FcIcons.FcPrint className="icon-print icon-table" title="Imprimir factura de la venta" />
+                </Link>
               </td>
             </tr>
           )  
@@ -42,7 +46,6 @@ const Table = ({dataApi = []}) => {
           }
         </tbody>
       </table>
-    </div>
     </>
   )
 }

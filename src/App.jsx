@@ -13,28 +13,32 @@ import Providers from "./pages/Providers";
 import Shopping from "./pages/Shopping";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
+import {SidebarProvider} from "./providers/SidebarProvider"
 
 function App() {
   return (
   <>
-    <BrowserRouter>
-      <SideBarMenu/>
-        <Routes>
-          <Route exact path="/" element={ <Home/> }/>
-          <Route path="/sales" element={<Sales/>}/>
-          <Route path="/inventory" element={<Inventory/>} />
-          <Route path="/inventory/products" element={<Products/>} />
-          <Route path="/inventory/providers" element={<Providers/>} />
-          <Route path="/inventory/shopping" element={<Shopping/>} />
-          <Route path="/inventory/sales_returns" element={<CustomerReturns/>} />
-          <Route path="/inventory/shopping_returns" element={<ProvidersReturns/>} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/production_cost" element={<Production/>} />
-          <Route path="/customers" element={<Customers/>} />
-          <Route path="/users" element={<AdminUsers/>} />
-          <Route path="/reports" element={<Reports/>} />
-        </Routes>
-    </BrowserRouter>
+    <SidebarProvider >
+      <BrowserRouter>
+        <SideBarMenu/>
+      
+          <Routes>
+            <Route exact path="/" element={ <Home/> }/>
+            <Route path="/sales" element={<Sales/>}/>
+            <Route path="/inventory" element={<Inventory/>} />
+            <Route path="/inventory/products" element={<Products/>} />
+            <Route path="/inventory/providers" element={<Providers/>} />
+            <Route path="/inventory/shopping" element={<Shopping/>} />
+            <Route path="/inventory/sales_returns" element={<CustomerReturns/>} />
+            <Route path="/inventory/shopping_returns" element={<ProvidersReturns/>} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/production_cost" element={<Production/>} />
+            <Route path="/customers" element={<Customers/>} />
+            <Route path="/users" element={<AdminUsers/>} />
+            <Route path="/reports" element={<Reports/>} />
+          </Routes>
+      </BrowserRouter>    
+    </SidebarProvider>
   </>
   )
 }

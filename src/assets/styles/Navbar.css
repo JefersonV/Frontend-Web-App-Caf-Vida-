@@ -17,6 +17,7 @@
 
 .wrapper {
   margin-left: 250px;
+  transition: 450ms;
 }
 
 aside::-webkit-scrollbar {
