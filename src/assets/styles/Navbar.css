@@ -3,7 +3,9 @@
   --item-selected: #333333;
   --sub-item-selected: #35ada7;
   --bg-sub-item: #414757;
-  --border-menu: #59C3C3;
+  --border-color: #585b5e;
+  --border-sub-menu: #59C3C3;
+  --border-menu: #00bbff; 
   --color-sub-item: #f5f5f5;
   --white: #ffffff;
   --font-lato: 'Lato', sans-serif;
@@ -144,5 +146,26 @@ h1 {
 }
 
 .nav-subItem:hover {
-  background: var(--sub-item-selected);
+
+  border-radius: .5em;
+  background-color: var(--item-selected);
+  overflow: hidden;
+  border-left: 4px solid var(--border-menu);
+}
+
+.subSubNav {
+  padding-left: 3em;
+}
+
+.subSubNav svg {
+  margin-right: .5em;
+}
+
+.subSubNav1 {
+  border-top: 2px solid var(--border-color);
+
+}
+
+.subSubNav3 {
+  border-bottom: 2px solid var(--border-color);
 }

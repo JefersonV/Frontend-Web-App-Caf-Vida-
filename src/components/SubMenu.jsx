@@ -3,9 +3,10 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 const SubMenu = ( {item} ) => {
   const [subnav, setSubnav] = useState(false)
-  const [subSubNav, setSubSubNav] = useState(false)
+  const [subSubNavSw, setSubSubNav] = useState(false)
   const showSubNav = () => setSubnav(!subnav)
-  const showSubSubNav = () => setSubSubNav(!subSubNav)
+  const showSubSubNav = () => setSubSubNav(!subSubNavSw)
+
   return (
     <>
       {/* Main Items */}
@@ -26,30 +27,23 @@ const SubMenu = ( {item} ) => {
       {/* SubNav estructura y mapeo*/}
       { subnav && item.subNav.map((item, index) => {
         return (
-          <Link to={item.path} key={index} className="nav-subItem" onClick={item.subSubNav && showSubSubNav}>
+          <Link to={item.path} key={index} className={item.class} onClick={item.subSubNav && showSubSubNav}>
             {item.icon}
             <span>{item.title}</span>
+            {/* Sub sub item */}
             <div>
-              {item.subSubNav && subSubNav
+              {item.subSubNav && subSubNavSw
                 ? item.iconOpened
-                : item.subSubNav
+                : item.subSubNavSw
                 ? item.iconClosed
                 : null
               }
-            </div>
+              
+              {/* {console.log(item.subSubNav[index])} */}
+            </div> 
           </Link>
         )
       })}
-    {/* SubSubNav estructura y mapeo*/}
-    {item.subSubNav && item.subSubNav.map((item, index) => {
-      return (
-        <Link to={item.path} key={index} className="nav-subItem2">
-          {item.icon}
-          <span>{item.title}</span>
-        
-        </Link>
-      )
-    })}
     </>
   )
 }
