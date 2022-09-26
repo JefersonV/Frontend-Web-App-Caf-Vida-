@@ -26,23 +26,6 @@ export const SideBarTypes = [
         icon: <IoIcons.IoIosPaper />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
-        subSubNav: [
-          {
-            title: 'Productos Terminados',
-            path: '/finished_product',
-            icon: <TiIcons.TiDropbox/>,
-          },
-          {
-            title: 'Materia Prima',
-            path: 'raw_material',
-            icon: <TiIcons.TiDropbox/>,
-          },
-          {
-            title: 'Material de Empaque',
-            path: 'packing_material',
-            icon: <TiIcons.TiDropbox/>,
-          }
-        ]
       },
       {
         title: 'Proveedores',
@@ -63,6 +46,23 @@ export const SideBarTypes = [
         title: 'Devoluciones Proveedores',
         path: 'inventory/shopping_returns',
         icon: <IoIcons.IoIosPaper />,
+      }
+    ],
+    subSubNav: [
+      {
+        title: 'Productos Terminados',
+        path: '/finished_product',
+        icon: <TiIcons.TiDropbox/>,
+      },
+      {
+        title: 'Materia Prima',
+        path: 'raw_material',
+        icon: <TiIcons.TiDropbox/>,
+      },
+      {
+        title: 'Material de Empaque',
+        path: 'packing_material',
+        icon: <TiIcons.TiDropbox/>,
       }
     ]
   },  //1
