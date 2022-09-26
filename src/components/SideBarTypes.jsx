@@ -1,5 +1,6 @@
 import React from 'react'
 import * as FaIcons from 'react-icons/fa'
+import * as BsIcons from 'react-icons/bs'
 import * as GoIcons from 'react-icons/go'
 import * as IoIcons from 'react-icons/io'
 import * as RiIcons from 'react-icons/ri'
@@ -7,7 +8,7 @@ import * as TiIcons from 'react-icons/ti'
 import * as GiIcons from 'react-icons/gi'
 import * as BiIcons from 'react-icons/bi'
 import * as TbIcons from 'react-icons/tb'
-
+import * as FiIcons from 'react-icons/fi'
 
 export const SideBarTypes = [
   {
@@ -53,25 +54,25 @@ export const SideBarTypes = [
       {
         title: "Proveedores",
         path: "inventory/providers",
-        icon: <IoIcons.IoIosPaper />,
+        icon: <FiIcons.FiTruck />,
         class: "nav-subItem"
       },
       {
         title: "Compras",
         path: "inventory/shopping",
-        icon: <IoIcons.IoIosPaper />,
+        icon: <BsIcons.BsFillBagCheckFill />,
         class: "nav-subItem"
       },
       {
         title: "Devoluciones Clientes",
         path: "inventory/sales_returns",
-        icon: <IoIcons.IoIosPaper />,
+        icon: <FaIcons.FaCartArrowDown />,
         class: "nav-subItem"
       },
       {
         title: "Devoluciones Proveedores",
         path: "inventory/shopping_returns",
-        icon: <IoIcons.IoIosPaper />,
+        icon: <RiIcons.RiLuggageCartFill />,
         class: "nav-subItem"
       },
     ],
