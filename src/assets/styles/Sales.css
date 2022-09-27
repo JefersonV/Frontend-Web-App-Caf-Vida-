@@ -1,0 +1,61 @@
+
+
+.barraArriba{
+  align-items: center;
+  margin: 0 auto;
+  height: 10vh;
+  width: 100vw;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  margin-left: 50px;
+    
+
+}
+h1{
+  margin-top: 7px;
+  text-align: center;
+  font-size: 19px;
+  margin-left: 100px;
+  
+  
+
+}
+.cont1{
+  border-style:groove;
+  height: 50px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+#buscar{
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 10px;    
+}
+#select{
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.btn1{
+  align-items:center;
+  border: 0;
+  position: relative;
+  justify-content: center;
+  margin-left: 5px;
+  
+}
+
+.btn2{
+  align-items: center;
+  border: 0;
+  margin-left: 5px;
+  cursor: pointer;
+  
+
+}
+
