@@ -5,9 +5,10 @@ import * as AiIcons from 'react-icons/ai'
 import * as FcIcons from 'react-icons/fc'
 
 const Table = ({dataApi = []}) => {
+
   return (
     <>
-      <table className="table table-striped w-80 thead-light">
+      <table className="table table-striped w-80 thead-light shadow-lg">
         <thead>
           <tr>
             <th scope="col">#</th>

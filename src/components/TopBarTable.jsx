@@ -5,15 +5,22 @@ import { useState } from 'react'
 import '../assets/styles/Sales.css'
 import styled from 'styled-components';
 
-
 const Sales = () => {
 
   const [estadoModal1, cambiarEstadoModal1] =useState(false);
- 
-    return (
+  const [search, setSearch] = useState("")
+
+  //Función de búsqueda
+  const searcher = (e) => {
+    setSearch(e.target.value)
+  }
+
+  //metodo de filtrado 2   
+  
+  return (
     <>
     
-      <h1> ¡¡Aroma que te hace soñar, sabor que te hace Despertar!! </h1>
+      <h1 className="top-bar-title"> ¡¡Aroma que te hace soñar, sabor que te hace Despertar!! </h1>
       <hr />
       
           <div className='barraArriba'>
@@ -27,7 +34,7 @@ const Sales = () => {
             </select>
 
 
-            <input type="search" placeholder='Buscar....' name="buscar" id="buscar" />
+            <input type="search" placeholder='Buscar....' name="buscar" id="buscar" onChange={searcher}/>
             </div>
             
 
@@ -43,11 +50,3 @@ const Sales = () => {
 }
 
 export default Sales
-
-const Contenidomod=styled.div`
-align-items: center;
-    border: 0;
-    margin-left: 500px;
-    margin-top: 100px;
-
-`;
