@@ -13,8 +13,6 @@ import { useSidebarContext, useSidebarToggleContext } from '../providers/Sidebar
 function SideBarMenu() {
   const sidebar = useSidebarContext()
   const sidebarFn = useSidebarToggleContext()
-/*   const [sidebar, setSidebar] = useState(true)
-  let showSidebar = () => setSidebar(!sidebar) */
   
   return (
     <>

@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-
+import { useEffect} from "react";
+import { useFetchContext, useSetFetchContext } from '../providers/SidebarProvider'
 const useFetch = url => {
-	const [dataApi, setDataApi] = useState([])
+	// Datos traídos del estado global de la app, componente SidebarProvider
+	const dataApi = useFetchContext()
+	const setDataApi = useSetFetchContext()
+
 	useEffect(() => {
 		fetch(url)
 			.then(response => response.json())

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import '../assets/styles/Table.css'
 import * as AiIcons from 'react-icons/ai'
 import * as FcIcons from 'react-icons/fc'
+import { useResultsSearchContext} from '../providers/SidebarProvider';
 
 const Table = ({dataApi = []}) => {
-
+  //Datos del estado global 
+  const results = useResultsSearchContext()
   return (
     <>
       <table className="table table-striped w-80 thead-light shadow-lg">
@@ -23,7 +25,7 @@ const Table = ({dataApi = []}) => {
         </thead>
         <tbody>
           {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
-          {dataApi.map((item, index) => {
+          {results.map((item, index) => {
             return (
             <tr key={index}>
               <th>{item.id}</th>
