@@ -5,7 +5,7 @@ import * as AiIcons from 'react-icons/ai'
 import * as FcIcons from 'react-icons/fc'
 import { useResultsSearchContext} from '../providers/SidebarProvider';
 
-const Table = ({dataApi = []}) => {
+const Table = () => {
   //Datos del estado global 
   const results = useResultsSearchContext()
   return (

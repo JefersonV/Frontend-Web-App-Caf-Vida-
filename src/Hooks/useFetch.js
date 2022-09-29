@@ -10,7 +10,6 @@ const useFetch = url => {
 			.then(response => response.json())
 			.then(data => setDataApi(data.results))
 	}, [url])
-	return dataApi
 }
 
 export default useFetch;

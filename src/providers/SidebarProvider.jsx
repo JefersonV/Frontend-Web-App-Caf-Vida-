@@ -38,7 +38,6 @@ export function useSetFetchContext () {
   return useContext(setStateFetchContext)
 }
 
-
 export const SidebarProvider = ({children}) => {
   // dataApi Fetch
   const [dataApi, setDataApi] = useState([])
@@ -50,12 +49,18 @@ export const SidebarProvider = ({children}) => {
   const [search, setSearch] = useState("")
   const [users, setUsers] = useState([])
 
+  // buscador, captura de datos
   const searcher = (e) => {
     console.log(e.target.value)
     setSearch(e.target.value)
   }
   //metodo de filtrado del buscador
-  const results = !search ? dataApi : dataApi.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
+  const results = !search ? dataApi 
+  : dataApi.filter((dato) =>  
+  dato.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
+  dato.status.toLowerCase().includes(search.toLocaleLowerCase()) ||
+  dato.gender.toLowerCase().includes(search.toLocaleLowerCase())
+  )
   return(
     <>{/* Inyección de contextos */}
       <sidebarContext.Provider value={sidebar} >
