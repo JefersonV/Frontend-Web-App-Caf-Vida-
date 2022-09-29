@@ -45,10 +45,8 @@ export const SidebarProvider = ({children}) => {
   const [sidebar, setSidebar] = useState(true)
   let showSidebar = () => setSidebar(!sidebar)
 
-  // buscador
+  // state para buscador
   const [search, setSearch] = useState("")
-  const [users, setUsers] = useState([])
-
   // buscador, captura de datos
   const searcher = (e) => {
     console.log(e.target.value)
