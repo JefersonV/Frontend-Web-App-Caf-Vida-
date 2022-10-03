@@ -5,7 +5,6 @@ import '../assets/styles/Sales.css'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
 const Sales = () => {  
 
   const [estadoModal1, cambiarEstadoModal1] =useState(false);
@@ -41,10 +40,6 @@ const Sales = () => {
                 </div>
             </div>              
             
-
-            
-           
-
            <ModalSales
            estado={estadoModal1 }
            cambiarEstado={cambiarEstadoModal1}
@@ -55,12 +50,11 @@ const Sales = () => {
             </Contenidomod>
 
            </ModalSales>
-        
-    </>
-  )
-}
+      <h1>Página de Ventas</h1>
 
-export default Sales
+    </>
+  );
+};
 
 const Contenidomod=styled.div`
 align-items: center;
@@ -69,3 +63,4 @@ align-items: center;
     margin-top: 100px;
 
 `;
+export default Sales;
