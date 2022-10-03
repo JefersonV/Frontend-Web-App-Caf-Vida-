@@ -17,6 +17,11 @@
   font-family: var(--font-lato);
 }
 
+
+.wrapper {
+  margin-left: 250px;
+  transition: 350ms;
+}
 aside::-webkit-scrollbar {
 	width: 9px;
 }
