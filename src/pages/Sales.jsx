@@ -50,7 +50,6 @@ const Sales = () => {
             </Contenidomod>
 
            </ModalSales>
-      <h1>Página de Ventas</h1>
 
     </>
   );
