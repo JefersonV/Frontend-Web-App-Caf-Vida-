@@ -1,0 +1,134 @@
+
+
+.barraArriba{
+    align-items: center;
+    margin: 0 auto;
+    height: 10vh;
+    width: 100vw;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    margin-left: 50px;
+    
+      
+
+}
+#h1{
+    margin-top: 7px;
+    text-align: center;
+    font-size: 22px;
+    margin-left: 100px;
+
+  
+    
+
+}
+.cont1{
+    border-style:groove;
+    height: 50px;
+    align-items: center;
+    padding-bottom: 10px;
+        
+        
+}
+
+#buscar{
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;    
+}
+#select{
+    align-items: center;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.btn1{
+    align-items:center;
+    border: 0;
+    position: relative;
+    justify-content: center;
+    margin-left: 5px;
+    color: black;
+    
+}
+
+.btn2{
+    align-items: center;
+    border: 0;
+    margin-left: 5px;
+    cursor: pointer;
+    color: black;
+   
+}
+/*Buttons modalSales*/
+.btn3{
+    color: black;
+}
+.btn4{
+    color: black;
+}
+.btn5{
+    color: black;
+}
+.btn6{
+    color: black;
+}
+.btn7{
+    color: black;
+}
+.btn8{
+    color: black;
+}
+.btn9{
+    color: black;
+}
+
+.metodo{
+    margin-left:45vh;
+}
+.select3{
+    margin-left: 10px;
+}
+.lab6{
+    margin-left: 64vh;
+}
+.descu{
+    margin-left: 10px;
+    border: solid 1px #BDC7D8;
+}
+.lab7{
+    margin-left: 9vh;
+}
+.dev{
+    margin-left: 85vh;
+    color: black;   
+    
+}
+
+/*Tabla producto*/
+.table{
+    margin-left: 45vh;
+    margin-top: 5px;
+}
+.tablePro{
+    
+    border: solid 1px #BDC7D8;
+
+   
+    width: 1000px;
+}
+/*tabla cliente*/
+
+
+
+/*Style buttons modalSalesAdd*/
+
+
+
+
+
+
+

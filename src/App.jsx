@@ -14,6 +14,8 @@ import Shopping from "./pages/Shopping";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
 
+
+
 function App() {
   return (
   <>
@@ -33,6 +35,8 @@ function App() {
           <Route path="/customers" element={<Customers/>} />
           <Route path="/users" element={<AdminUsers/>} />
           <Route path="/reports" element={<Reports/>} />
+          
+          
         </Routes>
     </BrowserRouter>
   </>
