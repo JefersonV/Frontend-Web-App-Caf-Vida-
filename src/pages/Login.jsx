@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-async function loginUser(credentials) {
-  return fetch("http://localhost:3000/login", {
+function loginUser(credentials) {
+  console.log(JSON.stringify(credentials));
+  return fetch("http://localhost:3000/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "aplication/json",
@@ -12,15 +13,16 @@ async function loginUser(credentials) {
 }
 
 const Login = ({ setToken }) => {
-  const [username, setUserName] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await loginUser({
-      username,
+      email,
       password,
     });
+    console.log(token);
     setToken(token);
   };
 
@@ -29,8 +31,8 @@ const Login = ({ setToken }) => {
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUserName(e.target.value)} />
+          <p>Email</p>
+          <input type="text" onChange={(e) => setEmail(e.target.value)} />
         </label>
         <label>
           <p>Password</p>
