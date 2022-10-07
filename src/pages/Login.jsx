@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+//Funcion para realizar la peticion POST a la API
 function loginUser(credentials) {
+  //Se imprimen las credenciales para las pruebas
   console.log(JSON.stringify(credentials));
+
+  //Petición
   return fetch("http://localhost:3000/auth/login", {
     method: "POST",
     headers: {
@@ -16,12 +20,15 @@ const Login = ({ setToken }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  //Funcion para controlar el evento submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //Para capturar el resultado de la peticion
     const token = await loginUser({
       email,
       password,
     });
+    //Se imprime el resultado de la peticion
     console.log(token);
     setToken(token);
   };

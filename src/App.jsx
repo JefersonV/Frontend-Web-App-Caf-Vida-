@@ -24,10 +24,12 @@ import useToken from "./components/useToken";
 function App() {
   const { token, setToken } = useToken();
 
+  //Se niega el token, si da true significa que no es un token valido
   if (!token) {
     return <Login setToken={setToken} />;
   }
 
+  //Si no se cumplio la condicional se devuelve al cliente el home
   return (
     <>
       <BrowserRouter>
