@@ -9,6 +9,15 @@
 	margin-left: 50px;
 }
 
+body {
+	overflow-y: hidden;
+}
+
+.side {
+	overflow-y: scroll;
+	height: 100vh;
+}
+
 .top-bar-title {
 	margin-top: 7px;
 	text-align: center;

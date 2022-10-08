@@ -21,6 +21,8 @@
 .wrapper {
   margin-left: 250px;
   transition: 350ms;
+  overflow-y: scroll;
+	height: 100vh;
 }
 aside::-webkit-scrollbar {
 	width: 9px;
