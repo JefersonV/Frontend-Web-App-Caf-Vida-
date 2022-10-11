@@ -53,25 +53,25 @@ export const SideBarTypes = [
       /* subSubNav */
       {
         title: "Proveedores",
-        path: "inventory/providers",
+        path: "/providers",
         icon: <FiIcons.FiTruck />,
         class: "nav-subItem"
       },
       {
         title: "Compras",
-        path: "inventory/shopping",
+        path: "/shopping",
         icon: <BsIcons.BsFillBagCheckFill />,
         class: "nav-subItem"
       },
       {
         title: "Devoluciones Clientes",
-        path: "inventory/sales_returns",
+        path: "/sales_returns",
         icon: <FaIcons.FaCartArrowDown />,
         class: "nav-subItem"
       },
       {
         title: "Devoluciones Proveedores",
-        path: "inventory/shopping_returns",
+        path: "/shopping_returns",
         icon: <RiIcons.RiLuggageCartFill />,
         class: "nav-subItem"
       },

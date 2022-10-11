@@ -22,7 +22,7 @@ function SideBarMenu() {
           <Link to = "#" className="nav-icon">
             <FaIcons.FaBars onClick={sidebarFn}/>
           </Link>
-          <Link to="/">
+          <Link to="/home">
             <img src={Logo} width="75px" className="header-logo"/>
           </Link>
         </header>
@@ -34,7 +34,7 @@ function SideBarMenu() {
                 <Link to="#" className="nav-icon">
                   <AiIcons.AiOutlineClose onClick={sidebarFn}/>
                 </Link>
-                <Link to="/">
+                <Link to="/home">
                   <img src={Logo} width="75px" className="header-logo"/>
                 </Link>
               </div>

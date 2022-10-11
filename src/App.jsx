@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react'
 import SideBarMenu from "./components/SideBarMenu"
-import { BrowserRouter as Router,Switch,Route} from "react-router-dom";
+import { BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom";
 import Sales from "./pages/Sales";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
@@ -13,28 +14,144 @@ import Providers from "./pages/Providers";
 import Shopping from "./pages/Shopping";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
+import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
-
+import HomeLogin from './pages/HomeLogin';
 function App() {
+  /* Lógica de autenticación de Usuario */
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const setAuth = (booleand) => {
+    setIsAuthenticated(booleand);
+  };
+
+  async function isAuth() {
+    try {
+      const response = await fetch("http://localhost:3000/auth/verify", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
+
+      const parseRes = await response.json();
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    isAuth();
+  });
+
+    /* render={(props) =>
+  isAuthenticated ? ( esto comprueba si el usuario esta autenticado
+    <Login {...props} setAuth={setAuth} /> redirige a esta ruta si esta esta autenticado
+  ) : (
+    <Redirect to="/home" /> sino lo redirige a otra ruta
+  )
+  }
+  */
   return (
   <>
     <SidebarProvider >
       <Router>
         <SideBarMenu/>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/sales" component={Sales} />
-            <Route path="/inventory" component={Inventory} />
-            <Route path="/inventory/products" component={Products} />
-            <Route path="/inventory/providers" component={Providers} />
-            <Route path="/inventory/shopping" component={Shopping} />
-            <Route path="/inventory/sales_returns" component={CustomerReturns} />
-            <Route path="/inventory/shopping_returns" component={ProvidersReturns} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/production_cost" component={Production} />
-            <Route path="/customers" component={Customers} />
-            <Route path="/users" component={AdminUsers} />
-            <Route path="/reports" component={Reports} />
+            <Route  
+              exact 
+              path="/login" 
+              render={(props) => 
+                !isAuthenticated ? (
+                  <Login {...props} setAuth={setAuth} />
+                ) : (
+                  // home ????
+                  <Redirect to="/home" />
+                )
+              }
+            ></Route>
+            <Route 
+              exact
+              path="/home"
+              render={(props) => 
+                isAuthenticated ? (
+                  <HomeLogin {...props} setAuth={setAuth} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            ></Route>
+
+            <Route 
+              path="/sales"
+              render={(props) => 
+                  isAuthenticated ? <Sales /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+            path="/inventory"
+            render={(props) =>
+              isAuthenticated ? <Inventory /> : <Redirect to="/login" />
+            }
+            ></Route>
+            <Route
+              path="/inventory/products"
+              render={(props) =>
+                isAuthenticated ? <Products /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/inventory/providers"
+              render={(props) =>
+                isAuthenticated ? <Providers /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/inventory/shopping"
+              render={(props) =>
+                isAuthenticated ? <Shopping /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/inventory/sales_returns"
+              render={(props) =>
+                isAuthenticated ? <CustomerReturns /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/inventory/shopping_returns"
+              render={(props) =>
+                isAuthenticated ? <ProvidersReturns /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/orders"
+              render={(props) =>
+                isAuthenticated ? <Orders /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/production_cost"
+              render={(props) =>
+                isAuthenticated ? <Production /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/customers"
+              render={(props) =>
+                isAuthenticated ? <Customers /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/users"
+              render={(props) =>
+                isAuthenticated ? <AdminUsers /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/reports"
+              render={(props) =>
+                isAuthenticated ? <Reports /> : <Redirect to="/login" />
+              }
+            ></Route>
           </Switch>
       </Router>
     </SidebarProvider>

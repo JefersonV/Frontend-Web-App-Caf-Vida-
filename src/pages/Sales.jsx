@@ -4,7 +4,7 @@ import TopBarTable from '../components/TopBarTable'
 import useFetch from '../Hooks/useFetch'
 import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider'
 const Sales = () => {
-  const url = 'http://localhost:3000/sales'
+  const url = 'http://localhost:4000/sales'
   const sidebar = useSidebarContext()
   const dataApi = useFetch(url)
   console.log(sidebar)
