@@ -1,4 +1,5 @@
 import React from "react";
+import SideBarMenu from "../components/SideBarMenu";
 import generateSales from "../generatePDF/generateSales";
 // const dateOfReport = "del mes de agosto de 2022";
 
@@ -150,6 +151,7 @@ const sales = [
 const Reports = () => {
   return (
     <>
+      <SideBarMenu />
       <button
         onClick={() =>
           generateSales(sales, "Reporte de ventas del 27/09/2022 al 30/09/2022")

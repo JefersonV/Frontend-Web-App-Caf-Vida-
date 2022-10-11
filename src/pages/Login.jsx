@@ -1,63 +1,62 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { Fragment, useState } from "react";
 
-//Funcion para realizar la peticion POST a la API
-function loginUser(credentials) {
-  //Se imprimen las credenciales para las pruebas
-  console.log(JSON.stringify(credentials));
+const Login = ({ setAuth }) => {
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+  });
 
-  //Petición
-  return fetch("http://localhost:3000/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "aplication/json",
-    },
-    body: JSON.stringify(credentials),
-  }).then((data) => data.json());
-}
+  const { email, password } = inputs;
 
-const Login = ({ setToken }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const onChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
 
-  //Funcion para controlar el evento submit
-  const handleSubmit = async (e) => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
-    //Para capturar el resultado de la peticion
-    const token = await loginUser({
-      email,
-      password,
-    });
-    //Se imprime el resultado de la peticion
-    console.log(token);
-    setToken(token);
+    try {
+      const body = { email, password };
+
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const parseRes = await response.json();
+
+      localStorage.setItem("token", parseRes.token);
+
+      setAuth(true);
+    } catch (err) {
+      console.error(err.massage);
+    }
   };
 
   return (
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Email</p>
-          <input type="text" onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <label>
-          <p>Password</p>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
+    <Fragment>
+      <h1 className="">Login</h1>
+      <form onSubmit={onSubmitForm}>
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          className=""
+          value={email}
+          onChange={(e) => onChange(e)}
+        ></input>
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          className=""
+          value={password}
+          onChange={(e) => onChange(e)}
+        ></input>
+        <button className="">Ingresar</button>
       </form>
-    </div>
+    </Fragment>
   );
-};
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
 };
 
 export default Login;
