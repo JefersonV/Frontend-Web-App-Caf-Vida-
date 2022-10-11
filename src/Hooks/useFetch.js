@@ -8,7 +8,8 @@ const useFetch = url => {
 	useEffect(() => {
 		fetch(url)
 			.then(response => response.json())
-			.then(data => setDataApi(data.results))
+			.then(data => setDataApi(data))
+			console.log(dataApi)
 	}, [url])
 }
 

@@ -4,12 +4,12 @@ import TopBarTable from '../components/TopBarTable'
 import useFetch from '../Hooks/useFetch'
 import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider'
 const Sales = () => {
-  const url = 'https://rickandmortyapi.com/api/character'
+  const url = 'http://localhost:3000/sales'
   const sidebar = useSidebarContext()
   const dataApi = useFetch(url)
   console.log(sidebar)
+  console.log(dataApi)
   return (
-    
     <>
       {/* wrapper sirve para que se adapte con respecto a la sidebar */}
       

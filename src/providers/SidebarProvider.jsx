@@ -51,13 +51,14 @@ export const SidebarProvider = ({children}) => {
   const searcher = (e) => {
     console.log(e.target.value)
     setSearch(e.target.value)
+    console.log(search.length)
   }
   //metodo de filtrado del buscador
   const results = !search ? dataApi 
   : dataApi.filter((dato) =>  
-  dato.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
-  dato.status.toLowerCase().includes(search.toLocaleLowerCase()) ||
-  dato.gender.toLowerCase().includes(search.toLocaleLowerCase())
+  dato.cliente.toLowerCase().includes(search.toLocaleLowerCase()) ||
+  dato.producto.toLowerCase().includes(search.toLocaleLowerCase()) ||
+  dato.fecha.toLowerCase().includes(search.toLocaleLowerCase())
   )
   return(
     <>{/* Inyección de contextos */}

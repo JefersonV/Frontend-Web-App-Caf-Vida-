@@ -14,12 +14,13 @@ const Table = () => {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Código</th>
             <th scope="col">Fecha</th>
             <th scope="col">Cliente</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Producto</th>
             <th scope="col">Vendedor</th>
-            <th scope="col">Total</th>
             <th scope="col">Método Pago</th>
+            <th scope="col">Total</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -28,13 +29,14 @@ const Table = () => {
           {results.map((item, index) => {
             return (
             <tr key={index}>
-              <th>{item.id}</th>
-              <td>{item.status}</td>
-              <td>{item.species}</td>
-              <td>{item.gender}</td>
-              <td>{item.species}</td>
-              <td>{item.status}</td>
-              <td>{item.name}</td>
+              <th>{item.id_venta}</th>
+              <td>{item.fecha}</td>
+              <td>{item.cliente}</td>
+              <td>{item.cantidad}</td>
+              <td>{item.producto}</td>
+              <td>{item.usuario }</td>
+              <td>{item.modo_pago}</td>
+              <td>{item.total}</td>
               <td>
                 <Link to="#">
                   <AiIcons.AiOutlineEye className="icon-eye icon-table" title="Ver detalles de la venta"/>

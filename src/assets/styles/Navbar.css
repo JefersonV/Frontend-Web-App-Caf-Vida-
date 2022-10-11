@@ -57,6 +57,10 @@ h1 {
   align-items: center;
 }
 
+.header-logo {
+  margin-left: 1.8em;
+}
+
 .nav-icon {
   margin-left: .7em;
   font-size: 2em;
@@ -90,6 +94,10 @@ h1 {
 
 .sidebar {
   width: 100%;
+}
+
+.sidebar-top-flex {
+  display: flex;
 }
 
 .icon-hide {
