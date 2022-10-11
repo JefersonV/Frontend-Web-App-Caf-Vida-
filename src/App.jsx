@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SideBarMenu from "./components/SideBarMenu"
 import { BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom";
 import Sales from "./pages/Sales";
+/* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
@@ -42,7 +43,7 @@ function App() {
     isAuth();
   });
 
-    /* render={(props) =>
+  /* render={(props) =>
   isAuthenticated ? ( esto comprueba si el usuario esta autenticado
     <Login {...props} setAuth={setAuth} /> redirige a esta ruta si esta esta autenticado
   ) : (
@@ -83,41 +84,41 @@ function App() {
             <Route 
               path="/sales"
               render={(props) => 
-                  isAuthenticated ? <Sales /> : <Redirect to="/login" />
+                isAuthenticated ? <Sales /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
-            path="/inventory"
-            render={(props) =>
-              isAuthenticated ? <Inventory /> : <Redirect to="/login" />
+              path="/inventory"
+              render={(props) =>
+                isAuthenticated ? <Inventory /> : <Redirect to="/login" />
             }
             ></Route>
             <Route
-              path="/inventory/products"
+              path="/products"
               render={(props) =>
                 isAuthenticated ? <Products /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
-              path="/inventory/providers"
+              path="/providers"
               render={(props) =>
                 isAuthenticated ? <Providers /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
-              path="/inventory/shopping"
+              path="/shopping"
               render={(props) =>
                 isAuthenticated ? <Shopping /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
-              path="/inventory/sales_returns"
+              path="/sales_returns"
               render={(props) =>
                 isAuthenticated ? <CustomerReturns /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
-              path="/inventory/shopping_returns"
+              path="/shopping_returns"
               render={(props) =>
                 isAuthenticated ? <ProvidersReturns /> : <Redirect to="/login" />
               }

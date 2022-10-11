@@ -25,7 +25,7 @@ export const SideBarTypes = [
     subNav: [
       {
         title: "Productos",
-        path: "/inventory/products",
+        path: "/products",
         icon: <IoIcons.IoIosPaper />,
         iconClosed: <RiIcons.RiArrowDownSFill />,
         iconOpened: <RiIcons.RiArrowUpSFill />,
