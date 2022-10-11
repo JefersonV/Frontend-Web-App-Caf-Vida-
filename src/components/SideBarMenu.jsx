@@ -21,6 +21,7 @@ function SideBarMenu() {
             <FaIcons.FaBars onClick={showSidebar}/>
           </Link>
         </header>
+        {/* Lógica del sidebar */}
         {sidebar === true ?
           <aside className="navbar-left navbar1">
             <div className="sidebar">

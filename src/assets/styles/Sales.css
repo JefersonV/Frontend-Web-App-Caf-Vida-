@@ -110,12 +110,13 @@
 /*Tabla producto*/
 .table{
     margin-left: 45vh;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 .tablePro{
     
     border: solid 1px #BDC7D8;
-  
+
+   
     width: 1000px;
 }
 /*tabla cliente*/
