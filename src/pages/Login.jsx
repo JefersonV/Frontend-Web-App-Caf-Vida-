@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import "../assets/styles/Login.css";
 
 const Login = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -35,26 +36,32 @@ const Login = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="">Login</h1>
-      <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className=""
-          value={email}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className=""
-          value={password}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <button className="">Ingresar</button>
-      </form>
+      <div class="login-box">
+        <h2>Login</h2>
+        <form onSubmit={onSubmitForm}>
+          <div class="user-box">
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => onChange(e)}
+            ></input>
+            <label>Correo Electrónico</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => onChange(e)}
+            ></input>
+            <label>Contraseña</label>
+          </div>
+          <div class="button-form">
+            <button class="btn">Ingresar</button>
+          </div>
+        </form>
+      </div>
     </Fragment>
   );
 };
