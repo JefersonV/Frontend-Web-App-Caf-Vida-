@@ -12,7 +12,7 @@ const Sales = () => {
 
   //Función de búsqueda
   const searcher = useSearcherContext()
-
+  
   //metodo de filtrado 2   
   
   return (
