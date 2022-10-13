@@ -4,6 +4,9 @@ import { BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom"
 import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
+import ModalSales from "./components/ModalSales"
+import ModalSales2 from './components/ModalSales2';
+import Test from './components/Test';
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -89,9 +92,9 @@ function App() {
               }
             ></Route>
             <Route 
-              path="/sales/new"
+              path="/new"
               render={(props) => 
-                isAuthenticated ? <SalesNew /> : <Redirect to="/login" />
+                isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
               }
             ></Route>
             <Route

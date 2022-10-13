@@ -2,7 +2,7 @@ import React from 'react'
 import Table from '../components/Table'
 import TopBarTable from '../components/TopBarTable'
 import useFetch from '../Hooks/useFetch'
-import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider'
+import { useSidebarContext } from '../providers/SidebarProvider'
 const Sales = () => {
   const url = 'http://localhost:4000/sales'
   const sidebar = useSidebarContext()
