@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import "../assets/styles/Sales.css";
@@ -42,6 +42,44 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
     });
   };
 
+  // Captura de datos del formulario para la API
+  const [dataClient, setDataClient] = useState({
+    nombre: "",
+    telefono: "",
+    correo: "",
+    direccion: "",
+    nit: "",
+  })
+
+  const { nombre, telefono, correo, direccion, nit } = dataClient;
+
+  const onChangeData = e => {
+    setDataClient({ ...dataClient, [e.target.name]: e.target.value })
+    console.log(dataClient)
+  }
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      // cuerpo del JSON
+      const body = { nombre, telefono, correo, direccion, nit };
+
+      const response = await fetch("http://localhost:4000/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const parseRes = await response.json();
+
+      localStorage.setItem("token", parseRes.token);
+
+      setAuth(true);
+    } catch (err) {
+      console.error(err.massage);
+    }
+  };
+
   return (
     <>
       {estado2 && (
@@ -51,8 +89,8 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
               <BiEdit size="2rem" color="darkgreen" />
               Registro de clientes{" "}
             </h1>
-            <Form>
-              <label htmlFor="" className="lal1">
+            <Form onSubmit={onSubmitForm}>
+              {/* <label htmlFor="" className="lal1">
                 {" "}
                 Código{" "}
               </label>
@@ -63,7 +101,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
                   placeholder=" Código autogenerado"
                   disabled
                 />
-              </div>
+              </div> */}
 
               <label htmlFor="" className="lal2">
                 {" "}
@@ -73,8 +111,10 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
                 <input
                   className="txt1"
                   type="text"
+                  name="nombre"
                   placeholder=" Ingrese nombre"
-                  required
+                  value={nombre}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
@@ -84,42 +124,54 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
               </label>
               <div className="boddy3">
                 <input
-                  className="txt2"
+                  className="txt1"
                   type="phone"
+                  name="telefono"
                   placeholder=" Ingrese numero"
-                  required
+                  value={telefono}
+                  onChange={(e) => onChangeData(e)}
                 />
+                <label htmlFor="" className="lal3">
+                {" "}
+                Correo{" "}
+              </label>
                 <input
-                  className="txt3"
-                  type="phone"
-                  placeholder=" Ingrese numero"
-                  required
+                  className="txt1"
+                  type="email"
+                  name="correo"
+                  placeholder="Ingrese correo"
+                  value={correo}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
               <label htmlFor="" className="la4">
                 {" "}
-                NIT
+                Dirección
               </label>
               <div className="boddy4">
                 <input
                   className="txt4"
                   type="text"
-                  placeholder=" Ingrese NIT"
-                  required
+                  name="direccion"
+                  placeholder=" Ingrese Dirección"
+                  value={direccion}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 
               <label htmlFor="" className="lal5">
                 {" "}
-                Dirección{" "}
+                Nit{" "}
               </label>
               <div className="boddy5">
                 <input
                   className="txt5"
                   type="text"
-                  placeholder=" Ingrese Dirección"
-                  required
+                  name="nit"
+                  placeholder=" Ingrese NIT"
+                  value={nit}
+                  onChange={(e) => onChangeData(e)}
                 />
               </div>
 

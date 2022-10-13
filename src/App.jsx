@@ -18,6 +18,7 @@ import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
 import HomeLogin from './pages/HomeLogin';
+import SalesNew from './components/SalesNew';
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -85,6 +86,12 @@ function App() {
               path="/sales"
               render={(props) => 
                 isAuthenticated ? <Sales /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route 
+              path="/sales/new"
+              render={(props) => 
+                isAuthenticated ? <SalesNew /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
