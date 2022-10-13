@@ -1,3 +1,46 @@
+.contenedorModal h1 {
+	font-size: 1.3em;
+	text-transform: uppercase;
+	margin: 0;
+	font-weight: bold;
+}
+
+.overlay {
+	border: 1px solid #004;
+}
+
+.Encabezado2 h3 {
+	font-size: 1.1em;
+	text-align: center;
+	margin: 0;
+}
+
+.BodyDate {
+	margin-left: .5em;
+}
+ 
+.buttons-saleTop {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#buscar2 {
+	border-radius: .5em;
+	outline: none;
+	width: 200px;
+}
+
+::placeholder {
+	color: rgb(184, 184, 184);
+	font-size: .9em;
+}
+
+.customer-data {
+	font-weight: bold;
+	font-size: 1.1em;
+	margin: .8em 0 0 0;
+}
+
 .barraArriba {
 	align-items: center;
 	margin: 0 auto;
@@ -9,12 +52,8 @@
 	margin-left: 50px;
 }
 
-body {
-	overflow-y: hidden;
-}
-
 .side {
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 	height: 100vh;
 }
 
@@ -61,8 +100,6 @@ body {
 	border: 0;
 	margin-left: 5px;
 	cursor: pointer;
-
-
 }
 
 
@@ -73,6 +110,8 @@ body {
 
 .btn4 {
 	color: black;
+	border: none;
+	background: none;
 }
 
 .btn5 {
@@ -96,16 +135,18 @@ body {
 }
 
 .metodo {
-	margin-left: 45vh;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .select3 {
 	margin-left: 10px;
 }
 
-.lab6 {
-	margin-left: 64vh;
+.lab4 {
+	font-weight: bold;
 }
+
 
 .descu {
 	margin-left: 10px;
@@ -128,16 +169,37 @@ body {
 	margin-top: 5px;
 } */
 
-.tablePro {
-
-	border: solid 1px #BDC7D8;
-
-
-	width: 1000px;
+.table {
+	margin-bottom: .5rem;
 }
 
-/*tabla cliente*/
+.tablePro {
+	border: solid 1px #BDC7D8;
+	width: 99%;
+}
 
+.table-total {
+	display: flex;
+	justify-content: flex-end;
+	margin-right: 1em;
+}
 
+.table-total label {
+	font-weight: bold;
+	font-size: 1em;
+}
 
-/*Style buttons modalSalesAdd*/
+.table-input {
+	width: 75px;
+}
+
+.buttons-bottom {
+	display: flex;
+	justify-content: center;
+	gap: 3em;
+}
+
+.buttons-bottom button {
+	border: none;
+	background: none;
+}

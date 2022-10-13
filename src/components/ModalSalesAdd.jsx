@@ -89,20 +89,8 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
               <BiEdit size="2rem" color="darkgreen" />
               Registro de clientes{" "}
             </h1>
-            <Form onSubmit={onSubmitForm}>
-              {/* <label htmlFor="" className="lal1">
-                {" "}
-                Código{" "}
-              </label>
-              <div className="boddy">
-                <input
-                  className="txt1"
-                  type="text"
-                  placeholder=" Código autogenerado"
-                  disabled
-                />
-              </div> */}
-
+            {/* <Form onSubmit={onSubmitForm}> */}
+            <Form>
               <label htmlFor="" className="lal2">
                 {" "}
                 Nombre{" "}

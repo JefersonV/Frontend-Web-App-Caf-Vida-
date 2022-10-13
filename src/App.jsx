@@ -5,8 +5,6 @@ import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
 import ModalSales from "./components/ModalSales"
-import ModalSales2 from './components/ModalSales2';
-import Test from './components/Test';
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -21,7 +19,7 @@ import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
 import HomeLogin from './pages/HomeLogin';
-import SalesNew from './components/SalesNew';
+
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(false);

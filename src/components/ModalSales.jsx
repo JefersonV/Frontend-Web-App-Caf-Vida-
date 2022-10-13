@@ -14,12 +14,14 @@ import { FcPrint } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ModalSalesAdd from './ModalSalesAdd';
+import SearchBarDrop from './SearchBarDrop';
 import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
 
-const ModalSales = ({ children, estado, cambiarEstado }) => {
+const ModalSales = ({ children }) => {
   // Para que se ajuste con respecto a la sidebar
   const sidebar = useSidebarContext()
+
   const clientes = [
     {
       id: 1,
@@ -29,7 +31,7 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
       direccion: 'Panajachel, zona 1',
       nit: 23154668
     },
-/*     {
+    {
       id: 2,
       nombre: 'Juan Pérez',
       telefono: 12345678,
@@ -60,9 +62,54 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
       nit: 23154668
-    }, */
+    },
+    {
+      id: 6,
+      nombre: 'Jeferson Velásquez',
+      telefono: 12345678,
+      correo: 'jvelasquezc@example.com',
+      direccion: 'Panajachel, zona 1',
+      nit: 23154668
+    },
+    {
+      id: 7,
+      nombre: 'Juan Pérez',
+      telefono: 12345678,
+      correo: 'jvelasquezc@example.com',
+      direccion: 'Panajachel, zona 1',
+      nit: 23154668
+    },
+    {
+      id: 8,
+      nombre: 'Esther López',
+      telefono: 12345678,
+      correo: 'jvelasquezc@example.com',
+      direccion: 'Panajachel, zona 1',
+      nit: 23154668
+    },
+    {
+      id: 9,
+      nombre: 'Marina García',
+      telefono: 12345678,
+      correo: 'jvelasquezc@example.com',
+      direccion: 'Panajachel, zona 1',
+      nit: 23154668
+    },
+    {
+      id: 10,
+      nombre: 'Mario Gómez',
+      telefono: 12345678,
+      correo: 'jvelasquezc@example.com',
+      direccion: 'Panajachel, zona 1',
+      nit: 23154668
+    },
   ]
-
+  // console.log(clientes.length)
+    /* Opciones que aparecerán en el buscador */
+    const defaultOptions = [];
+    for (let i = 0; i < clientes.length-1; i++) {
+      defaultOptions.push(clientes[i].nombre);
+    }
   /* Sweet alert */
   const cancelSweet = () => {
     Swal.fire({
@@ -91,6 +138,7 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        // Función limpiar datos
       }
     });
   };
@@ -105,56 +153,68 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
       timer: 1300,
     });
   };
-
+  // Estado del modal
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
-
+  // Estado del buscador
+  const [options, setOptions] = useState([])
+  const onInputChange = (e) => {
+    setOptions(
+      defaultOptions.filter((option) => 
+      option.toLowerCase().includes(e.target.value.toLocaleLowerCase()))
+    );
+  }
   return (
     <>
       <div className={sidebar ? "wrapper" : "side"}>
         <main className="overlay">
           <div className="contenedorModal">
-            <p>Registro de Ventas</p>
+            <h1>Registro de Ventas</h1>
             <hr />
             <div className="Encabezado2">
-              <h3>
+              {/* <h3>
                 <img src={logo} width="50px" alt="logo cafe vida" />
                 ¡¡Aroma que te hace soñar, sabor que te
                 hace Despertar!!
-              </h3>
+              </h3> */}
             </div>
             <div className="BodyDate">
-              <label id='label2' htmlFor="">
-                Datos del cliente
-              </label>
-              <label id='label3'>
-                Buscador
-              </label>
+              <div className="buttons-saleTop">
 
-              <input
-                  type="search"
-                  placeholder="Buscar...."
-                  className="buscar2"
-                  id="buscar2"
-                  
-                />
+                <label id='label3'>
+                  Buscar cliente
+                </label>
+                <SearchBarDrop options={options} onInputChange={onInputChange} />
+                {/*  <input
+                    type="search"
+                    placeholder="Nombre del cliente ..."
+                    className="buscar2"
+                    id="buscar2"
+                    
+                  /> */}
 
-                <button
-                  className="btn4"
-                  onClick={() => cambiarEstadoModal2(!estadoModal2)}
-                >
-                <IoPersonAdd size="2rem" color="darkgoldenrod" />
-                Agregar Cliente
-              </button>
-              <Link to="/reports" className="btn3">
-                  <HiDocumentReport size="2rem" color="darkred" />
-                  Reporte Ventas
-                </Link>
-                <Link to="/sales" className="btn1">
-                  {" "}
-                  <AiFillFileText size="2rem" color="rgb(36, 38, 41)" />
-                  Resumen Ventas Realizadas
-                </Link>
+                  <button
+                    className="btn4"
+                    onClick={() => cambiarEstadoModal2(!estadoModal2)}
+                  >
+                  <IoPersonAdd size="2rem" color="darkgoldenrod" />
+                  Nuevo cliente
+                </button>
+                <Link to="/reports" className="btn3">
+                    <HiDocumentReport size="2rem" color="darkred" />
+                    Reporte Ventas
+                  </Link>
+                  <Link to="/sales" className="btn1">
+                    {" "}
+                    <AiFillFileText size="2rem" color="rgb(36, 38, 41)" />
+                    Resumen Ventas Realizadas
+                  </Link>
+              </div>
                 <div className="table">
+                <label id='label2' htmlFor="">
+                <p className="customer-data">
+                  Datos del cliente
+                </p>
+              </label>
                   <table className="tablePro">
                     <thead>
                       <tr>
@@ -166,7 +226,8 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {clientes.map((item, index) => {
+                      
+                      {/* {clientes.map((item, index) => {
                         return (
                           <tr key={index}>
                             <td>{item.nombre}</td>
@@ -176,18 +237,20 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
                             <td>{item.nit}</td>
                           </tr>
                         )
-                      })}
-                      {/* <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td> */}
+                      })} */}
+                      <tr>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
                 
-                <label id="lab4" htmlFor="lab4">
-                  {" "}
+                <label id="lab4" className="lab4">
+                  
                   DETALLE PRODUCTO
                 </label>
                 <select className="select2" id="select2">
@@ -207,40 +270,50 @@ const ModalSales = ({ children, estado, cambiarEstado }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
-                      <td>----</td>
+                      <tr>
+                        <td>
+                          <input className="table-input" type="number" name="" id="" />
+                        </td>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                      </tr>
                     </tbody>
                   </table>
+                  <div className="table-total">
+                    <label className="lab7" htmlFor="total">
+                      Total a pagar
+                    </label>
+                  </div>
                 </div>
                 <div className="metodo">
-                  <label htmlFor="lab5">Método de pago</label>
-                  <select className="select3" id="">
-                    <option value=""> Efectivo </option>
-                    <option value=""> Transferencia Bancaria</option>
-                    <option value=""> Depósito Monetario</option>
-                  </select>
-
-                  <label className="lab6" htmlFor="lab6">
-                    Descuento %
-                  </label>
-                  <input className="descu" type="number" placeholder=" %" />
+                  <div className="metodo-left">
+                    <label htmlFor="lab5">Método de pago</label>
+                    <select className="select3" id="">
+                      <option value=""> Efectivo </option>
+                      <option value=""> Transferencia Bancaria</option>
+                      <option value=""> Depósito Monetario</option>
+                    </select>
+                  </div>
+                  <div className="metodo-right">
+                    <label className="lab6" htmlFor="lab6">
+                      Descuento %
+                    </label>
+                    <input className="descu" type="number" placeholder=" %" />
+                  </div>
                   <br />
-                  <button className="dev">
+                  {/* <button className="dev">
                     {" "}
                     <GiReturnArrow size="2rem" color="rgb(28, 4, 95)" />{" "}
                     Devoluciones
-                  </button>
+                  </button> */}
 
-                  <label className="lab7" htmlFor="total">
-                    Total a pagar
-                  </label>
+                  
                 </div>
 
-                <section className="buttons">
+                <section className="buttons-bottom">
                 <button className="btn5" onClick={() => NewSweet()}>
                     {" "}
                     <VscNewFile size="2rem" color="rgb(155, 74, 8)" /> Nueva Venta
