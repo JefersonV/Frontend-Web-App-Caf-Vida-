@@ -15,12 +15,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ModalSalesAdd from './ModalSalesAdd';
 import SearchBarDrop from './SearchBarDrop';
-import logo from '../assets/images/logo-white.png'
+// import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
 
 const ModalSales = ({ children }) => {
   // Para que se ajuste con respecto a la sidebar
   const sidebar = useSidebarContext()
+  // Estado del modal del formulario de clientes
+  const [estadoModal2, cambiarEstadoModal2] = useState(false);
 
   const clientes = [
     {
@@ -104,12 +106,35 @@ const ModalSales = ({ children }) => {
       nit: 23154668
     },
   ]
-  // console.log(clientes.length)
-    /* Opciones que aparecerán en el buscador */
-    const defaultOptions = [];
-    for (let i = 0; i < clientes.length-1; i++) {
-      defaultOptions.push(clientes[i].nombre);
+  const products = [
+    {
+      id: 1,
+      nombre: 'Café Molido',
+      stock_ingreso: 0,
+      precio_venta: 50,
+      stock_minimo: 10,
+      peso: '1 lb',
+      detalle: 'Café Molido de 1lb de 2da calidad',
+      cantidad: 0,
+      descuento: 0,
+      subtotal: 0,
+      total: 0
+    },
+    {
+      id: 2,
+      nombre: 'Café Molido',
+      stock_ingreso: 0,
+      precio_venta: 25,
+      stock_minimo: 10,
+      peso: '1/2 lb',
+      detalle: 'Café Molido de 1/2 lb de 2da calidad',
+      cantidad: 0,
+      descuento: 0,
+      subtotal: 0,
+      total: 0
     }
+
+  ]
   /* Sweet alert */
   const cancelSweet = () => {
     Swal.fire({
@@ -153,16 +178,59 @@ const ModalSales = ({ children }) => {
       timer: 1300,
     });
   };
-  // Estado del modal
-  const [estadoModal2, cambiarEstadoModal2] = useState(false);
+  // console.log(clientes.length)
+  /* Opciones que aparecerán en el buscador */
+  const defaultOptions = [];
+  for (let i = 0; i < clientes.length-1; i++) {
+    defaultOptions.push(`${clientes[i].id}   ${clientes[i].nombre}`);
+  }
+  
   // Estado del buscador
   const [options, setOptions] = useState([])
+  //Manejador de evento del buscador
   const onInputChange = (e) => {
     setOptions(
       defaultOptions.filter((option) => 
       option.toLowerCase().includes(e.target.value.toLocaleLowerCase()))
     );
   }
+
+  //Select de producto
+  const [productSelected, setProductSelected] = useState({
+
+  })
+  //Estado para la tabla de Producto
+  const [tableData, setTableData] = useState([{}])
+  
+  
+  //Manejador del control <select>
+  const onChangeSelect = e => {
+    e.preventDefault()
+    console.log('Seleccionaste: ' + e.target.value)
+    setProductSelected({value: e.target.value})
+    // setProductSelected(({productSelected.id}))
+    // return e.target.value;
+    // console.log(products)
+    // const productoEncontrado = products.find((product, index) => product.detalle === productSelected.value)
+    // setTableData(tableData => tableData.concat(productoEncontrado))
+    e.stopPropagation()
+  }
+  
+  //Buscamos el valor en el array products comparandolo a el producto seleccionado
+  const productoEncontrado = products.find(product => product.detalle === productSelected.value)
+  console.log('Seleccionado ' + productSelected.value)
+  console.log(products.map(product => product.detalle))
+
+  // Btn agregar
+  const submitSelected = e => {
+    e.preventDefault()
+    // alert('Lo que te corresponde es: ' + productSelected.value)
+    console.log(e.target.value)
+    // console.log('seleccionaste ' + productSelected )
+    // setSearches(searches => searches.concat(query))
+  } 
+    // console.log('nuevo')
+    // console.log(tableData)
   return (
     <>
       <div className={sidebar ? "wrapper" : "side"}>
@@ -170,13 +238,6 @@ const ModalSales = ({ children }) => {
           <div className="contenedorModal">
             <h1>Registro de Ventas</h1>
             <hr />
-            <div className="Encabezado2">
-              {/* <h3>
-                <img src={logo} width="50px" alt="logo cafe vida" />
-                ¡¡Aroma que te hace soñar, sabor que te
-                hace Despertar!!
-              </h3> */}
-            </div>
             <div className="BodyDate">
               <div className="buttons-saleTop">
 
@@ -184,14 +245,6 @@ const ModalSales = ({ children }) => {
                   Buscar cliente
                 </label>
                 <SearchBarDrop options={options} onInputChange={onInputChange} />
-                {/*  <input
-                    type="search"
-                    placeholder="Nombre del cliente ..."
-                    className="buscar2"
-                    id="buscar2"
-                    
-                  /> */}
-
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}
@@ -249,20 +302,27 @@ const ModalSales = ({ children }) => {
                   </table>
                 </div>
                 
-                <label id="lab4" className="lab4">
-                  
-                  DETALLE PRODUCTO
-                </label>
-                <select className="select2" id="select2">
-                  <option value="">Café molido 1 lb</option>
-                  <option value="">Café molido 1/2 lb</option>
-                </select>
+                <form action="" onClick={submitSelected}>
+                  <label id="lab4" className="lab4">
+                    DETALLE PRODUCTO
+                    {/* onChange = {e => setSelects(e.target.value)} */}
+                    <select value="seleccione" className="select2" id="select2" onChange={onChangeSelect}>
+                      
+                      {products.map((product) => {
+                        return (
+                          <option key={product.id} value={product.detalle}>{product.detalle}</option>
+                        )
+                      })}
+                    </select> 
+                  </label>
+                  <input type="submit" value="Registra producto" />
+                </form>
                 <div className="table">
                   <table className="tablePro">
                     <thead>
                       <tr>
                         <th id="can">Cantidad</th>
-                        <th id="pr">Precio (lb)</th>
+                        <th id="pr">Peso (lb)</th>
                         <th id="pro">Producto</th>
                         <th id="det">Detalle</th>
                         <th id="prec">Precio</th>
@@ -270,16 +330,22 @@ const ModalSales = ({ children }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <input className="table-input" type="number" name="" id="" />
-                        </td>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                      </tr>
+                        {/* {  
+                          tableData.map((product) => {
+                          return(
+                            <tr>
+                              <td>
+                                <input className="table-input" type="number" name="" id="" />
+                              </td>
+                              <td>{product.peso}</td>
+                              <td>{product.nombre}</td>
+                              <td>{product.detalle}</td>
+                              <td>{product.precio_venta}</td>
+                              <td>{product.subtotal}</td>
+                            </tr>
+                          )
+                          })
+                        } */}
                     </tbody>
                   </table>
                   <div className="table-total">

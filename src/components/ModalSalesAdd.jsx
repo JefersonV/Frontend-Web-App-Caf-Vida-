@@ -58,6 +58,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
     console.log(dataClient)
   }
 
+  //Evento de envío del formularioy
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
