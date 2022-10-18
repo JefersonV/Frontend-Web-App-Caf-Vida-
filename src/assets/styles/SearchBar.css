@@ -2,7 +2,7 @@
   width: 18em;
 }
 
-#results {
+#CustomerForm {
   position: absolute;
   width: inherit;
   overflow-y: scroll;
@@ -11,7 +11,7 @@
   /* border-bottom: 1px #eeeeee solid; */
 }
 
-#results > button {
+#CustomerForm > button {
   background-color: #fafafa;
 }
 

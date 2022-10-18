@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/SearchBar.css';
 
-const SearchBarDrop = ({ options, onInputChange }) => {
+const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
   const ulRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
@@ -19,16 +19,25 @@ const SearchBarDrop = ({ options, onInputChange }) => {
   
   return (
     <div className="search-bar-dropdown">
-      <input
-        id="search-bar"
-        type="search"
-        className="form-control"
+
+    <div class="input-group mb-3">
+      <input 
+        id="search-bar" 
+        type="search" 
+        class="form-control" 
         placeholder="Nombre del cliente ..."
+        aria-label="Rec safdasf"
+        aria-describedby="basic-addon2" 
         ref={inputRef}
         onChange={onInputChange}
-        autoComplete="off"
+        autoComplete="off"  
       />
-      <ul id="results" className="list-group" ref={ulRef}>
+      <div class="input-group-append">
+        <input type="submit" value="Registrar cliente" form="CustomerForm" class="btn btn-outline-secondary" />
+      </div>
+    </div>
+      {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
+      <form id="CustomerForm" className="list-group" ref={ulRef} onSubmit={handleCustomer}>
         {options.map((option, index) => {
           return (
             <button
@@ -39,10 +48,6 @@ const SearchBarDrop = ({ options, onInputChange }) => {
               onClick={(e) => {
                 // Aparece el nombre en el value del botón
                 inputRef.current.value = option;
-                // setItemSelected(option.id)  
-                // console.log(itemSelected)
-                // console.log(index)
-                // capturarDatos()
               }}
               className="list-group-item list-group-item-action"
             >
@@ -50,7 +55,8 @@ const SearchBarDrop = ({ options, onInputChange }) => {
             </button>
           );
         })}
-      </ul>
+      </form>
+      
     </div>
   );
 };

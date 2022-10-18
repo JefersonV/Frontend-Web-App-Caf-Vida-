@@ -68,7 +68,7 @@ const ModalSales = ({ children }) => {
     },
     {
       id: 6,
-      nombre: 'Jeferson Velásquez',
+      nombre: 'Esteban López',
       telefono: 12345678,
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
@@ -76,7 +76,7 @@ const ModalSales = ({ children }) => {
     },
     {
       id: 7,
-      nombre: 'Juan Pérez',
+      nombre: 'Juan Gonzáles',
       telefono: 12345678,
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
@@ -84,7 +84,7 @@ const ModalSales = ({ children }) => {
     },
     {
       id: 8,
-      nombre: 'Esther López',
+      nombre: 'Marina López',
       telefono: 12345678,
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
@@ -92,7 +92,7 @@ const ModalSales = ({ children }) => {
     },
     {
       id: 9,
-      nombre: 'Marina García',
+      nombre: 'María Rodríguez',
       telefono: 12345678,
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
@@ -100,7 +100,7 @@ const ModalSales = ({ children }) => {
     },
     {
       id: 10,
-      nombre: 'Mario Gómez',
+      nombre: 'Marino Gómez',
       telefono: 12345678,
       correo: 'jvelasquezc@example.com',
       direccion: 'Panajachel, zona 1',
@@ -177,6 +177,7 @@ const ModalSales = ({ children }) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         // Función limpiar datos
+        // limpiarDatos()
       }
     });
   };
@@ -195,19 +196,46 @@ const ModalSales = ({ children }) => {
   /* Opciones que aparecerán en el buscador */
   const defaultOptions = [];
   for (let i = 0; i < clientes.length-1; i++) {
-    defaultOptions.push(`${clientes[i].id}   ${clientes[i].nombre}`);
+    defaultOptions.push(`${clientes[i].nombre}`);
   }
   
   // Estado del buscador
   const [options, setOptions] = useState([])
+  //Estado de la tabla de cliente
+  const [clientTable, setClientTable] = useState([])
+  // Estado del item seleccionado
+  const [clientSelected, setClientSelected] = useState({})
+    //Capturar datos del cliente
+  const handleCustomer = e => {
+    e.preventDefault()
+    console.log(clientSelected)
+    console.log('acción cliente')
+    //Verificamos que el cliente exista, según los datos de la API
+    const clienteEncontrado = clientes.find((cliente) => 
+      cliente.nombre === clientSelected.client
+    )
+
+    // Solo se puede agregar 1 cliente por venta
+    if(clientTable.length > -1 && clientTable.length < 1) {
+      setClientTable((clientTable) => clientTable.concat(clienteEncontrado))
+      console.log(clientTable)
+    }
+
+    console.log(typeof clienteEncontrado)
+    console.log(clienteEncontrado)
+  }
   //Manejador de evento del buscador
   const onInputChange = (e) => {
     setOptions(
       defaultOptions.filter((option) => 
       option.toLowerCase().includes(e.target.value.toLocaleLowerCase()))
     );
+    //setProductSelected({ value: e.target.value });
+    setClientSelected({client: e.target.value})
+    console.log(clientSelected)
   }
 
+  
   //Estado de Select option de producto
   const [productSelected, setProductSelected] = useState({});
 
@@ -241,45 +269,23 @@ const ModalSales = ({ children }) => {
     e.stopPropagation();
   };
   
-    // Btn agregar
-    const submitSelected = (e) => {
-      e.preventDefault();
-      console.log('state ' + typeof productSelected.value);
-      console.log(productSelected);
-      // console.log('array ' + typeof products[1].detalle);
-      // console.log(products[1].detalle);
-      // console.log(products[2].detalle);
-      //Buscamos el valor en el array products comparandolo a el producto seleccionado
-      const productoEncontrado = products.find(
-        (product) => product.detalle === productSelected.value
-      );
+  // Btn agregar
+  const submitSelected = (e) => {
+    e.preventDefault();
+    //Buscamos el valor en el array products comparandolo a el producto seleccionado
+    const productoEncontrado = products.find(
+      (product) => product.detalle === productSelected.value
+    );
   
       console.log('Encontrado ' + typeof productoEncontrado);
       console.log(productoEncontrado);
-  
-      /* if (tableData.includes(productSelected.value)) {
-        console.log('bloquealo');
-      } */
-      // Se asegura que no se renderice la opción por defecto del control select
-      // if(tableData.detalle === productSelected.value) {}
-      /* for (let i = 0; i <= tableData; i++) {
-        if (tableData[i].detalle === productSelected.value) {
-          console.log('El item ya ha sido añadido');
-        }
-      } */
-      const existente = tableData.find(
-        (existente) => {
-          existente.detalle !== productSelected.value
-        return true
-        }
-      )
 
       if (productoEncontrado.id > 0) {
         setTableData((tableData) => tableData.concat(productoEncontrado));
         console.log(tableData);
       }
     };
-    console.log(tableData);
+    
 
   return (
     <>
@@ -295,7 +301,7 @@ const ModalSales = ({ children }) => {
                 <label id='label3'>
                   Buscar cliente
                 </label>
-                <SearchBarDrop options={options} onInputChange={onInputChange} />
+                <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer}/>
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}
@@ -330,7 +336,25 @@ const ModalSales = ({ children }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      
+                      { clientTable.length < 0 ? (
+                        <tr>
+                          <td>No hay ningún cliente registrado</td>
+                        </tr>
+
+                      ) : (
+                          clientTable.map((cliente, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{cliente.nombre}</td>
+                                <td>{cliente.telefono}</td>
+                                <td>{cliente.correo}</td>
+                                <td>{cliente.direccion}</td>
+                                <td>{cliente.nit}</td>
+                              </tr>
+                            )
+                          })
+                      )}
+
                       {/* {clientes.map((item, index) => {
                         return (
                           <tr key={index}>
@@ -342,13 +366,6 @@ const ModalSales = ({ children }) => {
                           </tr>
                         )
                       })} */}
-                      <tr>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                        <td>----</td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
