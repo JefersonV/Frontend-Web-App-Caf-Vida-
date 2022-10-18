@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Home from "./Home";
+import SideBarMenu from "../components/SideBarMenu";
 
 const HomeLogin = ({ setAuth }) => {
   const [name, setName] = useState("");
@@ -30,10 +31,11 @@ const HomeLogin = ({ setAuth }) => {
 
   return (
     <>
-      <Home />
-      <button className="" onClick={(e) => logout(e)}>
-        Cerar Sesion
-      </button>
+      <SideBarMenu/>
+        <Home />
+        <button className="" onClick={(e) => logout(e)}>
+          Cerrar Sesion
+        </button>
     </>
   );
 };

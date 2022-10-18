@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import ModalSalesAdd from './ModalSalesAdd';
 import SearchBarDrop from './SearchBarDrop';
+import SideBarMenu from './SideBarMenu';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
 
@@ -282,6 +283,7 @@ const ModalSales = ({ children }) => {
 
   return (
     <>
+      <SideBarMenu />
       <div className={sidebar ? "wrapper" : "side"}>
         <main className="overlay">
           <div className="contenedorModal">

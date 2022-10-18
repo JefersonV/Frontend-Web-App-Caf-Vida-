@@ -19,7 +19,7 @@ import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
 import HomeLogin from './pages/HomeLogin';
-
+import './assets/styles/Login.css'
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -57,8 +57,19 @@ function App() {
   <>
     <SidebarProvider >
       <Router>
-        <SideBarMenu/>
           <Switch>
+          <Route  
+              exact 
+              path="/" 
+              render={(props) => 
+                !isAuthenticated ? (
+                  <Login {...props} setAuth={setAuth} />
+                ) : (
+                  // home ????
+                  <Redirect to="/home" />
+                )
+              }
+            ></Route>
             <Route  
               exact 
               path="/login" 

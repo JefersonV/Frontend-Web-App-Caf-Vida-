@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSidebarContext } from '../providers/SidebarProvider'
+import '../assets/styles/Login.css'
 const Login = ({ setAuth }) => {
   const sidebar = useSidebarContext()
   const [inputs, setInputs] = useState({
@@ -36,26 +37,32 @@ const Login = ({ setAuth }) => {
 
   return (
     <div className={sidebar ? "wrapper" : "side"}>
-      <h1 className="">Login</h1>
-      <form onSubmit={onSubmitForm}>
-        <input
-          type="email"
-          name="email"
-          placeholder="email"
-          className=""
-          value={email}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className=""
-          value={password}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <button className="">Ingresar</button>
-      </form>
+      <div className="login-box">
+        <h2>Login</h2>
+        <form onSubmit={onSubmitForm}>
+          <div className="user-box">
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => onChange(e)}
+            ></input>
+            <label>Correo Electrónico</label>
+          </div>
+          <div className="user-box">
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => onChange(e)}
+            ></input>
+            <label>Contraseña</label>
+          </div>
+          <div className="button-form">
+            <button className="btn" id="btn-login">Ingresar</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
