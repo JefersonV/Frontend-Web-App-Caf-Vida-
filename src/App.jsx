@@ -4,6 +4,7 @@ import { BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom"
 import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
+import ModalSales from "./components/ModalSales"
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -18,6 +19,7 @@ import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
 import HomeLogin from './pages/HomeLogin';
+import './assets/styles/Login.css'
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -55,8 +57,19 @@ function App() {
   <>
     <SidebarProvider >
       <Router>
-        <SideBarMenu/>
           <Switch>
+          <Route  
+              exact 
+              path="/" 
+              render={(props) => 
+                !isAuthenticated ? (
+                  <Login {...props} setAuth={setAuth} />
+                ) : (
+                  // home ????
+                  <Redirect to="/home" />
+                )
+              }
+            ></Route>
             <Route  
               exact 
               path="/login" 
@@ -85,6 +98,12 @@ function App() {
               path="/sales"
               render={(props) => 
                 isAuthenticated ? <Sales /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route 
+              path="/new"
+              render={(props) => 
+                isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
               }
             ></Route>
             <Route

@@ -5,6 +5,8 @@ import Widget from "../components/widgets/Widget";
 import Featured from "../components/featured/Featured";
 import Chart from "../components/chart/Chart";
 import { useSidebarContext } from '../providers/SidebarProvider'
+import SideBarMenu from "../components/SideBarMenu";
+
 const Home = () => {
   const sidebar = useSidebarContext()
   return (

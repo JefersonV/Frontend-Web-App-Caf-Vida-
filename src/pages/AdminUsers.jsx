@@ -1,11 +1,13 @@
 import React from 'react'
+import SideBarMenu from '../components/SideBarMenu'
 
 const AdminUsers = () => {
   return (
     <>
-      <h1>
-        Admin Usuarios
-      </h1>
+    <SideBarMenu/>
+    <h1>
+      Admin Usuarios
+    </h1>
     </>
   )
 }
