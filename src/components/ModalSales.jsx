@@ -108,6 +108,19 @@ const ModalSales = ({ children }) => {
   ]
   const products = [
     {
+      id: 0,
+      nombre: 'Café Molido',
+      stock_ingreso: 0,
+      precio_venta: 50,
+      stock_minimo: 10,
+      peso: '1 lb',
+      detalle: 'Click para seleccionar',
+      cantidad: 0,
+      descuento: 0,
+      subtotal: 0,
+      total: 0,
+    },
+    {
       id: 1,
       nombre: 'Café Molido',
       stock_ingreso: 0,
@@ -118,7 +131,7 @@ const ModalSales = ({ children }) => {
       cantidad: 0,
       descuento: 0,
       subtotal: 0,
-      total: 0
+      total: 0,
     },
     {
       id: 2,
@@ -131,10 +144,9 @@ const ModalSales = ({ children }) => {
       cantidad: 0,
       descuento: 0,
       subtotal: 0,
-      total: 0
-    }
-
-  ]
+      total: 0,
+    },
+  ];
   /* Sweet alert */
   const cancelSweet = () => {
     Swal.fire({
@@ -195,42 +207,79 @@ const ModalSales = ({ children }) => {
     );
   }
 
-  //Select de producto
-  const [productSelected, setProductSelected] = useState({
+  //Estado de Select option de producto
+  const [productSelected, setProductSelected] = useState({});
 
-  })
   //Estado para la tabla de Producto
-  const [tableData, setTableData] = useState([{}])
+  const [tableData, setTableData] = useState([]);
   
+    //Estado para desactivar del botón registrar producto
+    const [selectDisabled, setSelectDisabled] = useState(false);
+    //Se asegura que si se han usado las opciones disponibles, se bloquee el botón Agregar producto
+    const switchSelect = () => {
+      if (tableData.length === products.length - 1) {
+        setSelectDisabled(true);
+        //Sweet alert2
+        Swal.fire({
+          title: 'Todas las opciones disponibles han sido agregadas',
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown',
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp',
+          },
+        });
+      }
+    };
   
   //Manejador del control <select>
-  const onChangeSelect = e => {
-    e.preventDefault()
-    console.log('Seleccionaste: ' + e.target.value)
-    setProductSelected({value: e.target.value})
-    // setProductSelected(({productSelected.id}))
-    // return e.target.value;
-    // console.log(products)
-    // const productoEncontrado = products.find((product, index) => product.detalle === productSelected.value)
-    // setTableData(tableData => tableData.concat(productoEncontrado))
-    e.stopPropagation()
-  }
+  const onChangeSelect = (e) => {
+    e.preventDefault();
+    //Capturamos el valor seleccionado de select
+    setProductSelected({ value: e.target.value });
+    e.stopPropagation();
+  };
   
-  //Buscamos el valor en el array products comparandolo a el producto seleccionado
-  const productoEncontrado = products.find(product => product.detalle === productSelected.value)
-  console.log('Seleccionado ' + productSelected.value)
-  console.log(products.map(product => product.detalle))
+    // Btn agregar
+    const submitSelected = (e) => {
+      e.preventDefault();
+      console.log('state ' + typeof productSelected.value);
+      console.log(productSelected);
+      // console.log('array ' + typeof products[1].detalle);
+      // console.log(products[1].detalle);
+      // console.log(products[2].detalle);
+      //Buscamos el valor en el array products comparandolo a el producto seleccionado
+      const productoEncontrado = products.find(
+        (product) => product.detalle === productSelected.value
+      );
+  
+      console.log('Encontrado ' + typeof productoEncontrado);
+      console.log(productoEncontrado);
+  
+      /* if (tableData.includes(productSelected.value)) {
+        console.log('bloquealo');
+      } */
+      // Se asegura que no se renderice la opción por defecto del control select
+      // if(tableData.detalle === productSelected.value) {}
+      /* for (let i = 0; i <= tableData; i++) {
+        if (tableData[i].detalle === productSelected.value) {
+          console.log('El item ya ha sido añadido');
+        }
+      } */
+      const existente = tableData.find(
+        (existente) => {
+          existente.detalle !== productSelected.value
+        return true
+        }
+      )
 
-  // Btn agregar
-  const submitSelected = e => {
-    e.preventDefault()
-    // alert('Lo que te corresponde es: ' + productSelected.value)
-    console.log(e.target.value)
-    // console.log('seleccionaste ' + productSelected )
-    // setSearches(searches => searches.concat(query))
-  } 
-    // console.log('nuevo')
-    // console.log(tableData)
+      if (productoEncontrado.id > 0) {
+        setTableData((tableData) => tableData.concat(productoEncontrado));
+        console.log(tableData);
+      }
+    };
+    console.log(tableData);
+
   return (
     <>
       <div className={sidebar ? "wrapper" : "side"}>
@@ -302,20 +351,26 @@ const ModalSales = ({ children }) => {
                   </table>
                 </div>
                 
-                <form action="" onClick={submitSelected}>
-                  <label id="lab4" className="lab4">
-                    DETALLE PRODUCTO
-                    {/* onChange = {e => setSelects(e.target.value)} */}
-                    <select value="seleccione" className="select2" id="select2" onChange={onChangeSelect}>
-                      
+                <form onSubmit={submitSelected}>
+                  <label>
+                    Seleccione su producto
+                    <select className="select2" id="select2" onChange={onChangeSelect}>
                       {products.map((product) => {
                         return (
-                          <option key={product.id} value={product.detalle}>{product.detalle}</option>
-                        )
+                          <option key={product.id} value={product.detalle} >
+                            {product.detalle}
+                          </option>
+                        );
                       })}
-                    </select> 
+                    </select>
                   </label>
-                  <input type="submit" value="Registra producto" />
+                  <input
+                    className="btn btn-danger"
+                    type="submit"
+                    value="Agregar producto"
+                    disabled={selectDisabled}
+                    onMouseDown={switchSelect}
+                  />
                 </form>
                 <div className="table">
                   <table className="tablePro">
@@ -330,12 +385,26 @@ const ModalSales = ({ children }) => {
                       </tr>
                     </thead>
                     <tbody>
-                        {/* {  
-                          tableData.map((product) => {
-                          return(
-                            <tr>
+                      {tableData.length < 1 ? (
+                        <tr>
+                          <td className="text-lg-left text-secondary ">
+                            No hay ningún producto agregado
+                          </td>
+                        </tr>
+                      ) : (
+                        tableData.map((product) => {
+                          return (
+                            <tr key={tableData.id}>
                               <td>
-                                <input className="table-input" type="number" name="" id="" />
+                                <input
+                                  className="table-input"
+                                  type="number"
+                                  name={'tableRow' + product.id}
+                                  id={'cantidad' + product.id}
+                                  min="1"
+                                  max="1000"
+                                  pattern="^[1-9]\d*$"
+                                />
                               </td>
                               <td>{product.peso}</td>
                               <td>{product.nombre}</td>
@@ -343,9 +412,9 @@ const ModalSales = ({ children }) => {
                               <td>{product.precio_venta}</td>
                               <td>{product.subtotal}</td>
                             </tr>
-                          )
-                          })
-                        } */}
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                   <div className="table-total">

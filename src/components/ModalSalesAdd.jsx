@@ -71,11 +71,12 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
         body: JSON.stringify(body),
       });
 
-      const parseRes = await response.json();
+      const resJson = await response.json();
 
-      localStorage.setItem("token", parseRes.token);
+      if(response.status === 200) {
+        //Pendiente
+      }
 
-      setAuth(true);
     } catch (err) {
       console.error(err.massage);
     }

@@ -26,6 +26,7 @@ const SearchBarDrop = ({ options, onInputChange }) => {
         placeholder="Nombre del cliente ..."
         ref={inputRef}
         onChange={onInputChange}
+        autoComplete="off"
       />
       <ul id="results" className="list-group" ref={ulRef}>
         {options.map((option, index) => {
