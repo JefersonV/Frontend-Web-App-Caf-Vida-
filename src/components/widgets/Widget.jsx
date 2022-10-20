@@ -9,7 +9,7 @@ const Widget = ({ type }) => {
     console.log(data);
   };
 
-  getSales();
+  // getSales();
   //temporal
   const ventasMes = 2500;
   const costoMes = 3500;

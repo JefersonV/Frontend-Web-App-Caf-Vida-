@@ -7,7 +7,7 @@ import SideBarMenu from '../components/SideBarMenu'
 const Sales = () => {
   const url = 'http://localhost:4000/sales'
   const sidebar = useSidebarContext()
-  const dataApi = useFetch(url)
+  const dataApi = useFetch(url, "GET", { token: localStorage.token })
   // console.log(sidebar)
   // console.log(dataApi)
   return (

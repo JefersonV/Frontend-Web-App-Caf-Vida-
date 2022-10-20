@@ -13,16 +13,18 @@ import { FcPrint } from "react-icons/fc";
 /* icons */
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+/* ---> Importamos el modal */
 import ModalSalesAdd from './ModalSalesAdd';
 import SearchBarDrop from './SearchBarDrop';
 import SideBarMenu from './SideBarMenu';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
+import { number } from 'prop-types';
 
 const ModalSales = ({ children }) => {
   // Para que se ajuste con respecto a la sidebar
   const sidebar = useSidebarContext()
-  // Estado del modal del formulario de clientes
+  //  ---> Estado del modal del formulario de clientes
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
 
   const clientes = [
@@ -158,11 +160,12 @@ const ModalSales = ({ children }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Si, cancelar!",
-    }).then((result) => {
+      cancelButtonText: "Volver al formulario"
+    })/* .then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Cancelado", "El registro ha sido cancelado", "success");
       }
-    });
+    }); */
   };
 
   const NewSweet = () => {
@@ -177,10 +180,18 @@ const ModalSales = ({ children }) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         // Función limpiar datos
-        // limpiarDatos()
+        limpiarDatos()
       }
     });
   };
+
+  const limpiarDatos = () => {
+    setClientTable([])
+    setClientSelected({})
+    setProductSelected({})
+    setTableData([])
+    setSelectDisabled(false)
+  }
 
   const saveConfirmed = () => {
     Swal.fire({
@@ -242,25 +253,25 @@ const ModalSales = ({ children }) => {
   //Estado para la tabla de Producto
   const [tableData, setTableData] = useState([]);
   
-    //Estado para desactivar del botón registrar producto
-    const [selectDisabled, setSelectDisabled] = useState(false);
-    //Se asegura que si se han usado las opciones disponibles, se bloquee el botón Agregar producto
-    const switchSelect = () => {
-      if (tableData.length === products.length - 1) {
-        setSelectDisabled(true);
-        //Sweet alert2
-        Swal.fire({
-          title: 'Todas las opciones disponibles han sido agregadas',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown',
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp',
-          },
-        });
-      }
-    };
-  
+  //Estado para desactivar del botón registrar producto
+  const [selectDisabled, setSelectDisabled] = useState(false);
+  //Se asegura que si se han usado las opciones disponibles, se bloquee el botón Agregar producto
+  const switchSelect = () => {
+    if (tableData.length === products.length - 1) {
+      setSelectDisabled(true);
+      //Sweet alert2
+      Swal.fire({
+        title: 'Todas las opciones disponibles han sido agregadas',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown',
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp',
+        },
+      });
+    }
+  };
+
   //Manejador del control <select>
   const onChangeSelect = (e) => {
     e.preventDefault();
@@ -270,23 +281,67 @@ const ModalSales = ({ children }) => {
   };
   
   // Btn agregar
+  let productoEncontrado = {}
   const submitSelected = (e) => {
     e.preventDefault();
     //Buscamos el valor en el array products comparandolo a el producto seleccionado
-    const productoEncontrado = products.find(
+    productoEncontrado = products.find(
       (product) => product.detalle === productSelected.value
     );
   
-      console.log('Encontrado ' + typeof productoEncontrado);
-      console.log(productoEncontrado);
+    console.log('Encontrado ' + typeof productoEncontrado);
+    console.log(productoEncontrado);
+    //Invocación de la función de validación
+    productoSeleccionado(tableData, productSelected)
+  };
+  // Cantidad de producto seleccionado con sweetAlert
+  const productoSeleccionado = (tableData, productSelected) => {
+    // La primera opción por defecto no cuenta
+    if (productoEncontrado.id > 0) {
+      
+      Swal.fire({
+        title: productSelected.value,
+        text: "Ingrese la cantidad a vender",
+        input: "number",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Volver",
+        showLoaderOnConfirm: true,
+        preConfirm: (inputValue) => {
+          if(isNaN(parseFloat(inputValue)) || inputValue < 1) {
+            Swal.showValidationMessage(
+              "Debe ingresar un valor numérico entero mayor que 0"
+            )
+          } else {
+          // Aquí debe ir un array intermedio
+          let productoIngresado = {
+            id: productoEncontrado.id,
+            nombre: productoEncontrado.nombre,
+            stock_ingreso: productoEncontrado.stock_ingreso,
+            precio_venta: productoEncontrado.precio_venta,
+            stock_minimo: productoEncontrado.stock_minimo,
+            peso: productoEncontrado.peso,
+            detalle: productoEncontrado.detalle,
+            cantidad: parseInt(inputValue),
+            descuento: productoEncontrado.descuento,
+            // Operación para el subtotal
+            subtotal: productoEncontrado.precio_venta * inputValue,
+            total: productoEncontrado.total
+          }
+            
+            setTableData((tableData) => tableData.concat(productoIngresado));
+            console.log(tableData);
+          }
+        }
+      })
+    }
+  }
 
-      if (productoEncontrado.id > 0) {
-        setTableData((tableData) => tableData.concat(productoEncontrado));
-        console.log(tableData);
-      }
-    };
-    
+  /* ------ Cálculo de subtotal y total------ */
+  const [cantidadProducto, setCantidadProducto] = useState("")
+  const calcularSubtotal = () => {
 
+  }
   return (
     <>
       <SideBarMenu />
@@ -316,7 +371,7 @@ const ModalSales = ({ children }) => {
                   <Link to="/sales" className="btn1">
                     {" "}
                     <AiFillFileText size="2rem" color="rgb(36, 38, 41)" />
-                    Resumen Ventas Realizadas
+                    Ventas Realizadas
                   </Link>
               </div>
                 <div className="table">
@@ -414,17 +469,7 @@ const ModalSales = ({ children }) => {
                         tableData.map((product) => {
                           return (
                             <tr key={tableData.id}>
-                              <td>
-                                <input
-                                  className="table-input"
-                                  type="number"
-                                  name={'tableRow' + product.id}
-                                  id={'cantidad' + product.id}
-                                  min="1"
-                                  max="1000"
-                                  pattern="^[1-9]\d*$"
-                                />
-                              </td>
+                              <td>{product.cantidad}</td>
                               <td>{product.peso}</td>
                               <td>{product.nombre}</td>
                               <td>{product.detalle}</td>

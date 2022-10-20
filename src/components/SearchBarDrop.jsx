@@ -20,11 +20,11 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
   return (
     <div className="search-bar-dropdown">
 
-    <div class="input-group mb-3">
+    <div className="input-group mb-3">
       <input 
         id="search-bar" 
         type="search" 
-        class="form-control" 
+        className="form-control" 
         placeholder="Nombre del cliente ..."
         aria-label="Rec safdasf"
         aria-describedby="basic-addon2" 
@@ -32,8 +32,8 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
         onChange={onInputChange}
         autoComplete="off"  
       />
-      <div class="input-group-append">
-        <input type="submit" value="Registrar cliente" form="CustomerForm" class="btn btn-outline-secondary" />
+      <div className="input-group-append">
+        <input type="submit" value="Registrar cliente" form="CustomerForm" className="btn btn-outline-secondary" />
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
