@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import "./widget.scss";
 
 const Widget = ({ type }) => {
-  const getSales = async () => {
-    const res = await fetch("http://localhost:3000/sales/18");
-    const data = await res.json();
-    console.log(data);
-  };
+  // const getSales = async () => {
+  //   const res = await fetch("http://localhost:3000/sales/18");
+  //   const data = await res.json();
+  //   console.log(data);
+  // };
 
-  getSales();
+  //getSales();
   //temporal
   const ventasMes = 2500;
   const costoMes = 3500;
@@ -25,7 +25,7 @@ const Widget = ({ type }) => {
         title: "VENTAS DEL MES",
         isMoney: true,
         link: "Ver todas las ventas",
-        path: "/orders",
+        path: "/sales",
         monto: ventasMes,
         icon: (
           <FaIcons.FaShoppingCart

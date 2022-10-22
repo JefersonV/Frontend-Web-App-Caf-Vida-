@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import { useResultsSearchContext } from "../providers/SidebarProvider";
 
-const Table = () => {
+const TableInventory = () => {
   //Datos del estado global
   const results = useResultsSearchContext();
   return (
@@ -15,12 +15,12 @@ const Table = () => {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Fecha</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Vendedor</th>
-            <th scope="col">Método Pago</th>
-            <th scope="col">Total</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Tipo Operación</th>
+            <th scope="col">Cliente/Proveedor</th>
+            <th scope="col">Descuento</th>
+            <th scope="col">Forma Pago</th>
+            <th scope="col">Total Operación</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -28,20 +28,24 @@ const Table = () => {
           {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
           {results.map((item, index) => {
             // let fechaArray = item.fecha.split("T");
+            let opcion;
+            if (item.cliente == null) opcion = item.proveedor;
+            else opcion = item.cliente;
+
             return (
               <tr key={index}>
-                <th>{item.id_venta}</th>
-                <td>{item.fecha}</td>
+                <th>{item.id_inventario_movimiento}</th>
                 {/* <td>{fechaArray[0]}</td> */}
-                <td>{item.cliente}</td>
-                <td>{item.cantidad}</td>
-                <td>{item.producto}</td>
-                <td>{item.usuario}</td>
+                <td>{item.fecha}</td>
+                <td>{item.responsable}</td>
+                <td>{item.tipo_operacion}</td>
+                <td>{opcion}</td>
+                <td>{item.descuento}</td>
                 <td>{item.modo_pago}</td>
-                <td>{item.total}</td>
+                <td>{item.total_operacion}</td>
                 <td>
                   <Link to="#">
-                    <AiIcons.AiOutlineEdit
+                    <AiIcons.AiOutlineEye
                       className="icon-eye icon-table"
                       title="Ver detalles de la venta"
                     />
@@ -62,4 +66,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default TableInventory;

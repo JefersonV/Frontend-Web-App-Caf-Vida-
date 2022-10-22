@@ -1,13 +1,13 @@
 import React from "react";
-import Table from "../components/Table";
-import TopBarTable from "../components/TopBarTable";
 import useFetch from "../Hooks/useFetch";
 import { useSidebarContext } from "../providers/SidebarProvider";
 import SideBarMenu from "../components/SideBarMenu";
-const Sales = () => {
-  const url = "http://localhost:3000/sales";
+import TableProducts from "../components/TableProducts";
+import TopBarTableProduct from "../components/topBarsTables/TopBarTableProduct";
+const FinishedProduct = () => {
+  //const url = "http://localhost:3000/inventory/products";
   const sidebar = useSidebarContext();
-  const dataApi = useFetch(url, "GET", { token: localStorage.token });
+  //const dataApi = useFetch(url, "GET", { token: localStorage.token });
 
   // console.log(sidebar)
   //console.log(dataApi);
@@ -18,11 +18,12 @@ const Sales = () => {
       <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
-        <TopBarTable />
-        <Table dataApi={dataApi} />
+        <TopBarTableProduct />
+        <TableProducts />
+        {/* <TableProducts dataApi={dataApi} /> */}
       </div>
     </>
   );
 };
 
-export default Sales;
+export default FinishedProduct;

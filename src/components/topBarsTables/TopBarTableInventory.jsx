@@ -1,16 +1,13 @@
 import React from "react";
-import "../assets/styles/Sales.css";
-import { useSearcherContext } from "../providers/SidebarProvider";
-import { Link } from "react-router-dom";
+import "../../assets/styles/Sales.css";
+import { useSearcherContext } from "../../providers/SidebarProvider";
 
-const TopBarTable = () => {
+const TopBarTableInventory = () => {
   //Función de búsqueda
   const searcher = useSearcherContext();
   return (
     <>
-      <h1 className="top-bar-title">
-        !! Aroma que te hace soñar, sabor que te hace despertar
-      </h1>
+      <h1 className="top-bar-title">Resumen del Movimiento de Inventario</h1>
       <hr />
 
       <div className="barraArriba">
@@ -29,16 +26,13 @@ const TopBarTable = () => {
             placeholder="Buscar...."
             name="buscar"
             id="buscar"
+            disabled
             onChange={searcher}
           />
         </div>
-
-        <Link to="/new" className="btn2" id="btn2">
-          Nueva Venta
-        </Link>
       </div>
     </>
   );
 };
 
-export default TopBarTable;
+export default TopBarTableInventory;
