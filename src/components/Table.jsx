@@ -10,7 +10,7 @@ const Table = () => {
   const results = useResultsSearchContext()
   return (
     <>
-      <table className="table table-striped w-80 thead-light ">
+      <table className="table table-striped w-80 thead-light table-bordered">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -38,9 +38,6 @@ const Table = () => {
               <td>{item.modo_pago}</td>
               <td>{item.total}</td>
               <td>
-                <Link to="#">
-                  <AiIcons.AiOutlineEye className="icon-eye icon-table" title="Ver detalles de la venta"/>
-                </Link>
                 <Link to="#">
                   <FcIcons.FcPrint className="icon-print icon-table" title="Imprimir factura de la venta" />
                 </Link>

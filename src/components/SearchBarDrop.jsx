@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/SearchBar.css';
+import * as  AiIcons from 'react-icons/fc';
 
 const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
   const ulRef = useRef();
@@ -30,10 +31,10 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
         aria-describedby="basic-addon2" 
         ref={inputRef}
         onChange={onInputChange}
-        autoComplete="off"  
+        autoComplete="off"
       />
       <div className="input-group-append">
-        <input type="submit" value="Registrar cliente" form="CustomerForm" className="btn btn-outline-secondary" />
+        <input type="submit" value="Registrar" form="CustomerForm" className="btn btn-outline-secondary" id="customer-btn"/>
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
@@ -50,7 +51,8 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
                 inputRef.current.value = option;
               }}
               className="list-group-item list-group-item-action"
-            >
+              >
+              {/* <AiIcons.AiOutlineSearch /> */}
               {option}
             </button>
           );

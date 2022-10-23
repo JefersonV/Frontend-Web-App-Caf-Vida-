@@ -21,7 +21,9 @@
  
 .buttons-saleTop {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
 #buscar2 {
@@ -160,7 +162,21 @@
 .dev {
 	margin-left: 85vh;
 	color: black;
+}
 
+.form-product-select {
+	display: flex;
+	justify-items: center;
+	align-content: center;
+	gap: 3em;
+}
+
+.form-product-select label {
+	font-weight: bold;
+}
+
+.form-product-select select {
+	width: 40%;
 }
 
 /*Tabla producto*/
@@ -187,6 +203,12 @@
 .table-total label {
 	font-weight: bold;
 	font-size: 1em;
+}
+
+.label-cliente {
+	font-weight: bold;
+	position: relative;
+	margin: -2em;
 }
 
 .table-input {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import "../assets/styles/Sales.css";
 /* Icons */
 import { IoPersonAdd } from "react-icons/io5";
@@ -12,6 +12,7 @@ import { GiReturnArrow } from "react-icons/gi";
 import { FcPrint } from "react-icons/fc";
 /* icons */
 import { Link } from "react-router-dom";
+import createHistory from 'history/createBrowserHistory'
 import Swal from "sweetalert2";
 /* ---> Importamos el modal */
 import ModalSalesAdd from './ModalSalesAdd';
@@ -19,7 +20,7 @@ import SearchBarDrop from './SearchBarDrop';
 import SideBarMenu from './SideBarMenu';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
-import { number } from 'prop-types';
+import { Table } from 'react-bootstrap';
 
 const ModalSales = ({ children }) => {
   // Para que se ajuste con respecto a la sidebar
@@ -150,6 +151,7 @@ const ModalSales = ({ children }) => {
       total: 0,
     },
   ];
+
   /* Sweet alert */
   const cancelSweet = () => {
     Swal.fire({
@@ -168,6 +170,7 @@ const ModalSales = ({ children }) => {
     }); */
   };
 
+  const history = createHistory();
   const NewSweet = () => {
     Swal.fire({
       title: "¿Registrar nueva venta?",
@@ -180,7 +183,9 @@ const ModalSales = ({ children }) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         // Función limpiar datos
-        limpiarDatos()
+        history.go(0)
+        
+        // limpiarDatos()
       }
     });
   };
@@ -271,7 +276,7 @@ const ModalSales = ({ children }) => {
       });
     }
   };
-
+  
   //Manejador del control <select>
   const onChangeSelect = (e) => {
     e.preventDefault();
@@ -288,12 +293,30 @@ const ModalSales = ({ children }) => {
     productoEncontrado = products.find(
       (product) => product.detalle === productSelected.value
     );
-  
+    
     console.log('Encontrado ' + typeof productoEncontrado);
     console.log(productoEncontrado);
     //Invocación de la función de validación
     productoSeleccionado(tableData, productSelected)
   };
+  /* ------ Cálculo de subtotal y total------ */
+  let [total, setTotal] = useState(0)
+  const calcularTotal = (arrayCalculo) => {
+    let sumaSubtotal = 0
+    let sumaTotal = 0
+    let descuento = 0
+
+    if(arrayCalculo.length >= 0) {
+      
+      arrayCalculo.forEach((producto) => {
+        sumaSubtotal = sumaSubtotal + producto.subtotal
+      })
+    }
+    //Actualización de estado
+    setTotal(sumaSubtotal.toFixed(2))
+
+  }
+
   // Cantidad de producto seleccionado con sweetAlert
   const productoSeleccionado = (tableData, productSelected) => {
     // La primera opción por defecto no cuenta
@@ -305,43 +328,58 @@ const ModalSales = ({ children }) => {
         input: "number",
         showCancelButton: true,
         confirmButtonText: "Aceptar",
-        cancelButtonText: "Volver",
+        cancelButtonText: "Cancelar",
         showLoaderOnConfirm: true,
         preConfirm: (inputValue) => {
+          // Validación de una cantidad válida
           if(isNaN(parseFloat(inputValue)) || inputValue < 1) {
             Swal.showValidationMessage(
               "Debe ingresar un valor numérico entero mayor que 0"
             )
           } else {
-          // Aquí debe ir un array intermedio
-          let productoIngresado = {
-            id: productoEncontrado.id,
-            nombre: productoEncontrado.nombre,
-            stock_ingreso: productoEncontrado.stock_ingreso,
-            precio_venta: productoEncontrado.precio_venta,
-            stock_minimo: productoEncontrado.stock_minimo,
-            peso: productoEncontrado.peso,
-            detalle: productoEncontrado.detalle,
-            cantidad: parseInt(inputValue),
-            descuento: productoEncontrado.descuento,
-            // Operación para el subtotal
-            subtotal: productoEncontrado.precio_venta * inputValue,
-            total: productoEncontrado.total
-          }
-            
+          
+            // Array intermedio entre productoEncontrado y tableData
+            let productoIngresado = {
+              id: productoEncontrado.id,
+              nombre: productoEncontrado.nombre,
+              stock_ingreso: productoEncontrado.stock_ingreso,
+              precio_venta: productoEncontrado.precio_venta,
+              stock_minimo: productoEncontrado.stock_minimo,
+              peso: productoEncontrado.peso,
+              detalle: productoEncontrado.detalle,
+              cantidad: parseInt(inputValue),
+              descuento: productoEncontrado.descuento,
+              // Operación para el subtotal
+              subtotal: productoEncontrado.precio_venta * inputValue,
+              total: productoEncontrado.total
+            }
+            // producto ingresado siiii tiene elementos
+            console.log('is Empty')
+            let isEmpty = Object.entries(productoIngresado).length >= 0
+            console.log(isEmpty)
             setTableData((tableData) => tableData.concat(productoIngresado));
+            console.log('table data')
             console.log(tableData);
+            console.log(tableData.length)
+            // calcularTotal(tableData)
+
+            const arrayCalculo = []
+            // Le pasamos los datos que tiene el estado además el nuevo que también debe calcular
+            arrayCalculo.push(...tableData)
+            arrayCalculo.push(productoIngresado)
+            
+            console.log('calculado')
+            console.log(arrayCalculo)
+            calcularTotal(arrayCalculo)
+
           }
         }
       })
     }
   }
-
-  /* ------ Cálculo de subtotal y total------ */
-  const [cantidadProducto, setCantidadProducto] = useState("")
-  const calcularSubtotal = () => {
-
-  }
+  /* Es necesario llamara a tableData por fuera de el método, y también fuera de la invocación */
+  console.log('final')
+  console.log(tableData)
   return (
     <>
       <SideBarMenu />
@@ -352,10 +390,9 @@ const ModalSales = ({ children }) => {
             <hr />
             <div className="BodyDate">
               <div className="buttons-saleTop">
-
-                <label id='label3'>
+                {/* <label id='label3' className="label-cliente" htmlFor="search-bar">
                   Buscar cliente
-                </label>
+                </label> */}
                 <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer}/>
                   <button
                     className="btn4"
@@ -374,61 +411,52 @@ const ModalSales = ({ children }) => {
                     Ventas Realizadas
                   </Link>
               </div>
-                <div className="table">
+              <div className="table">
                 <label id='label2' htmlFor="">
                 <p className="customer-data">
                   Datos del cliente
                 </p>
               </label>
-                  <table className="tablePro">
-                    <thead>
+                <table className="table table-bordered">
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th id="nom" scope="col">Nombre</th>
+                      <th id="tel" scope="col">Teléfono</th>
+                      <th id="cor" scope="col">Correo</th>
+                      <th id="dire" scope="col">Dirección</th>
+                      <th id="nit" scope="col">NIT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    { clientTable.length < 0 ? (
                       <tr>
-                        <th id="nom">Nombre</th>
-                        <th id="tel">Teléfono</th>
-                        <th id="cor">Correo</th>
-                        <th id="dire">Dirección</th>
-                        <th id="nit">NIT</th>
+                        <td>No hay ningún cliente registrado</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      { clientTable.length < 0 ? (
-                        <tr>
-                          <td>No hay ningún cliente registrado</td>
-                        </tr>
 
-                      ) : (
-                          clientTable.map((cliente, index) => {
-                            return (
-                              <tr key={index}>
-                                <td>{cliente.nombre}</td>
-                                <td>{cliente.telefono}</td>
-                                <td>{cliente.correo}</td>
-                                <td>{cliente.direccion}</td>
-                                <td>{cliente.nit}</td>
-                              </tr>
-                            )
-                          })
-                      )}
-
-                      {/* {clientes.map((item, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{item.nombre}</td>
-                            <td>{item.telefono}</td>
-                            <td>{item.correo}</td>
-                            <td>{item.direccion}</td>
-                            <td>{item.nit}</td>
-                          </tr>
-                        )
-                      })} */}
-                    </tbody>
-                  </table>
-                </div>
+                    ) : (
+                        clientTable.map((cliente, index) => {
+                          return (
+                            <tr key={index}>
+                              <th scope="row">{cliente.id}</th>
+                              <td>{cliente.nombre}</td>
+                              <td>{cliente.telefono}</td>
+                              <td>{cliente.correo}</td>
+                              <td>{cliente.direccion}</td>
+                              <td>{cliente.nit}</td>
+                            </tr>
+                          )
+                        })
+                    )}
+                  </tbody>
+                </table>
+              </div>
                 
-                <form onSubmit={submitSelected}>
-                  <label>
+                <form onSubmit={submitSelected} className="form-product-select">
+                  <label htmlFor="select2">
                     Seleccione su producto
-                    <select className="select2" id="select2" onChange={onChangeSelect}>
+                  </label>
+                    <select className="select2 custom-select" id="select2" onChange={onChangeSelect}>
                       {products.map((product) => {
                         return (
                           <option key={product.id} value={product.detalle} >
@@ -437,7 +465,6 @@ const ModalSales = ({ children }) => {
                         );
                       })}
                     </select>
-                  </label>
                   <input
                     className="btn btn-danger"
                     type="submit"
@@ -447,11 +474,12 @@ const ModalSales = ({ children }) => {
                   />
                 </form>
                 <div className="table">
-                  <table className="tablePro">
-                    <thead>
+                  <table className="table table-bordered">
+                    <thead className="thead-light">
                       <tr>
+                        <th scope="row">#</th>
                         <th id="can">Cantidad</th>
-                        <th id="pr">Peso (lb)</th>
+                        <th id="pr">Peso (Lbs)</th>
                         <th id="pro">Producto</th>
                         <th id="det">Detalle</th>
                         <th id="prec">Precio</th>
@@ -466,26 +494,49 @@ const ModalSales = ({ children }) => {
                           </td>
                         </tr>
                       ) : (
-                        tableData.map((product) => {
+                        tableData.map((product, index) => {
                           return (
                             <tr key={tableData.id}>
+                              <td>{index+1}</td>
                               <td>{product.cantidad}</td>
                               <td>{product.peso}</td>
                               <td>{product.nombre}</td>
                               <td>{product.detalle}</td>
-                              <td>{product.precio_venta}</td>
-                              <td>{product.subtotal}</td>
+                              <td>Q.{product.precio_venta.toFixed(2)}</td>
+                              <td>Q.{product.subtotal.toFixed(2)}</td>
                             </tr>
                           );
                         })
                       )}
+                      {tableData.length < 1 ? 
+                      null
+                      : (
+                        /* Parte inferior de la tabla para sumatoria de subtotal y total */
+                        <>
+                          <tr className="table table-light">
+                            <th scope="row"> -- </th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td coldspan="5">Sumatoria Subtotal</td>
+                            <td>Q.{total}</td>
+                          </tr>
+                          <tr className="table table-light">
+                            <th scope="row"> -- </th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td coldspan="5">Total:</td>
+                            <td>Q.</td>
+                          </tr>
+                        </>
+                      )
+                      }
                     </tbody>
                   </table>
-                  <div className="table-total">
-                    <label className="lab7" htmlFor="total">
-                      Total a pagar
-                    </label>
-                  </div>
+                  
                 </div>
                 <div className="metodo">
                   <div className="metodo-left">
