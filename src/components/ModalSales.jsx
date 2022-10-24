@@ -27,6 +27,33 @@ const ModalSales = ({ children }) => {
   const sidebar = useSidebarContext()
   //  ---> Estado del modal del formulario de clientes
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
+  // Fetch products
+  const [fetchProducts, setFetchProducts] = useState([])
+
+  const getProducts = async () => {
+    const response = await fetch("http://localhost:4000/inventory/products", {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const data = await response.json()
+    setFetchProducts(data)
+  }
+  
+  let productsBeta
+  useEffect(()=> {
+    /* fetchProducts.unshift({
+      id: 0,
+      producto: 'Seleccione'
+    }) */
+    getProducts()
+    console.log('productos fetch')
+    console.log(fetchProducts)
+    productsBeta = fetchProducts
+    console.log('productos beta')
+    console.log(productsBeta)
+  }, [])
+
 
   const clientes = [
     {
@@ -262,7 +289,7 @@ const ModalSales = ({ children }) => {
   const [selectDisabled, setSelectDisabled] = useState(false);
   //Se asegura que si se han usado las opciones disponibles, se bloquee el botón Agregar producto
   const switchSelect = () => {
-    if (tableData.length === products.length - 1) {
+    if (tableData.length === fetchProducts.length - 1) {
       setSelectDisabled(true);
       //Sweet alert2
       Swal.fire({
@@ -282,6 +309,8 @@ const ModalSales = ({ children }) => {
     e.preventDefault();
     //Capturamos el valor seleccionado de select
     setProductSelected({ value: e.target.value });
+    console.log('Seleccionado')
+    console.log(productSelected)
     e.stopPropagation();
   };
   
@@ -290,8 +319,8 @@ const ModalSales = ({ children }) => {
   const submitSelected = (e) => {
     e.preventDefault();
     //Buscamos el valor en el array products comparandolo a el producto seleccionado
-    productoEncontrado = products.find(
-      (product) => product.detalle === productSelected.value
+    productoEncontrado = fetchProducts.find(
+      (product) => product.producto === productSelected.value
     );
     
     console.log('Encontrado ' + typeof productoEncontrado);
@@ -301,26 +330,58 @@ const ModalSales = ({ children }) => {
   };
   /* ------ Cálculo de subtotal y total------ */
   let [total, setTotal] = useState(0)
+  let [subTotal, setSubTotal] = useState(0)
   const calcularTotal = (arrayCalculo) => {
     let sumaSubtotal = 0
-    let sumaTotal = 0
-    let descuento = 0
-
+    
     if(arrayCalculo.length >= 0) {
       
       arrayCalculo.forEach((producto) => {
         sumaSubtotal = sumaSubtotal + producto.subtotal
       })
     }
+
     //Actualización de estado
+    setSubTotal(sumaSubtotal.toFixed(2))
     setTotal(sumaSubtotal.toFixed(2))
 
+  }
+
+  const [descuento, setDescuento] = useState(0)
+  /* Manejador del input de descuento */
+  const aplicarDescuento = e => {
+    let sumaTotal = 0
+    if(tableData.length < 1 ) {
+      Swal.showValidationMessage(
+        "Primero debe seleccionar los productos a vender"
+      )
+    } else {
+      Swal.fire({
+        title: "El descuento se aplicará en forma de porcentaje",
+        text: "Ingrese un número entero",
+        input: "number",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        showLoaderOnConfirm: true,
+        preConfirm: (inputValue) => {
+          if(isNaN(parseFloat(inputValue)) || inputValue < 1) {
+            Swal.showValidationMessage(
+              "Debe ingresar un valor numérico entero mayor que 0"
+            )
+          } else {
+            setTotal = total - (inputValue / 100)
+            // setTotal(sumaTotal.toFixed(2))
+          }
+        }
+      })
+    }
   }
 
   // Cantidad de producto seleccionado con sweetAlert
   const productoSeleccionado = (tableData, productSelected) => {
     // La primera opción por defecto no cuenta
-    if (productoEncontrado.id > 0) {
+    if (productoEncontrado.id_producto > 0) {
       
       Swal.fire({
         title: productSelected.value,
@@ -340,19 +401,21 @@ const ModalSales = ({ children }) => {
           
             // Array intermedio entre productoEncontrado y tableData
             let productoIngresado = {
-              id: productoEncontrado.id,
-              nombre: productoEncontrado.nombre,
-              stock_ingreso: productoEncontrado.stock_ingreso,
+              id: productoEncontrado.id_producto,
+              nombre: productoEncontrado.producto,
+              stock_ingreso: productoEncontrado.stock_actual,
               precio_venta: productoEncontrado.precio_venta,
               stock_minimo: productoEncontrado.stock_minimo,
-              peso: productoEncontrado.peso,
-              detalle: productoEncontrado.detalle,
+              peso: productoEncontrado.costo_compra,
+              detalle: productoEncontrado.producto,
               cantidad: parseInt(inputValue),
-              descuento: productoEncontrado.descuento,
+              descuento: 0,
               // Operación para el subtotal
               subtotal: productoEncontrado.precio_venta * inputValue,
-              total: productoEncontrado.total
+              total: 0
             }
+            console.log('ingresado')
+            console.log(productoIngresado)
             // producto ingresado siiii tiene elementos
             console.log('is Empty')
             let isEmpty = Object.entries(productoIngresado).length >= 0
@@ -362,7 +425,7 @@ const ModalSales = ({ children }) => {
             console.log(tableData);
             console.log(tableData.length)
             // calcularTotal(tableData)
-
+            
             const arrayCalculo = []
             // Le pasamos los datos que tiene el estado además el nuevo que también debe calcular
             arrayCalculo.push(...tableData)
@@ -380,6 +443,15 @@ const ModalSales = ({ children }) => {
   /* Es necesario llamara a tableData por fuera de el método, y también fuera de la invocación */
   console.log('final')
   console.log(tableData)
+
+  const Products = () => {
+    <select>
+      {fetchProducts.map((product, index) => {
+        <option value="" key={index}>{}</option>
+        
+      })}
+    </select>
+  }
   return (
     <>
       <SideBarMenu />
@@ -457,10 +529,10 @@ const ModalSales = ({ children }) => {
                     Seleccione su producto
                   </label>
                     <select className="select2 custom-select" id="select2" onChange={onChangeSelect}>
-                      {products.map((product) => {
+                      {fetchProducts.map((product) => {
                         return (
-                          <option key={product.id} value={product.detalle} >
-                            {product.detalle}
+                          <option key={product.id} value={product.producto} >
+                            {product.producto}
                           </option>
                         );
                       })}
@@ -508,6 +580,7 @@ const ModalSales = ({ children }) => {
                           );
                         })
                       )}
+                      
                       {tableData.length < 1 ? 
                       null
                       : (
@@ -520,7 +593,7 @@ const ModalSales = ({ children }) => {
                             <td></td>
                             <td></td>
                             <td coldspan="5">Sumatoria Subtotal</td>
-                            <td>Q.{total}</td>
+                            <td>Q.{subTotal}</td>
                           </tr>
                           <tr className="table table-light">
                             <th scope="row"> -- </th>
@@ -529,7 +602,7 @@ const ModalSales = ({ children }) => {
                             <td></td>
                             <td></td>
                             <td coldspan="5">Total:</td>
-                            <td>Q.</td>
+                            <td>Q.{total}</td>
                           </tr>
                         </>
                       )
@@ -548,19 +621,13 @@ const ModalSales = ({ children }) => {
                     </select>
                   </div>
                   <div className="metodo-right">
-                    <label className="lab6" htmlFor="lab6">
+                    <button onClick={aplicarDescuento} className="btn-primary rounded">Aplicar Descuento</button>
+                    {/* <label className="lab6" htmlFor="lab6">
                       Descuento %
                     </label>
-                    <input className="descu" type="number" placeholder=" %" />
+                    <input className="descu" type="number" placeholder=" %" onChange={onChangeDescuento}/> */}
                   </div>
                   <br />
-                  {/* <button className="dev">
-                    {" "}
-                    <GiReturnArrow size="2rem" color="rgb(28, 4, 95)" />{" "}
-                    Devoluciones
-                  </button> */}
-
-                  
                 </div>
 
                 <section className="buttons-bottom">
