@@ -12,7 +12,7 @@ const useFetch = (url, method, headers) => {
     fetch(url, { method, headers })
       .then((response) => response.json())
       .then((data) => setDataApi(data));
-    //console.log(dataApi);
+    console.log(dataApi);
   }, [url]);
 };
 

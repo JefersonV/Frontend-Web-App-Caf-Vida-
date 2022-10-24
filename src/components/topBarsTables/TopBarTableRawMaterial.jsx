@@ -27,13 +27,13 @@ const TopBarTableRawMaterial = ({ children }) => {
                 <option value="">Resumen de ventas mensual</option>
                 <option value="">Resumen de todas las ventas</option>
               </select>
-              <input
+              {/* <input
                 type="search"
                 placeholder="Buscar...."
                 name="buscar"
                 id="buscar"
                 onChange={searcher}
-              />
+              /> */}
             </div>
             {/* <Link to="/new" className="btn2" id="btn2">
           Agregar Nuevo

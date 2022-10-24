@@ -8,6 +8,7 @@ import { useResultsSearchContext } from "../providers/SidebarProvider";
 const Table = () => {
   //Datos del estado global
   const results = useResultsSearchContext();
+
   return (
     <>
       <table className="table table-striped w-80 thead-light ">
@@ -18,6 +19,7 @@ const Table = () => {
             <th scope="col">Cliente</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Producto</th>
+            <th scope="col">Precio Unitario</th>
             <th scope="col">Vendedor</th>
             <th scope="col">Método Pago</th>
             <th scope="col">Total</th>
@@ -32,13 +34,13 @@ const Table = () => {
               <tr key={index}>
                 <th>{item.id_venta}</th>
                 <td>{item.fecha}</td>
-                {/* <td>{fechaArray[0]}</td> */}
                 <td>{item.cliente}</td>
                 <td>{item.cantidad}</td>
                 <td>{item.producto}</td>
+                <td>Q. {item.precio_uni}</td>
                 <td>{item.usuario}</td>
                 <td>{item.modo_pago}</td>
-                <td>{item.total}</td>
+                <td>Q. {item.total}</td>
                 <td>
                   <Link to="#">
                     <AiIcons.AiOutlineEdit

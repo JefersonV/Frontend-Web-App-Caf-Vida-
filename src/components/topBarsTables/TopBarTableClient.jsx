@@ -1,11 +1,11 @@
 import React from "react";
 import "../../assets/styles/Sales.css";
 import { useSearcherContext } from "../../providers/SidebarProvider";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import ModalAddPackingMaterial from "../modals/ModalAddPackingMaterial";
+import ModalAddClient from "../modals/ModalAddClient";
+import { Link } from "react-router-dom";
 
-const TopBarTablePackingMaterial = ({ children }) => {
+const TopBarTableClient = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
   //Función de búsqueda
   const searcher = useSearcherContext();
@@ -13,7 +13,7 @@ const TopBarTablePackingMaterial = ({ children }) => {
     <>
       <div>
         <div>
-          <h1 className="top-bar-title">Material de Empaque Disponible</h1>
+          <h1 className="top-bar-title">Clientes Registrados</h1>
           <hr />
 
           <div className="barraArriba">
@@ -44,13 +44,14 @@ const TopBarTablePackingMaterial = ({ children }) => {
           </div>
           {children}
         </div>
-        <ModalAddPackingMaterial
+        {/* Traemos el modal y le pasamos los props */}
+        <ModalAddClient
           estado2={estadoModal2}
           cambiarEstado2={cambiarEstadoModal2}
-        ></ModalAddPackingMaterial>
+        ></ModalAddClient>
       </div>
     </>
   );
 };
 
-export default TopBarTablePackingMaterial;
+export default TopBarTableClient;

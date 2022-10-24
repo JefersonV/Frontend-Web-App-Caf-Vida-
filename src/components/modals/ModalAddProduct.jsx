@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import "../../assets/styles/Sales.css";
 import Swal from "sweetalert2";
-import { Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
   const saveSweetalert = () => {
@@ -17,7 +17,6 @@ const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         cambiarEstado2(false);
-        handleClick();
       }
     });
   };
@@ -39,15 +38,9 @@ const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
           "success",
           cambiarEstado2(false)
         );
-        //handleClick();
       }
     });
   };
-
-  const history = useHistory();
-  function handleClick() {
-    history("/products");
-  }
 
   // Captura de datos del formulario para la API
   const [dataProduct, setDataProduct] = useState({
@@ -81,15 +74,13 @@ const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
       });
       // const data = await response.json();
       console.log(response);
-      if (response.status === 204) {
-        saveSweetalert();
-      }
+      // if (response.status === 204) {
+      //   saveSweetalert();
+      // }
     } catch (error) {
       console.log(error.massage);
     }
   };
-
-  //Funcion para editar
 
   return (
     <>
@@ -194,14 +185,14 @@ const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
                 </div>
 
                 <LinkButt>
-                  <button className="btn8" onClick={() => cancelSweet()}>
+                  <Link className="btn8" onClick={() => cancelSweet()}>
                     {" "}
                     Cancelar
-                  </button>
+                  </Link>
                   <button
                     type="submit"
                     className="btn9"
-                    // onClick={() => saveSweetalert()}
+                    onClick={() => saveSweetalert()}
                   >
                     {" "}
                     Guardar{" "}

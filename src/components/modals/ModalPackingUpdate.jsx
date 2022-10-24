@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import "../../assets/styles/Sales.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
+const ModalPackingUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
   const saveSweetalert = () => {
     Swal.fire({
       position: "top-center",
@@ -42,37 +42,67 @@ const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
     });
   };
 
+  //Array de los registros
+  const [data, setData] = useState([]);
+
+  //Funcion para obtener la lista de datos
+  const getData = async (id) => {
+    const response = await fetch(
+      `http://localhost:3000/inventory/packing_material/${id}`,
+      {
+        headers: {
+          token: localStorage.token,
+        },
+      }
+    );
+    const data = await response.json();
+    setData(data);
+    setDataPackMaterial({
+      tipo_empaque: data.nombre,
+      costo: data.costo,
+    });
+  };
+  console.log(data);
+
+  //funcion useffect para llamar y cargar los datos
+  useEffect(() => {
+    if (idEdit) {
+      getData(idEdit);
+    }
+  }, [idEdit]);
+
   // Captura de datos del formulario para la API
-  const [dataRawMaterial, setDataRawMaterial] = useState({
-    id_tipo_materia: "",
-    cantidad: "",
-    id_unidad_medida: "",
+  const [dataPackMaterial, setDataPackMaterial] = useState({
+    tipo_empaque: "",
     costo: "",
   });
 
   const onChangeData = (e) => {
-    setDataRawMaterial({ ...dataRawMaterial, [e.target.name]: e.target.value });
-    console.log(e.target.name, e.target.value);
+    setDataPackMaterial({
+      ...dataPackMaterial,
+      [e.target.name]: e.target.value,
+    });
+    console.log(dataPackMaterial);
   };
 
-  //Evento de envío del formulario
+  //Evento de envío del formularioy
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    console.log(dataRawMaterial);
+    console.log(dataPackMaterial);
 
     try {
       const response = await fetch(
-        "http://localhost:3000/inventory/raw_material",
+        `http://localhost:3000/inventory/packing_material/${idEdit}`,
         {
-          method: "POST",
-          body: JSON.stringify(dataRawMaterial),
+          method: "PUT",
+          body: JSON.stringify(dataPackMaterial),
           headers: {
             "Content-Type": "application/json",
             token: localStorage.token,
           },
         }
       );
-      //const data = await response.json();
+      // const data = await response.json();
       console.log(response);
       // if (response.status === 204) {
       //   saveSweetalert();
@@ -89,71 +119,39 @@ const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
           <ContenedorModal>
             <h1>
               <BiEdit size="2rem" color="darkgreen" />
-              Ingreso de Materia Prima{" "}
+              Ingreso de Material de Empaque{" "}
             </h1>
             {/* <Form onSubmit={onSubmitForm}> */}
             <form onSubmit={onSubmitForm}>
               <Form>
                 <label htmlFor="" className="lal5">
                   {" "}
-                  Tipo de Materia Prima{" "}
+                  Tipo de Material de Empaque{" "}
                 </label>
                 <div className="boddy">
                   <select
                     className="txt1"
                     id=""
-                    name="id_tipo_materia"
+                    name="tipo_empaque"
                     onChange={(e) => onChangeData(e)}
                   >
-                    <option value="">Seleccione el tipo...</option>
-                    <option value="1"> Café Pergamino</option>
-                    <option value="2"> Café en Grano</option>
+                    <option value="">{data.nombre}</option>
+                    <option value="1"> Empaque triliminado</option>
+                    <option value="2"> Empaque válvula</option>
+                    <option value="3"> Empaque con zip y válvula</option>
                   </select>
                 </div>
-
-                <label htmlFor="" className="lal3">
+                <label htmlFor="" className="lal2">
                   {" "}
-                  Cantidad en Quientales{" "}
+                  Costo{" "}
                 </label>
-                <div className="boddy3">
+                <div className="boddy">
                   <input
                     className="txt1"
                     type="number"
-                    name="cantidad"
-                    placeholder=" Ingrese cantidad"
-                    //value={cantidad}
-                    onChange={(e) => onChangeData(e)}
-                  />
-                  <label htmlFor="" className="lal3">
-                    {" "}
-                    Unidad de medida{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="id_unidad_medida"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value="">Seleccione el tipo...</option>
-                      <option value="1"> 1 Libra</option>
-                      <option value="2"> 1/2 Libra</option>
-                      <option value="3"> 1 Quintal</option>
-                    </select>
-                  </div>
-                </div>
-
-                <label htmlFor="" className="la4">
-                  {" "}
-                  Costo
-                </label>
-                <div className="boddy4">
-                  <input
-                    className="txt4"
-                    type="number"
                     name="costo"
+                    value={dataPackMaterial.costo}
                     placeholder=" Ingrese el costo"
-                    //value={direccion}
                     onChange={(e) => onChangeData(e)}
                   />
                 </div>
@@ -182,7 +180,7 @@ const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
     </>
   );
 };
-export default ModalAddRawMaterial;
+export default ModalPackingUpdate;
 
 const Overlay1 = styled.div`
   width: 100vw;
@@ -197,7 +195,7 @@ const Overlay1 = styled.div`
 `;
 const ContenedorModal = styled.div`
   width: 550px;
-  height: 450px;
+  height: 310px;
   padding: 20px;
   background: #fff;
   position: relative;
@@ -223,7 +221,7 @@ const Form = styled.div`
     padding: 3px;
     border: solid 1px #bdc7d8;
     box-shadow: 2px 2px 5px #999;
-    border-radius: 3px;
+    border-radius: 5px;
   }
   label {
     margin-top: 5px;

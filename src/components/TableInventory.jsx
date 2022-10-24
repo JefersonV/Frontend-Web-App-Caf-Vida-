@@ -34,7 +34,7 @@ const TableInventory = () => {
 
             return (
               <tr key={index}>
-                <th>{item.id_inventario_movimiento}</th>
+                <th>{index + 1}</th>
                 {/* <td>{fechaArray[0]}</td> */}
                 <td>{item.fecha}</td>
                 <td>{item.responsable}</td>
@@ -42,7 +42,7 @@ const TableInventory = () => {
                 <td>{opcion}</td>
                 <td>{item.descuento}</td>
                 <td>{item.modo_pago}</td>
-                <td>{item.total_operacion}</td>
+                <td>Q. {item.total_operacion}</td>
                 <td>
                   <Link to="#">
                     <AiIcons.AiOutlineEye

@@ -5,13 +5,7 @@ import "../../assets/styles/Sales.css";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-const ModalAddProductUpdate = ({
-  children,
-  estado2,
-  cambiarEstado2,
-  idEdit,
-}) => {
-  console.log(idEdit);
+const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
   const saveSweetalert = () => {
     Swal.fire({
       position: "top-center",
@@ -23,6 +17,7 @@ const ModalAddProductUpdate = ({
     }).then((result) => {
       if (result.isConfirmed) {
         cambiarEstado2(false);
+        //handleClick();
       }
     });
   };
@@ -44,34 +39,28 @@ const ModalAddProductUpdate = ({
           "success",
           cambiarEstado2(false)
         );
-        history.push("/products");
       }
     });
   };
-  let op;
 
   //Array de los registros
   const [data, setData] = useState([]);
 
   //Funcion para obtener la lista de datos
   const getData = async (id) => {
-    const response = await fetch(
-      `http://localhost:3000/inventory/products/${id}`,
-      {
-        headers: {
-          token: localStorage.token,
-        },
-      }
-    );
+    const response = await fetch(`http://localhost:3000/costumers/${id}`, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
     const data = await response.json();
     setData(data);
-    setDataProduct({
-      nombre: data.producto,
-      stock_ingreso: 0,
-      unidad_medida: data.unidad_medida,
-      tipo_producto: data.id_producto,
-      precio_venta: data.precio_venta,
-      stock_minimo: data.stock_minimo,
+    setDataCliente({
+      nombre: data.nombre,
+      telefono: data.telefono,
+      correo: data.correo,
+      direccion: data.telefono,
+      nit: data.nit,
     });
   };
   console.log(data);
@@ -84,18 +73,17 @@ const ModalAddProductUpdate = ({
   }, [idEdit]);
 
   // Captura de datos del formulario para la API
-  const [dataProduct, setDataProduct] = useState({
+  const [dataCliente, setDataCliente] = useState({
     nombre: "",
-    stock_ingreso: "",
-    unidad_medida: "",
-    tipo_producto: "",
-    precio_venta: "",
-    stock_minimo: "",
+    telefono: "",
+    correo: "",
+    direccion: "",
+    nit: "",
   });
 
   //const history = useHistory();
   const onChangeData = (e) => {
-    setDataProduct({ ...dataProduct, [e.target.name]: e.target.value });
+    setDataCliente({ ...dataCliente, [e.target.name]: e.target.value });
     console.log(e.target.name, e.target.value);
   };
 
@@ -103,20 +91,20 @@ const ModalAddProductUpdate = ({
   const onSubmitForm = async (e) => {
     e.preventDefault();
     //console.log(dataProduct);
+
     try {
       const response = await fetch(
-        `http://localhost:3000/inventory/products/${idEdit}`,
+        `http://localhost:3000/costumers/${idEdit}`,
         {
           method: "PUT",
-          body: JSON.stringify(dataProduct),
+          body: JSON.stringify(dataCliente),
           headers: {
             "Content-Type": "application/json",
             token: localStorage.token,
           },
         }
       );
-      const data = await response.json();
-      console.log(data);
+      // const data = await response.json();
       console.log(response);
       // if (response.status === 204) {
       //   saveSweetalert();
@@ -126,11 +114,6 @@ const ModalAddProductUpdate = ({
     }
   };
 
-  //Id 1 tipo producto = cafe molido
-  if (dataProduct.tipo_producto == 1) {
-    op = "Cafe Molido";
-  }
-
   return (
     <>
       {estado2 && (
@@ -138,122 +121,85 @@ const ModalAddProductUpdate = ({
           <ContenedorModal>
             <h1>
               <BiEdit size="2rem" color="darkgreen" />
-              Actualizar Productos{" "}
+              Actualizar Cliente{" "}
             </h1>
             {/* <Form onSubmit={onSubmitForm}> */}
             <form onSubmit={onSubmitForm}>
               <Form>
                 <label htmlFor="" className="lal2">
                   {" "}
-                  Producto{" "}
+                  Nombre{" "}
                 </label>
                 <div className="boddy">
                   <input
                     className="txt1"
                     type="text"
                     name="nombre"
-                    placeholder=" Ingrese nombre producto"
-                    value={dataProduct.nombre}
+                    placeholder=" Ingrese nombre"
+                    value={dataCliente.nombre}
                     onChange={(e) => onChangeData(e)}
                   />
                 </div>
 
                 <label htmlFor="" className="lal3">
                   {" "}
-                  Stock a Actual{" "}
+                  Telefono{" "}
                 </label>
                 <div className="boddy">
                   <input
                     className="txt1"
                     type="number"
-                    name="stock_ingreso"
-                    // placeholder=" Cantidad a ingresar"
-                    // value={data.stock_actual}
-                    value={data.stock_actual}
+                    name="telefono"
+                    placeholder=" Ingrese telefono"
+                    value={dataCliente.telefono}
                     onChange={(e) => onChangeData(e)}
-                    disabled
                   />
                 </div>
                 <label htmlFor="" className="lal3">
                   {" "}
-                  Stock a Ingresar{" "}
+                  Correo{" "}
                 </label>
                 <div className="boddy">
                   <input
                     className="txt1"
-                    type="number"
-                    name="stock_ingreso"
-                    placeholder=" Cantidad a ingresar"
-                    value={dataProduct.stock_ingreso}
+                    type="text"
+                    name="correo"
+                    placeholder=" Ingrese correo"
+                    value={dataCliente.correo}
                     onChange={(e) => onChangeData(e)}
                   />
                 </div>
-                <div className="pres-tip">
-                  <label htmlFor="" className="lal3">
-                    {" "}
-                    Presentación{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="unidad_medida"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value={dataProduct.unidad_medida}>
-                        {data.unidad_medida}
-                      </option>
-                      <option value="1"> 1 Libra</option>
-                      <option value="2"> 1/2 Libra</option>
-                    </select>
-                  </div>
-                  <label htmlFor="" className="lal5">
-                    {" "}
-                    Tipo de Producto{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="tipo_producto"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value={dataProduct.tipo_producto}>{op}</option>
-                      <option value="1"> Café Molido</option>
-                    </select>
-                  </div>
+                <label htmlFor="" className="lal5">
+                  {" "}
+                  Direccion{" "}
+                </label>
+                <div className="boddy">
+                  <input
+                    className="txt1"
+                    type="text"
+                    name="direccion"
+                    placeholder=" Ingrese direccion"
+                    value={dataCliente.direccion}
+                    onChange={(e) => onChangeData(e)}
+                  />
                 </div>
                 <label htmlFor="" className="lal3">
                   {" "}
-                  Stock Minimo{" "}
+                  NIT{" "}
                 </label>
                 <div className="boddy">
                   <input
                     className="txt1"
                     type="number"
-                    name="stock_minimo"
-                    placeholder="Ingrese stock minimo"
-                    value={dataProduct.stock_minimo}
+                    name="nit"
+                    placeholder="Ingrese No. NIT"
+                    value={dataCliente.nit}
                     onChange={(e) => onChangeData(e)}
                   />
                 </div>
 
-                <label htmlFor="" className="la4">
-                  {" "}
-                  Precio Venta
-                </label>
-                <div className="boddy">
-                  <input
-                    className="txt1"
-                    type="number"
-                    name="precio_venta"
-                    placeholder=" Ingrese precio venta"
-                    value={dataProduct.precio_venta}
-                    onChange={(e) => onChangeData(e)}
-                  />
-                </div>
                 <LinkButt>
-                  <Link to="#" className="btn8" onClick={() => cancelSweet()}>
+                  <Link className="btn8" onClick={() => cancelSweet()}>
                     {" "}
                     Cancelar
                   </Link>
@@ -276,7 +222,7 @@ const ModalAddProductUpdate = ({
     </>
   );
 };
-export default ModalAddProductUpdate;
+export default ModalClientUpdate;
 
 const Overlay1 = styled.div`
   width: 100vw;
@@ -291,7 +237,7 @@ const Overlay1 = styled.div`
 `;
 const ContenedorModal = styled.div`
   width: 550px;
-  height: 620px;
+  height: 570px;
   padding: 20px;
   background: #fff;
   position: relative;

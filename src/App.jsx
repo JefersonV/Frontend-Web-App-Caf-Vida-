@@ -128,12 +128,6 @@ function App() {
             ></Route>
             {/* Ruta para editar  */}
             <Route
-              path="/products/:id/edit"
-              render={(props) =>
-                isAuthenticated ? <Products /> : <Redirect to="/login" />
-              }
-            ></Route>
-            <Route
               path="/finished_product"
               render={(props) =>
                 isAuthenticated ? <FinishedProduct /> : <Redirect to="/login" />

@@ -75,9 +75,9 @@ const ModalAddPackingMaterial = ({ children, estado2, cambiarEstado2 }) => {
       );
       // const data = await response.json();
       console.log(response);
-      if (response.status === 204) {
-        saveSweetalert();
-      }
+      // if (response.status === 204) {
+      //   saveSweetalert();
+      // }
     } catch (error) {
       console.log(error.massage);
     }
@@ -127,14 +127,14 @@ const ModalAddPackingMaterial = ({ children, estado2, cambiarEstado2 }) => {
                 </div>
 
                 <LinkButt>
-                  <button className="btn8" onClick={() => cancelSweet()}>
+                  <Link className="btn8" onClick={() => cancelSweet()}>
                     {" "}
                     Cancelar
-                  </button>
+                  </Link>
                   <button
                     type="submit"
                     className="btn9"
-                    // onClick={() => saveSweetalert()}
+                    onClick={() => saveSweetalert()}
                   >
                     {" "}
                     Guardar{" "}

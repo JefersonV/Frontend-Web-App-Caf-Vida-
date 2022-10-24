@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import "../../assets/styles/Sales.css";
-import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const ModalAddProductUpdate = ({
+const ModalRawMaterialUpdate = ({
   children,
   estado2,
   cambiarEstado2,
   idEdit,
 }) => {
-  console.log(idEdit);
   const saveSweetalert = () => {
     Swal.fire({
       position: "top-center",
@@ -44,11 +43,9 @@ const ModalAddProductUpdate = ({
           "success",
           cambiarEstado2(false)
         );
-        history.push("/products");
       }
     });
   };
-  let op;
 
   //Array de los registros
   const [data, setData] = useState([]);
@@ -56,7 +53,7 @@ const ModalAddProductUpdate = ({
   //Funcion para obtener la lista de datos
   const getData = async (id) => {
     const response = await fetch(
-      `http://localhost:3000/inventory/products/${id}`,
+      `http://localhost:3000/inventory/raw_material/${id}`,
       {
         headers: {
           token: localStorage.token,
@@ -65,17 +62,16 @@ const ModalAddProductUpdate = ({
     );
     const data = await response.json();
     setData(data);
-    setDataProduct({
-      nombre: data.producto,
-      stock_ingreso: 0,
-      unidad_medida: data.unidad_medida,
-      tipo_producto: data.id_producto,
-      precio_venta: data.precio_venta,
-      stock_minimo: data.stock_minimo,
+    setDataRawMaterial({
+      id_tipo_materia: data.tipo_materia,
+      cantidad: data.cantidad,
+      id_unidad_medida: data.unidad_medida,
+      costo: data.costo,
     });
   };
-  console.log(data);
+  //console.log(data);
 
+  console.log(data);
   //funcion useffect para llamar y cargar los datos
   useEffect(() => {
     if (idEdit) {
@@ -84,39 +80,36 @@ const ModalAddProductUpdate = ({
   }, [idEdit]);
 
   // Captura de datos del formulario para la API
-  const [dataProduct, setDataProduct] = useState({
-    nombre: "",
-    stock_ingreso: "",
-    unidad_medida: "",
-    tipo_producto: "",
-    precio_venta: "",
-    stock_minimo: "",
+  const [dataRawMaterial, setDataRawMaterial] = useState({
+    id_tipo_materia: "",
+    cantidad: "",
+    id_unidad_medida: "",
+    costo: "",
   });
 
-  //const history = useHistory();
   const onChangeData = (e) => {
-    setDataProduct({ ...dataProduct, [e.target.name]: e.target.value });
+    setDataRawMaterial({ ...dataRawMaterial, [e.target.name]: e.target.value });
     console.log(e.target.name, e.target.value);
   };
 
   //Evento de envío del formulario
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    //console.log(dataProduct);
+    console.log(dataRawMaterial);
+
     try {
       const response = await fetch(
-        `http://localhost:3000/inventory/products/${idEdit}`,
+        `http://localhost:3000/inventory/raw_material/${idEdit}`,
         {
           method: "PUT",
-          body: JSON.stringify(dataProduct),
+          body: JSON.stringify(dataRawMaterial),
           headers: {
             "Content-Type": "application/json",
             token: localStorage.token,
           },
         }
       );
-      const data = await response.json();
-      console.log(data);
+      //const data = await response.json();
       console.log(response);
       // if (response.status === 204) {
       //   saveSweetalert();
@@ -126,11 +119,6 @@ const ModalAddProductUpdate = ({
     }
   };
 
-  //Id 1 tipo producto = cafe molido
-  if (dataProduct.tipo_producto == 1) {
-    op = "Cafe Molido";
-  }
-
   return (
     <>
       {estado2 && (
@@ -138,120 +126,75 @@ const ModalAddProductUpdate = ({
           <ContenedorModal>
             <h1>
               <BiEdit size="2rem" color="darkgreen" />
-              Actualizar Productos{" "}
+              Actualizar Materia Prima{" "}
             </h1>
             {/* <Form onSubmit={onSubmitForm}> */}
             <form onSubmit={onSubmitForm}>
               <Form>
-                <label htmlFor="" className="lal2">
+                <label htmlFor="" className="lal5">
                   {" "}
-                  Producto{" "}
+                  Tipo de Materia Prima{" "}
                 </label>
                 <div className="boddy">
-                  <input
+                  <select
                     className="txt1"
-                    type="text"
-                    name="nombre"
-                    placeholder=" Ingrese nombre producto"
-                    value={dataProduct.nombre}
+                    id=""
+                    name="id_tipo_materia"
                     onChange={(e) => onChangeData(e)}
-                  />
+                  >
+                    <option value="">{data.tipo_materia}</option>
+                    <option value="1"> Café Pergamino</option>
+                    <option value="2"> Café en Grano</option>
+                  </select>
                 </div>
 
                 <label htmlFor="" className="lal3">
                   {" "}
-                  Stock a Actual{" "}
+                  Cantidad en Quintales{" "}
                 </label>
-                <div className="boddy">
+                <div className="boddy3">
                   <input
                     className="txt1"
                     type="number"
-                    name="stock_ingreso"
-                    // placeholder=" Cantidad a ingresar"
-                    // value={data.stock_actual}
-                    value={data.stock_actual}
-                    onChange={(e) => onChangeData(e)}
-                    disabled
-                  />
-                </div>
-                <label htmlFor="" className="lal3">
-                  {" "}
-                  Stock a Ingresar{" "}
-                </label>
-                <div className="boddy">
-                  <input
-                    className="txt1"
-                    type="number"
-                    name="stock_ingreso"
-                    placeholder=" Cantidad a ingresar"
-                    value={dataProduct.stock_ingreso}
+                    name="cantidad"
+                    placeholder=" Ingrese cantidad"
+                    value={dataRawMaterial.cantidad}
                     onChange={(e) => onChangeData(e)}
                   />
-                </div>
-                <div className="pres-tip">
                   <label htmlFor="" className="lal3">
                     {" "}
-                    Presentación{" "}
+                    Unidad de medida{" "}
                   </label>
                   <div className="boddy">
                     <select
                       className="txt1"
                       id=""
-                      name="unidad_medida"
+                      name="id_unidad_medida"
                       onChange={(e) => onChangeData(e)}
                     >
-                      <option value={dataProduct.unidad_medida}>
-                        {data.unidad_medida}
-                      </option>
+                      <option value=""> {data.unidad_medida}</option>
                       <option value="1"> 1 Libra</option>
                       <option value="2"> 1/2 Libra</option>
+                      <option value="3"> 1 Quintal</option>
                     </select>
                   </div>
-                  <label htmlFor="" className="lal5">
-                    {" "}
-                    Tipo de Producto{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="tipo_producto"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value={dataProduct.tipo_producto}>{op}</option>
-                      <option value="1"> Café Molido</option>
-                    </select>
-                  </div>
-                </div>
-                <label htmlFor="" className="lal3">
-                  {" "}
-                  Stock Minimo{" "}
-                </label>
-                <div className="boddy">
-                  <input
-                    className="txt1"
-                    type="number"
-                    name="stock_minimo"
-                    placeholder="Ingrese stock minimo"
-                    value={dataProduct.stock_minimo}
-                    onChange={(e) => onChangeData(e)}
-                  />
                 </div>
 
                 <label htmlFor="" className="la4">
                   {" "}
-                  Precio Venta
+                  Costo
                 </label>
-                <div className="boddy">
+                <div className="boddy4">
                   <input
-                    className="txt1"
+                    className="txt4"
                     type="number"
-                    name="precio_venta"
-                    placeholder=" Ingrese precio venta"
-                    value={dataProduct.precio_venta}
+                    name="costo"
+                    placeholder=" Ingrese el costo"
+                    value={dataRawMaterial.costo}
                     onChange={(e) => onChangeData(e)}
                   />
                 </div>
+
                 <LinkButt>
                   <Link to="#" className="btn8" onClick={() => cancelSweet()}>
                     {" "}
@@ -276,7 +219,7 @@ const ModalAddProductUpdate = ({
     </>
   );
 };
-export default ModalAddProductUpdate;
+export default ModalRawMaterialUpdate;
 
 const Overlay1 = styled.div`
   width: 100vw;
@@ -291,7 +234,7 @@ const Overlay1 = styled.div`
 `;
 const ContenedorModal = styled.div`
   width: 550px;
-  height: 620px;
+  height: 450px;
   padding: 20px;
   background: #fff;
   position: relative;
@@ -302,7 +245,6 @@ const ContenedorModal = styled.div`
 
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   h1 {
-    text-align: center;
     margin-top: 0;
     font-size: 21px;
     margin-right: 200px;
@@ -338,8 +280,7 @@ const LinkButt = styled.div`
     box-shadow: 3px 3px 7px rgb(75, 33, 122);
     padding: 5px;
     margin-left: 100px;
-    background-color: lightseagreen;
-    border-color: lightseagreen;
+    background-color: rgba(24, 223, 230, 0.897);
     border-radius: 5px;
   }
   .btn8 {
@@ -348,7 +289,6 @@ const LinkButt = styled.div`
     background-color: rgba(230, 24, 24, 0.897);
     border: solid 1px;
     box-shadow: 3px 3px 7px rgb(75, 33, 122);
-    border-color: rgba(24, 223, 230, 0.897);
     border-radius: 5px;
   }
 `;

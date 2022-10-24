@@ -21,14 +21,14 @@ const TopBarTableInventory = () => {
             <option value="">Resumen de ventas mensual</option>
             <option value="">Resumen de todas las ventas</option>
           </select>
-          <input
+          {/* <input
             type="search"
             placeholder="Buscar...."
             name="buscar"
             id="buscar"
             disabled
             onChange={searcher}
-          />
+          /> */}
         </div>
       </div>
     </>

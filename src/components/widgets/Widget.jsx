@@ -97,7 +97,7 @@ const Widget = ({ type }) => {
         title: "BOLSAS DISPONIBLES",
         isMoney: false,
         link: "Ver todos...",
-        path: "/inventory/products",
+        path: "/products",
         monto: bolsasDispo,
         icon: (
           <FaIcons.FaShoppingBasket

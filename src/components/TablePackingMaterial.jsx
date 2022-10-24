@@ -5,8 +5,11 @@ import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import { useResultsSearchContext } from "../providers/SidebarProvider";
 import Swal from "sweetalert2";
+import ModalPackingUpdate from "./modals/ModalPackingUpdate";
 
-const TablePackingMaterial = () => {
+const TablePackingMaterial = ({ children }) => {
+  const [estadoModal2, cambiarEstadoModal2] = useState(false);
+  const [idEdit, setIdEdit] = useState("");
   const deleteSweet = (id) => {
     Swal.fire({
       title: "Estas seguro?",
@@ -18,7 +21,7 @@ const TablePackingMaterial = () => {
       confirmButtonText: "Si, eliminalo!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Eliminado!", "El registro se ha elimando", "Exitoso");
+        Swal.fire("Eliminado!", "El registro se ha elimando", "success");
         productDelete(id);
       }
     });
@@ -62,47 +65,63 @@ const TablePackingMaterial = () => {
   const results = useResultsSearchContext();
   return (
     <>
-      <table className="table table-striped w-80 thead-light ">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Nombre Empaque</th>
-            <th scope="col">Costo Empaque</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
-          {data.map((data) => {
-            return (
-              <tr key={data.id_empaque}>
-                <th>{data.id_empaque}</th>
-                <td>{data.fecha}</td>
-                <td>{data.nombre}</td>
-                <td>{data.costo}</td>
-                <td>
-                  <Link to="#">
-                    <AiIcons.AiOutlineEdit
-                      className="icon-eye icon-table"
-                      title="Ver detalles de la venta"
-                    />
-                  </Link>
-                  <button
-                    className="btn-borrar"
-                    onClick={() => deleteSweet(data.id_empaque)}
-                  >
-                    <FcIcons.FcFullTrash
-                      className="icon-print icon-table"
-                      title="Borrar registro"
-                    />
-                  </button>
-                </td>
+      <div>
+        <div>
+          <table className="table table-striped w-80 thead-light ">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Nombre Empaque</th>
+                <th scope="col">Costo Empaque</th>
+                <th scope="col">Acciones</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
+              {data.map((data, index) => {
+                return (
+                  <tr key={data.id_empaque}>
+                    <th>{index + 1}</th>
+                    <td>{data.fecha}</td>
+                    <td>{data.nombre}</td>
+                    <td>Q. {data.costo}</td>
+                    <td>
+                      <button
+                        className="btn-borrar" //btn-editar
+                        onClick={() => {
+                          cambiarEstadoModal2(!estadoModal2);
+                          setIdEdit(data.id_empaque);
+                        }}
+                      >
+                        <AiIcons.AiOutlineEdit
+                          className="icon-eye icon-table"
+                          title="Editar registro"
+                        />
+                      </button>
+                      <button
+                        className="btn-borrar"
+                        onClick={() => deleteSweet(data.id_empaque)}
+                      >
+                        <FcIcons.FcFullTrash
+                          className="icon-print icon-table"
+                          title="Borrar registro"
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {children}
+        </div>
+        <ModalPackingUpdate
+          estado2={estadoModal2}
+          cambiarEstado2={cambiarEstadoModal2}
+          idEdit={idEdit}
+        ></ModalPackingUpdate>
+      </div>
     </>
   );
 };
