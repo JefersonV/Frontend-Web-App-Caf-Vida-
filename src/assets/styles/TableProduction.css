@@ -1,0 +1,54 @@
+.TopBar{
+  font-size:  1.1em;
+ }
+ .Contenido{
+  align-items: center;
+  /*margin: 0 auto;*/
+  height: 10vh;
+  /* position: fixed; */
+  display: flex;
+   margin-left: 100px;
+ }
+ .search{
+   margin-left: 45px ;
+   margin-top: 20px;
+   margin-bottom: 10px;
+ }
+ #lab{
+  font-size: 40px;
+  margin-top: 20px;
+
+ }
+ .link1{
+  border-radius: .5em;
+	background-color: rgb(4, 4, 4);
+	width: 250px;
+  color:rgb(236, 232, 232);
+  margin-left: 230px;
+  padding: 4px;
+
+ }
+ .link2{
+  border-radius: .5em;
+	outline: none;
+	width: 200px;
+  background-color: rgb(5, 54, 127);
+  color: white;
+  margin-left: 50px;
+
+ }
+#Buscar{
+  margin-left: 50px;
+  width: 350px;
+}
+td {
+  font-size: .8em;
+}
+
+.icon-table {
+  font-size: 1.8em;
+  margin-right: .3em;
+}
+table {
+  margin-left: 0;
+}
