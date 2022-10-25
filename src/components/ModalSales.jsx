@@ -8,7 +8,7 @@ import { AiFillFileText } from "react-icons/ai";
 import { VscNewFile } from "react-icons/vsc";
 import { FcCancel } from "react-icons/fc";
 import { IoIosSave } from "react-icons/io";
-import { GiReturnArrow } from "react-icons/gi";
+import { GiCoffeeBeans } from "react-icons/gi";
 import { FcPrint } from "react-icons/fc";
 /* icons */
 import { Link } from "react-router-dom";
@@ -30,20 +30,11 @@ const ModalSales = ({ children }) => {
   // Fetch products
   const [fetchProducts, setFetchProducts] = useState([])
 
+  /* Opción por defecto del <select> de productos */
   const defaultOptionProduct = {
     id_producto: 0,
     producto: "Click para seleccionar",
-    precio_venta: 50,
-    costo_compra: 23,
-    stock_actual: 20,
-    stock_minimo: 10,
-    unidad_medida: "Libra"
   }
-  // const [showOptions, setShowOptions] = useState(false)
-
-  // const toggleOptions = () => {
-  //   setShowOptions(!showOptions)
-  // }
 
   const getProducts = async () => {
     const response = await fetch("http://localhost:4000/inventory/products", {
@@ -54,8 +45,8 @@ const ModalSales = ({ children }) => {
     console.log('respuesta')
     console.log(response)
     const data = await response.json()
-    // setFetchProducts((fetchProducts) => fetchProducts.unshift(productDefaultOption))
     setFetchProducts(data)
+    // Aparte de la data de 
     setFetchProducts(fetchProducts => [defaultOptionProduct, ...fetchProducts])  
   }
   
@@ -64,9 +55,6 @@ const ModalSales = ({ children }) => {
     console.log('productos fetch')
     console.log(fetchProducts)
   }, [])
-  const addDefaultOptionProduct = (newProduct) => setFetchProducts(oldProducts => [newProduct, ...oldProducts])
-  // const addMessage = (newMessage) => setMessages(oldMessages => [newMessage, ...oldMessages])
-
 
   const clientes = [
     {
@@ -222,7 +210,7 @@ const ModalSales = ({ children }) => {
   const [clientSelected, setClientSelected] = useState({})
 
   const [disabledClientAdd, setDisabledClientAdd] = useState()
-  // Botón de registro a la tabla
+  // Botón de registro a la tabla cliente
   const handleCustomer = e => {
     e.preventDefault()
 
@@ -246,6 +234,14 @@ const ModalSales = ({ children }) => {
   }
   // Comprueba si hay datos que agregar a la tabla
   const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0 
+  // onSubmit de cliente
+  const onSubmitClient = e => {
+    e.preventDefault();
+    clientObjectIsEmpty(clientSelected) ?
+    console.log('No se encuentra clientSelected')
+    : 
+    console.log('Si lo capturó clientSelected')
+  }
 
   //Manejador de evento del buscador y captura de datos
   const onInputChange = (e) => {
@@ -284,7 +280,8 @@ const ModalSales = ({ children }) => {
     }
   };
   
-  //Manejador del control <select>
+
+  //Manejador del control <select> de producto
   const onChangeSelect = (e) => {
     e.preventDefault();
     //Capturamos el valor seleccionado de select
@@ -313,6 +310,7 @@ const ModalSales = ({ children }) => {
   let [subTotal, setSubTotal] = useState(0)
   const calcularTotal = (arrayCalculo) => {
     let sumaSubtotal = 0
+    let totalAux = 0
     
     if(arrayCalculo.length >= 0) {
       
@@ -321,42 +319,17 @@ const ModalSales = ({ children }) => {
       })
     }
 
-    //Actualización de estado
-    setSubTotal(sumaSubtotal.toFixed(2))
-    setTotal(sumaSubtotal.toFixed(2))
-
+    setSubTotal(sumaSubtotal)
   }
 
-  const [descuento, setDescuento] = useState(0)
-  /* Manejador del input de descuento */
-  const aplicarDescuento = e => {
-    let sumaTotal = 0
-    if(tableData.length < 1 ) {
-      Swal.showValidationMessage(
-        "Primero debe seleccionar los productos a vender"
-      )
-    } else {
-      Swal.fire({
-        title: "El descuento se aplicará en forma de porcentaje",
-        text: "Ingrese un número entero",
-        input: "number",
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-        cancelButtonText: "Cancelar",
-        showLoaderOnConfirm: true,
-        preConfirm: (inputValue) => {
-          if(isNaN(parseFloat(inputValue)) || inputValue < 1) {
-            Swal.showValidationMessage(
-              "Debe ingresar un valor numérico entero mayor que 0"
-            )
-          } else {
-            setTotal = total - (inputValue / 100)
-            // setTotal(sumaTotal.toFixed(2))
-          }
-        }
-      })
-    }
+  /* Manejador del control de pago */
+  const [pay, setPay] = useState({})
+  const onChangePay = e => {
+    setPay( {pay: e.target.value} )
+    console.log('Pago')
+    console.log(pay)
   }
+
 
   // Cantidad de producto seleccionado con sweetAlert
   const productoSeleccionado = (tableData, productSelected) => {
@@ -483,6 +456,28 @@ const ModalSales = ({ children }) => {
     submitDataVenta(url)  
   }
 
+  const [descuento, setDescuento] = useState(0)
+  const onChangeDiscount = e => {
+    let descuentoAux = 0;
+
+    parseFloat(descuentoAux = e.target.value)
+    let descuentoRes = 0
+    descuentoRes = parseFloat(total * (descuentoAux / 100))
+    setDescuento(descuentoRes.toFixed(2))
+    // setTotal = total - (inputValue / 100)
+    console.log('descuento capturado')
+    console.log(typeof descuento)
+
+    /*----- Cálculo del total después de capturar el descuento ----- */
+    if(descuento !== 0) {
+      // totalAux = sumaSubtotal - descuento
+      setTotal(parseFloat(subTotal - descuento))
+      console.log('descuento es: ')
+      console.log(typeof descuento)
+    } else {
+      setTotal(subTotal.toFixed(2))
+    }
+  }
 
   return (
     <>
@@ -497,7 +492,7 @@ const ModalSales = ({ children }) => {
                 {/* <label id='label3' className="label-cliente" htmlFor="search-bar">
                   Buscar cliente
                 </label> */}
-                <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer}/>
+                <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer} onSubmitClient={onSubmitClient}/>
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}
@@ -635,6 +630,17 @@ const ModalSales = ({ children }) => {
                             <td></td>
                             <td 
                               coldspan="5"
+                              className="font-weight-bold">Descuento:</td>
+                            <td>Q.{descuento}</td>
+                          </tr>
+                          <tr className="table table-light">
+                            <th scope="row"></th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td 
+                              coldspan="5"
                               className="font-weight-bold">Total:</td>
                             <td>Q.{total}</td>
                           </tr>
@@ -648,18 +654,17 @@ const ModalSales = ({ children }) => {
                 <div className="metodo">
                   <div className="metodo-left">
                     <label htmlFor="lab5">Método de pago</label>
-                    <select className="select3" id="">
-                      <option value=""> Efectivo </option>
-                      <option value=""> Transferencia Bancaria</option>
-                      <option value=""> Depósito Monetario</option>
+                    <select className="select2 custom-select" id="" onChange={onChangePay}>
+                      <option>Click para seleccionar</option>
+                      <option value="Efectivo"> Efectivo </option>
+                      <option value="Transferencia Bancaria"> Transferencia Bancaria</option>
+                      <option value="Depósito Monetario"> Depósito Monetario</option>
                     </select>
                   </div>
                   <div className="metodo-right">
-                    <button onClick={aplicarDescuento} className="btn-primary rounded">Aplicar Descuento</button>
-                    {/* <label className="lab6" htmlFor="lab6">
-                      Descuento %
-                    </label>
-                    <input className="descu" type="number" placeholder=" %" onChange={onChangeDescuento}/> */}
+                    <input type="number" name="descuento" onChange={onChangeDiscount} minLength="1" maxLength="30" placeholder="Descuento en %"/>
+                    {/* <button onClick={aplicarDescuento} className="btn-primary rounded">Aplicar Descuento</button> */}
+
                   </div>
                   <br />
                 </div>
@@ -682,13 +687,6 @@ const ModalSales = ({ children }) => {
                     <FcPrint size="2rem" /> Imprimir
                   </button>
                 </section>
-                {/* <button className="btn-prueba" onClick={toggleOptions}>Prueba</button>
-                
-                <ul className={showOptions ? "options-hide" : "btn-options-prueba"}>
-                  <li className="text-primary">Servicios</li>
-                  <li className="text-primary">Materia</li>
-                  <li className="text-primary">Empaque</li>
-                </ul> */}
             </div>
             {children}
           </div>
