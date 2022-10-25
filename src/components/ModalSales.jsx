@@ -30,29 +30,42 @@ const ModalSales = ({ children }) => {
   // Fetch products
   const [fetchProducts, setFetchProducts] = useState([])
 
+  const defaultOptionProduct = {
+    id_producto: 0,
+    producto: "Click para seleccionar",
+    precio_venta: 50,
+    costo_compra: 23,
+    stock_actual: 20,
+    stock_minimo: 10,
+    unidad_medida: "Libra"
+  }
+  // const [showOptions, setShowOptions] = useState(false)
+
+  // const toggleOptions = () => {
+  //   setShowOptions(!showOptions)
+  // }
+
   const getProducts = async () => {
     const response = await fetch("http://localhost:4000/inventory/products", {
       headers: {
         token: localStorage.token,
       },
     });
+    console.log('respuesta')
+    console.log(response)
     const data = await response.json()
+    // setFetchProducts((fetchProducts) => fetchProducts.unshift(productDefaultOption))
     setFetchProducts(data)
+    setFetchProducts(fetchProducts => [defaultOptionProduct, ...fetchProducts])  
   }
   
-  let productsBeta
   useEffect(()=> {
-    /* fetchProducts.unshift({
-      id: 0,
-      producto: 'Seleccione'
-    }) */
     getProducts()
     console.log('productos fetch')
     console.log(fetchProducts)
-    productsBeta = fetchProducts
-    console.log('productos beta')
-    console.log(productsBeta)
   }, [])
+  const addDefaultOptionProduct = (newProduct) => setFetchProducts(oldProducts => [newProduct, ...oldProducts])
+  // const addMessage = (newMessage) => setMessages(oldMessages => [newMessage, ...oldMessages])
 
 
   const clientes = [
@@ -137,48 +150,7 @@ const ModalSales = ({ children }) => {
       nit: 23154668
     },
   ]
-  const products = [
-    {
-      id: 0,
-      nombre: 'Café Molido',
-      stock_ingreso: 0,
-      precio_venta: 50,
-      stock_minimo: 10,
-      peso: '1 lb',
-      detalle: 'Click para seleccionar',
-      cantidad: 0,
-      descuento: 0,
-      subtotal: 0,
-      total: 0,
-    },
-    {
-      id: 1,
-      nombre: 'Café Molido',
-      stock_ingreso: 0,
-      precio_venta: 50,
-      stock_minimo: 10,
-      peso: '1 lb',
-      detalle: 'Café Molido de 1lb de 2da calidad',
-      cantidad: 0,
-      descuento: 0,
-      subtotal: 0,
-      total: 0,
-    },
-    {
-      id: 2,
-      nombre: 'Café Molido',
-      stock_ingreso: 0,
-      precio_venta: 25,
-      stock_minimo: 10,
-      peso: '1/2 lb',
-      detalle: 'Café Molido de 1/2 lb de 2da calidad',
-      cantidad: 0,
-      descuento: 0,
-      subtotal: 0,
-      total: 0,
-    },
-  ];
-
+  
   /* Sweet alert */
   const cancelSweet = () => {
     Swal.fire({
@@ -248,9 +220,12 @@ const ModalSales = ({ children }) => {
   const [clientTable, setClientTable] = useState([])
   // Estado del item seleccionado
   const [clientSelected, setClientSelected] = useState({})
-    //Capturar datos del cliente
+
+  const [disabledClientAdd, setDisabledClientAdd] = useState()
+  // Botón de registro a la tabla
   const handleCustomer = e => {
     e.preventDefault()
+
     console.log(clientSelected)
     console.log('acción cliente')
     //Verificamos que el cliente exista, según los datos de la API
@@ -261,13 +236,18 @@ const ModalSales = ({ children }) => {
     // Solo se puede agregar 1 cliente por venta
     if(clientTable.length > -1 && clientTable.length < 1) {
       setClientTable((clientTable) => clientTable.concat(clienteEncontrado))
+      console.log('cliente')
+      console.log(typeof clientTable)
       console.log(clientTable)
     }
 
     console.log(typeof clienteEncontrado)
     console.log(clienteEncontrado)
   }
-  //Manejador de evento del buscador
+  // Comprueba si hay datos que agregar a la tabla
+  const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0 
+
+  //Manejador de evento del buscador y captura de datos
   const onInputChange = (e) => {
     setOptions(
       defaultOptions.filter((option) => 
@@ -406,7 +386,7 @@ const ModalSales = ({ children }) => {
               stock_ingreso: productoEncontrado.stock_actual,
               precio_venta: productoEncontrado.precio_venta,
               stock_minimo: productoEncontrado.stock_minimo,
-              peso: productoEncontrado.costo_compra,
+              peso: productoEncontrado.unidad_medida,
               detalle: productoEncontrado.producto,
               cantidad: parseInt(inputValue),
               descuento: 0,
@@ -443,15 +423,67 @@ const ModalSales = ({ children }) => {
   /* Es necesario llamara a tableData por fuera de el método, y también fuera de la invocación */
   console.log('final')
   console.log(tableData)
+  
+  /* ------------- Finalizar venta ---------*/
+  const finalizarVenta = () => {
+    // Validaciones
+    if(tableData.length < 1 && clientObjectIsEmpty(clientTable)) {
+      Swal.fire('Registro incompleto',
+      'Debe registrar el cliente y los productos a vender',
+      'info')
+      return
+    } 
+    else if (tableData.length < 1) {
+      Swal.fire(
+        'Registro incompleto',
+        'Debe seleccionar el producto a vender',
+        'info')
+      return
+    }
+    else if (clientObjectIsEmpty(clientTable)) {
+      Swal.fire(
+        'Registro incompleto',
+        'Debe seleccionar o registrar el cliente',
+        'info'
+      )
+    return
+    }
+    console.log('prueba de return')
+    let ventaApiPost = {
+      fecha: '',
+      cantidad: '',
+      descripcion: 'prueba de un post',
+      descuento: 0,
+      subtotal: 150,
+      total: 150,
+      cliente: 1,
+      factura: 2,
+      producto: 1,
+      modo_pago: 2,
+      usuario: 1,
+    }
+    //() => saveConfirmed()
+    const url = "http://localhost:4000/sales"
+    const submitDataVenta = async (url) => {
+      try {
+        const response = await (fetch(url, {
+          method: "POST",
+          body: JSON.stringify(ventaApiPost),
+          headers: {
+            "Content-type": "application/json",
+            token: localStorage.token,
+          },
+        }));
 
-  const Products = () => {
-    <select>
-      {fetchProducts.map((product, index) => {
-        <option value="" key={index}>{}</option>
-        
-      })}
-    </select>
+        console.log(response)
+      } catch(err) {
+        console.log(err.message)
+      }
+    }
+    submitDataVenta(url)  
   }
+
+
   return (
     <>
       <SideBarMenu />
@@ -501,16 +533,15 @@ const ModalSales = ({ children }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    { clientTable.length < 0 ? (
+                    { clientObjectIsEmpty(clientTable) ? (
                       <tr>
                         <td>No hay ningún cliente registrado</td>
                       </tr>
-
                     ) : (
                         clientTable.map((cliente, index) => {
                           return (
                             <tr key={index}>
-                              <th scope="row">{cliente.id}</th>
+                              <th scope="row">{index+1}</th>
                               <td>{cliente.nombre}</td>
                               <td>{cliente.telefono}</td>
                               <td>{cliente.correo}</td>
@@ -581,27 +612,30 @@ const ModalSales = ({ children }) => {
                         })
                       )}
                       
-                      {tableData.length < 1 ? 
-                      null
+                      {tableData.length < 1 ? null
                       : (
                         /* Parte inferior de la tabla para sumatoria de subtotal y total */
                         <>
                           <tr className="table table-light">
-                            <th scope="row"> -- </th>
+                            <th scope="row"></th>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td coldspan="5">Sumatoria Subtotal</td>
+                            <td 
+                              coldspan="5" 
+                              className="font-weight-bold">Suma Subtotal</td>
                             <td>Q.{subTotal}</td>
                           </tr>
                           <tr className="table table-light">
-                            <th scope="row"> -- </th>
+                            <th scope="row"></th>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td coldspan="5">Total:</td>
+                            <td 
+                              coldspan="5"
+                              className="font-weight-bold">Total:</td>
                             <td>Q.{total}</td>
                           </tr>
                         </>
@@ -635,9 +669,9 @@ const ModalSales = ({ children }) => {
                     {" "}
                     <VscNewFile size="2rem" color="rgb(155, 74, 8)" /> Nueva Venta
                   </button>
-                  <button className="btn6" onClick={() => saveConfirmed()}>
+                  <button className="btn6" onClick={finalizarVenta}>
                     {" "}
-                    <IoIosSave size="2rem" color="darkblue" /> Guardar
+                    <IoIosSave size="2rem" color="darkblue" /> Registrar Venta
                   </button>
                   <button className="btn7" onClick={() => cancelSweet()}>
                     {" "}
@@ -648,6 +682,13 @@ const ModalSales = ({ children }) => {
                     <FcPrint size="2rem" /> Imprimir
                   </button>
                 </section>
+                {/* <button className="btn-prueba" onClick={toggleOptions}>Prueba</button>
+                
+                <ul className={showOptions ? "options-hide" : "btn-options-prueba"}>
+                  <li className="text-primary">Servicios</li>
+                  <li className="text-primary">Materia</li>
+                  <li className="text-primary">Empaque</li>
+                </ul> */}
             </div>
             {children}
           </div>
@@ -659,7 +700,7 @@ const ModalSales = ({ children }) => {
         ></ModalSalesAdd>
       </div>
     </>
-
+  
   )
 }
 

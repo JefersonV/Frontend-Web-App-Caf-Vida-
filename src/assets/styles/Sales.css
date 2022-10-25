@@ -225,3 +225,30 @@
 	border: none;
 	background: none;
 }
+
+.btn-prueba {
+	position: relative;
+}
+
+.btn-options-prueba {
+	position: absolute;
+	list-style: none;
+	border: 1px solid #ccc;
+	border-radius: 1em;
+	padding: 1em;
+	bottom: -8.5em;
+}
+
+.btn-options-prueba ul {
+	/* display: none; */
+}
+
+.btn-options-prueba li {
+	display: block;
+	margin: 0 auto;
+}
+
+/* Esconde las opciones  */
+.options-hide {
+	display: none;
+}

@@ -34,7 +34,7 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
         autoComplete="off"
       />
       <div className="input-group-append">
-        <input type="submit" value="Registrar" form="CustomerForm" className="btn btn-outline-secondary" id="customer-btn"/>
+        <input type="submit" value="Aceptar" form="CustomerForm" className="btn btn-outline-secondary" id="customer-btn"/>
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
