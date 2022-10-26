@@ -81,7 +81,8 @@ const TableProduction =({children})=>{
                 <label htmlFor="lab" id="lab"> Costos de Producción</label>
                 
                 <Link to="/menu_costos" className="link1"> Establecer / Modificar Costos</Link>
-                <Link><button className="link2" onClick={()=> cambiarEstadoCosto(!estadoCosto)}> Calcular Nuevo Costo</button></Link></div>
+                <button className="link2" onClick={()=> cambiarEstadoCosto(!estadoCosto)}> Calcular Nuevo Costo</button>
+                </div>
             <div className="search">
                 <label htmlFor="lab2" id="lab2"> Buscar</label>
                 <input type="search" placeholder="Buscar..." id="Buscar" onChange={searcher} />

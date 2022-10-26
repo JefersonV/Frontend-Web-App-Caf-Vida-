@@ -77,8 +77,8 @@ const TableMaterial =({children})=>{
         
             {/**Tabla del listado de MAteria Prima */}
             <label htmlFor="lab" id="label1">Materia Prima</label>
-            <Link><button className="link4" onClick={()=> cambiarEstadoRegistro5(!estadoRegistro5)}> Agregar Nueva Materia Prima</button> 
-            </Link>
+            <button className="link4" onClick={()=> cambiarEstadoRegistro5(!estadoRegistro5)}> Agregar Nueva Materia Prima</button> 
+            
             <div className="wrapper-exterior" >
    <div className="table-wrapper" > 
         <table className="table table-striped w-80 thead-light ">
