@@ -1,15 +1,13 @@
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "../assets/styles/Table.css";
 import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import Swal from "sweetalert2";
-import ModalClientUpdate from "./modals/ModalClientUpdate";
+import ModalProviderUpdate from "./modals/ModalProviderUpdate";
 
-const TableClient = ({ children }) => {
+const TableProviders = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
   const [idEdit, setIdEdit] = useState("");
-  console.log(idEdit);
   const deleteSweet = (id) => {
     Swal.fire({
       title: "Estas seguro?",
@@ -32,7 +30,7 @@ const TableClient = ({ children }) => {
 
   //Funcion para obtener la lista de datos
   const getData = async () => {
-    const response = await fetch("http://localhost:3000/costumers", {
+    const response = await fetch("http://localhost:3000/inventory/provider", {
       headers: {
         token: localStorage.token,
       },
@@ -40,7 +38,6 @@ const TableClient = ({ children }) => {
     const data = await response.json();
     setData(data);
   };
-
   //funcion useffect para llamar y cargar los datos
   useEffect(() => {
     getData();
@@ -49,15 +46,14 @@ const TableClient = ({ children }) => {
   //Funcion eliminar
   const productDelete = async (id) => {
     console.log("click -> Id: ", id);
-    await fetch(`http://localhost:3000/costumers/${id}`, {
+    await fetch(`http://localhost:3000/inventory/provider/${id}`, {
       method: "DELETE",
       headers: {
         token: localStorage.token,
       },
     });
-    setData(data.filter((data) => data.id_cliente !== id));
+    setData(data.filter((data) => data.id_proveedor !== id));
   };
-
   return (
     <>
       <div>
@@ -67,10 +63,9 @@ const TableClient = ({ children }) => {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Correo</th>
+                <th scope="col">Teléfono</th>
                 <th scope="col">Dirección</th>
-                <th scope="col">NIT</th>
+                <th scope="col">Correo</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -79,19 +74,20 @@ const TableClient = ({ children }) => {
               {/* {results.map((item, index) => { */}
               {data.map((data, index) => {
                 return (
-                  <tr key={data.id_cliente}>
+                  <tr key={data.id_proveedor}>
                     <th>{index + 1}</th>
                     <td>{data.nombre}</td>
                     <td>{data.telefono}</td>
-                    <td>{data.correo}</td>
                     <td>{data.direccion}</td>
-                    <td>{data.nit}</td>
+                    <td>{data.correo}</td>
                     <td>
                       <button
-                        className="btn-borrar"
+                        className="btn-borrar" //btn-editar
                         onClick={() => {
                           cambiarEstadoModal2(!estadoModal2);
-                          setIdEdit(data.id_cliente);
+                          // Dirigir a la pagina que abre el modal para actualizar
+                          //history.push(`/products/${data.id_producto}/edit`);
+                          setIdEdit(data.id_proveedor);
                         }}
                       >
                         <AiIcons.AiOutlineEdit
@@ -101,13 +97,13 @@ const TableClient = ({ children }) => {
                       </button>
                       {/* <Link to="/products/:id/edit">
                         <AiIcons.AiOutlineEdit
-                          className="icon-eye icon-table"
-                          title="Editar registro"
+                        className="icon-eye icon-table"
+                        title="Editar registro"
                         />
                       </Link> */}
                       <button
                         className="btn-borrar"
-                        onClick={() => deleteSweet(data.id_cliente)}
+                        onClick={() => deleteSweet(data.id_proveedor)}
                       >
                         <FcIcons.FcFullTrash
                           className="icon-print icon-table"
@@ -123,14 +119,14 @@ const TableClient = ({ children }) => {
           {children}
         </div>
         {/* Traemos el modal y le pasamos los props */}
-        <ModalClientUpdate
+        <ModalProviderUpdate
           estado2={estadoModal2}
           cambiarEstado2={cambiarEstadoModal2}
           idEdit={idEdit}
-        ></ModalClientUpdate>
+        ></ModalProviderUpdate>
       </div>
     </>
   );
 };
 
-export default TableClient;
+export default TableProviders;

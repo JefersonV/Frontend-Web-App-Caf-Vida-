@@ -42,6 +42,8 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
       }
     });
   };
+  //Array de los registros PRUEBA
+  const [newData, setNewData] = useState([]);
 
   //Array de los registros
   const [data, setData] = useState([]);
@@ -59,7 +61,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
       nombre: data.nombre,
       telefono: data.telefono,
       correo: data.correo,
-      direccion: data.telefono,
+      direccion: data.direccion,
       nit: data.nit,
     });
   };
@@ -106,12 +108,23 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
       );
       // const data = await response.json();
       console.log(response);
-      // if (response.status === 204) {
-      //   saveSweetalert();
-      // }
+      if (response.status === 204) {
+        saveSweetalert();
+      }
     } catch (error) {
       console.log(error.massage);
     }
+  };
+
+  //PRUEBA
+  const getNewData = async () => {
+    const newResponse = await fetch(`http://localhost:3000/costumers`, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const newData = newResponse.json();
+    setNewData(newData);
   };
 
   return (
@@ -199,12 +212,12 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                 </div>
 
                 <LinkButt>
-                  <Link className="btn8" onClick={() => cancelSweet()}>
+                  <Link to="#" className="btn8" onClick={() => cancelSweet()}>
                     {" "}
                     Cancelar
                   </Link>
                   <button
-                    type="submit"
+                    // type="submit"
                     className="btn9"
                     onClick={() => saveSweetalert()}
                   >

@@ -44,11 +44,10 @@ const ModalAddProductUpdate = ({
           "success",
           cambiarEstado2(false)
         );
-        history.push("/products");
+        //history.push("/products");
       }
     });
   };
-  let op;
 
   //Array de los registros
   const [data, setData] = useState([]);
@@ -118,6 +117,8 @@ const ModalAddProductUpdate = ({
       const data = await response.json();
       console.log(data);
       console.log(response);
+      //Si el servidor devuelve codigo 204 de confirmación
+      //lanza alerta de guardado correctamente
       // if (response.status === 204) {
       //   saveSweetalert();
       // }
@@ -125,11 +126,6 @@ const ModalAddProductUpdate = ({
       console.log(error.massage);
     }
   };
-
-  //Id 1 tipo producto = cafe molido
-  if (dataProduct.tipo_producto == 1) {
-    op = "Cafe Molido";
-  }
 
   return (
     <>
@@ -189,38 +185,45 @@ const ModalAddProductUpdate = ({
                   />
                 </div>
                 <div className="pres-tip">
-                  <label htmlFor="" className="lal3">
-                    {" "}
-                    Presentación{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="unidad_medida"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value={dataProduct.unidad_medida}>
-                        {data.unidad_medida}
-                      </option>
-                      <option value="1"> 1 Libra</option>
-                      <option value="2"> 1/2 Libra</option>
-                    </select>
+                  <div className="pres-tip-body">
+                    <label htmlFor="" className="lal3">
+                      {" "}
+                      Presentación{" "}
+                    </label>
+                    <div className="boddy">
+                      <select
+                        className="txt1"
+                        id=""
+                        name="unidad_medida"
+                        onChange={(e) => onChangeData(e)}
+                      >
+                        <option value={dataProduct.unidad_medida}>
+                          {data.unidad_medida}
+                        </option>
+                        <option value="1"> 1 Libra</option>
+                        <option value="2"> 1/2 Libra</option>
+                      </select>
+                    </div>
                   </div>
-                  <label htmlFor="" className="lal5">
-                    {" "}
-                    Tipo de Producto{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="tipo_producto"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value={dataProduct.tipo_producto}>{op}</option>
-                      <option value="1"> Café Molido</option>
-                    </select>
+                  <div className="pres-tip-body">
+                    <label htmlFor="" className="lal5">
+                      {" "}
+                      Tipo de Producto{" "}
+                    </label>
+                    <div className="boddy">
+                      <select
+                        className="txt1"
+                        id=""
+                        name="tipo_producto"
+                        onChange={(e) => onChangeData(e)}
+                      >
+                        {/* <option value={dataProduct.tipo_producto}>{op}</option> */}
+                        <option value={dataProduct.tipo_producto}>
+                          Café Molido
+                        </option>
+                        <option value="1"> Café Molido</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <label htmlFor="" className="lal3">
@@ -291,7 +294,7 @@ const Overlay1 = styled.div`
 `;
 const ContenedorModal = styled.div`
   width: 550px;
-  height: 620px;
+  height: 580px;
   padding: 20px;
   background: #fff;
   position: relative;

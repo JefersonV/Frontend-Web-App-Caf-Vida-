@@ -74,9 +74,9 @@ const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
       );
       //const data = await response.json();
       console.log(response);
-      // if (response.status === 204) {
-      //   saveSweetalert();
-      // }
+      if (response.status === 204) {
+        saveSweetalert();
+      }
     } catch (error) {
       console.log(error.massage);
     }
@@ -159,14 +159,14 @@ const ModalAddRawMaterial = ({ children, estado2, cambiarEstado2 }) => {
                 </div>
 
                 <LinkButt>
-                  <Link className="btn8" onClick={() => cancelSweet()}>
+                  <Link to="#" className="btn8" onClick={() => cancelSweet()}>
                     {" "}
                     Cancelar
                   </Link>
                   <button
-                    type="submit"
+                    // type="submit"
                     className="btn9"
-                    onClick={() => saveSweetalert()}
+                    onClick={(e) => onSubmitForm(e)}
                   >
                     {" "}
                     Guardar{" "}

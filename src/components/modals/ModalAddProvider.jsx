@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import "../../assets/styles/Sales.css";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
-const ModalRawMaterialUpdate = ({
-  children,
-  estado2,
-  cambiarEstado2,
-  idEdit,
-}) => {
+const ModalAddProvider = ({ children, estado2, cambiarEstado2 }) => {
   const saveSweetalert = () => {
     Swal.fire({
       position: "top-center",
@@ -47,73 +42,39 @@ const ModalRawMaterialUpdate = ({
     });
   };
 
-  //Array de los registros
-  const [data, setData] = useState([]);
-
-  //Funcion para obtener la lista de datos
-  const getData = async (id) => {
-    const response = await fetch(
-      `http://localhost:3000/inventory/raw_material/${id}`,
-      {
-        headers: {
-          token: localStorage.token,
-        },
-      }
-    );
-    const data = await response.json();
-    setData(data);
-    setDataRawMaterial({
-      id_tipo_materia: data.tipo_materia,
-      cantidad: data.cantidad,
-      id_unidad_medida: data.unidad_medida,
-      costo: data.costo,
-    });
-  };
-  //console.log(data);
-
-  console.log(data);
-  //funcion useffect para llamar y cargar los datos
-  useEffect(() => {
-    if (idEdit) {
-      getData(idEdit);
-    }
-  }, [idEdit]);
-
   // Captura de datos del formulario para la API
-  const [dataRawMaterial, setDataRawMaterial] = useState({
-    id_tipo_materia: "",
-    cantidad: "",
-    id_unidad_medida: "",
-    costo: "",
+  const [dataProvider, setDataProvider] = useState({
+    nombre: "Coatitlan R.L",
+    telefono: 23232323,
+    direccion: "Santiago Atitlan, Sololá",
+    correo: "",
   });
 
+  //const history = useHistory();
   const onChangeData = (e) => {
-    setDataRawMaterial({ ...dataRawMaterial, [e.target.name]: e.target.value });
+    setDataProvider({ ...dataProvider, [e.target.name]: e.target.value });
     console.log(e.target.name, e.target.value);
   };
 
   //Evento de envío del formulario
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    console.log(dataRawMaterial);
+    //console.log(dataProduct);
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/inventory/raw_material/${idEdit}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(dataRawMaterial),
-          headers: {
-            "Content-Type": "application/json",
-            token: localStorage.token,
-          },
-        }
-      );
-      //const data = await response.json();
+      const response = await fetch("http://localhost:3000/inventory/provider", {
+        method: "POST",
+        body: JSON.stringify(dataProvider),
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+      });
+      // const data = await response.json();
       console.log(response);
-      // if (response.status === 204) {
-      //   saveSweetalert();
-      // }
+      if (response.status === 204) {
+        saveSweetalert();
+      }
     } catch (error) {
       console.log(error.massage);
     }
@@ -126,73 +87,67 @@ const ModalRawMaterialUpdate = ({
           <ContenedorModal>
             <h1>
               <BiEdit size="2rem" color="darkgreen" />
-              Actualizar Materia Prima{" "}
+              Ingreso de Proveedores{" "}
             </h1>
             {/* <Form onSubmit={onSubmitForm}> */}
-            <form onSubmit={onSubmitForm}>
+            <form>
               <Form>
-                <label htmlFor="" className="lal5">
+                <label htmlFor="" className="lal2">
                   {" "}
-                  Tipo de Materia Prima{" "}
+                  Nombre del Proveedor{" "}
                 </label>
                 <div className="boddy">
-                  <select
+                  <input
                     className="txt1"
-                    id=""
-                    name="id_tipo_materia"
+                    type="text"
+                    name="nombre"
+                    placeholder=" Ingrese nombre producto"
+                    //value={producto}
                     onChange={(e) => onChangeData(e)}
-                  >
-                    <option value="">{data.tipo_materia}...</option>
-                    <option value="1"> Café Pergamino</option>
-                    <option value="2"> Café en Grano</option>
-                  </select>
+                  />
                 </div>
 
                 <label htmlFor="" className="lal3">
                   {" "}
-                  Cantidad en Quintales{" "}
+                  Teléfono{" "}
                 </label>
-                <div className="boddy3">
+                <div className="boddy">
                   <input
                     className="txt1"
                     type="number"
-                    name="cantidad"
-                    placeholder=" Ingrese cantidad"
-                    value={dataRawMaterial.cantidad}
+                    name="telefono"
+                    placeholder=" Ingrese teléfono"
+                    //value={stock_ingreso}
                     onChange={(e) => onChangeData(e)}
                   />
-                  <label htmlFor="" className="lal3">
-                    {" "}
-                    Unidad de medida{" "}
-                  </label>
-                  <div className="boddy">
-                    <select
-                      className="txt1"
-                      id=""
-                      name="id_unidad_medida"
-                      onChange={(e) => onChangeData(e)}
-                    >
-                      <option value=""> {data.unidad_medida}</option>
-                      <option value="1"> 1 Libra</option>
-                      <option value="2"> 1/2 Libra</option>
-                      <option value="3"> 1 Quintal</option>
-                    </select>
-                  </div>
                 </div>
-
-                <label htmlFor="" className="la4">
+                <label htmlFor="" className="lal3">
                   {" "}
-                  Costo
+                  Correo electrónico{" "}
                 </label>
-                <div className="boddy4">
+                <div className="boddy">
                   <input
-                    className="txt4"
-                    type="number"
-                    name="costo"
-                    placeholder=" Ingrese el costo"
-                    value={dataRawMaterial.costo}
+                    type="text"
+                    className="txt1"
+                    id=""
+                    name="correo"
                     onChange={(e) => onChangeData(e)}
                   />
+                </div>
+                <label htmlFor="" className="lal5">
+                  {" "}
+                  Dirección{" "}
+                </label>
+                <div className="boddy">
+                  <textarea
+                    type="text"
+                    className="txt1"
+                    id=""
+                    name="direccion"
+                    onChange={(e) => onChangeData(e)}
+                    cols="51"
+                    rows="3"
+                  ></textarea>
                 </div>
 
                 <LinkButt>
@@ -201,15 +156,14 @@ const ModalRawMaterialUpdate = ({
                     Cancelar
                   </Link>
                   <button
-                    type="submit"
+                    // type="submit"
                     className="btn9"
-                    onClick={() => saveSweetalert()}
+                    onClick={(e) => onSubmitForm(e)}
                   >
                     {" "}
                     Guardar{" "}
                   </button>
                 </LinkButt>
-
                 {children}
               </Form>
             </form>
@@ -219,7 +173,7 @@ const ModalRawMaterialUpdate = ({
     </>
   );
 };
-export default ModalRawMaterialUpdate;
+export default ModalAddProvider;
 
 const Overlay1 = styled.div`
   width: 100vw;
@@ -234,7 +188,7 @@ const Overlay1 = styled.div`
 `;
 const ContenedorModal = styled.div`
   width: 550px;
-  height: 450px;
+  height: 500px;
   padding: 20px;
   background: #fff;
   position: relative;
@@ -245,6 +199,7 @@ const ContenedorModal = styled.div`
 
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   h1 {
+    text-align: center;
     margin-top: 0;
     font-size: 21px;
     margin-right: 200px;
@@ -280,7 +235,8 @@ const LinkButt = styled.div`
     box-shadow: 3px 3px 7px rgb(75, 33, 122);
     padding: 5px;
     margin-left: 100px;
-    background-color: rgba(24, 223, 230, 0.897);
+    background-color: lightseagreen;
+    border-color: lightseagreen;
     border-radius: 5px;
   }
   .btn8 {
@@ -289,6 +245,7 @@ const LinkButt = styled.div`
     background-color: rgba(230, 24, 24, 0.897);
     border: solid 1px;
     box-shadow: 3px 3px 7px rgb(75, 33, 122);
+    border-color: rgba(24, 223, 230, 0.897);
     border-radius: 5px;
   }
 `;
