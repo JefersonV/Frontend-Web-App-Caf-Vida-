@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState,useEffect}from 'react';
 import styled from 'styled-components'
 import { BiEdit } from "react-icons/bi";
 import Swal from "sweetalert2";
 
-const NewMaterialP=({children, estado5, CambiarEstado5})=>{
+const NewMaterialPUpdate=({children, estado5, CambiarEstado5, idEdit,})=>{
     const saveSweetalert = () => {
         Swal.fire({
           position: "top-center",
@@ -42,6 +42,38 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
         });
       };
     
+      const [data, setData] = useState([]);
+
+      //Funcion para obtener la lista de datos
+      const getData = async (id) => {
+        const response = await fetch( 
+          `http://localhost:4000/production_cost/menu_costo/raw_material/${id}`,
+          {
+            headers: {
+              token: localStorage.token,
+            },
+          }
+        );
+    const data = await response.json();
+    setData(data);
+    setDataMaterial({
+      id_tipo_materia: data.tipo_materia,
+      cantidad:data.cantidad,
+      id_unidad_medida:data.unidad_medida,
+      costo: data.costo,
+    });
+  };
+  //console.log(data);
+
+  console.log(data);
+  //funcion useffect para llamar y cargar los datos
+  useEffect(() => {
+    if (idEdit) {
+      getData(idEdit);
+    }
+  }, [idEdit]);
+
+  
       //para capturar Datos
       const [dataMaterial, setDataMaterial] = useState({
         id_tipo_materia:"",
@@ -51,7 +83,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
       });
 
       const onChangeData =(e)=>{
-        setDataMaterial({ ...dataMaterial,[e.target.name]: e.target.value});
+        setDataMaterial({ ...dataMaterial,[e.target.name]: e.target.value });
         console.log(e.target.name, e.target.value);
 
       };
@@ -62,8 +94,8 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
         console.log(dataMaterial);
         try{
           const response = await fetch(
-             "http://localhost:4000/production_cost/menu_costo/raw_material",{
-              method: "POST",
+             `http://localhost:4000/production_cost/menu_costo/raw_material/${idEdit}`,
+              {method: "PUT",
               body: JSON.stringify(dataMaterial),
               headers:{
                 "Content-Type":"application/json",
@@ -84,7 +116,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
         <Overlay>
         <Contenedor>
             <h1><BiEdit size="2rem" color=" rgb(104, 22, 8)" />
-            Establecer costo Materia Prima</h1>
+            Actualizando costo Materia Prima</h1>
             
             <form onSubmit={onSubmitForm}>
             <Form2>
@@ -98,7 +130,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
              name='id_tipo_materia'
               onChange={(e)=>onChangeData(e)}>
                 
-                <option value="">Seleccionar tipo de materia</option>
+                <option value="">{data.tipo_materia}</option>
                 <option value="1">Cafe pergamino</option>
                 <option value="2">Cafe grano</option>
             </select> 
@@ -121,6 +153,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
               type="number"
               name="cantidad"
               placeholder=" Ingrese cantidad"
+              value={dataMaterial.cantidad}
               onChange={(e)=> onChangeData(e)}
               
             />
@@ -129,7 +162,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
             name='id_unidad_medida'
             onChange={(e)=> onChangeData(e)}
             >
-              <option value="">Seleccione la U.medida</option>
+              <option value="">{data.unidad_medida}</option>
                 <option value="1">Quintal</option>
                 <option value="2">1 libra</option>
                 <option value="3">1/2 libra</option>
@@ -148,8 +181,9 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
               className="txt1"
               type="number"
               name="costo"
-              placeholder=" Ingrese el precio" 
-                            onChange={(e)=> onChangeData(e)}
+              placeholder=" Ingrese el precio"
+              value={dataMaterial.costo}
+              onChange={(e)=> onChangeData(e)}
               
             />
             </div>
@@ -176,7 +210,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
         </>
     );
 };
-export default NewMaterialP
+export default NewMaterialPUpdate
 
 const Overlay =styled.div`
 width: 100vw;

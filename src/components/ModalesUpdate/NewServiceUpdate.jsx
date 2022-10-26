@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { BiEdit } from "react-icons/bi";
 import Swal from "sweetalert2";
-const NewService=({children, estado4, CambiarEstado4})=>{
+const NewServiceUpdate=({children, estado4, CambiarEstado4, idEdit})=>{
     const saveSweetalert = () => {
         Swal.fire({
           position: "top-center",
@@ -41,6 +41,38 @@ const NewService=({children, estado4, CambiarEstado4})=>{
         });
       };
     
+      const [data, setData] = useState([]);
+
+      //Funcion para obtener la lista de datos
+      const getData = async (id) => {
+        const response = await fetch( 
+          `http://localhost:4000/production_cost/menu_costo/service/${id}`,
+          {
+            headers: {
+              token: localStorage.token,
+            },
+          }
+        );
+    const data = await response.json();
+    setData(data);
+    setDataService({
+      id_tipo_materia: data.materia_prima,
+      id_unidad_medida: data.unidad_de_medida,
+      id_tipo_servicio: data.servicio,
+      costo_servicio: data.costo_servicio,
+    });
+  };
+  //console.log(data);
+
+  console.log(data);
+
+//funcion useffect para llamar y cargar los datos
+useEffect(() => {
+  if (idEdit) {
+    getData(idEdit);
+  }
+}, [idEdit]);
+
 //para capturar Datos
 const [dataService, setDataService]=useState({
       
@@ -62,8 +94,8 @@ const onSubmitForm = async(e)=>{
   console.log(dataService);
   try{
     const response = await fetch(
-       "http://localhost:4000/production_cost/menu_costo/service",{
-        method: "POST",
+       `http://localhost:4000/production_cost/menu_costo/service/${idEdit}`,{
+        method: "PUT",
         body: JSON.stringify(dataService),
         headers:{
           "Content-Type":"application/json",
@@ -104,7 +136,7 @@ const onSubmitForm = async(e)=>{
                 <select className='select1'
                 name='id_tipo_servicio'
                 onChange={(e)=>onChangeData(e)}>
-                    <option value="">Seleccionar servicio</option>
+                    <option value="">{data.servicio}</option>
                     <option value="1">Tueste</option>
                     <option value="2">Empaque triliminado</option>
                     <option value="3">Empaque con zip y válvula</option>
@@ -115,6 +147,7 @@ const onSubmitForm = async(e)=>{
                   type="number"
                   name="costo_servicio"
                   placeholder=" Ingrese el costo"
+                  value={dataService.costo_servicio}
                   onChange={(e)=>onChangeData(e)}
                   
                 />
@@ -132,7 +165,7 @@ const onSubmitForm = async(e)=>{
                 <select className='select2'
                 name='id_tipo_materia'
                 onChange={(e)=>onChangeData(e)}>
-                  <option value="">Seleccionar tipo de materia</option>
+                  <option value="">{data.materia_prima}</option>
                 <option value="1">Cafe pergamino</option>
                 <option value="2">Cafe grano</option>
                 </select>
@@ -140,7 +173,7 @@ const onSubmitForm = async(e)=>{
                 <select className='txt1'
                 name='id_unidad_medida'
                 onChange={(e)=>onChangeData(e)}>
-                     <option value="">Seleccione la U.medida</option>
+                     <option value="">{data.unidad_de_medida}</option>
                 <option value="1">Quintal</option>
                 <option value="2">1 libra</option>
                 <option value="3">1/2 libra</option>
@@ -170,7 +203,7 @@ const onSubmitForm = async(e)=>{
         </>
     );
 };
-export default NewService
+export default NewServiceUpdate
 
 const Overlay =styled.div`
 width: 100vw;

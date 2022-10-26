@@ -62,16 +62,9 @@
     text-decoration:underline;
   
    }
-td {
-    font-size: .8em;
-  }
-  
-  .icon-table {
-    font-size: 1.8em;
-    margin-right: .3em;
-  }
-  table {
-    margin-left: 0;
-    overflow-y: scroll;
-    height: 30%;
-  }
+.btn-borrar{
+  border: none;
+}
+.btn-editar{
+  border: none;
+}

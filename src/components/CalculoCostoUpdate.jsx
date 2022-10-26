@@ -1,9 +1,9 @@
-import React, {useState}from 'react'
+import React, {useState, useEffect}from 'react'
 import styled from 'styled-components'
 import { BiEdit } from "react-icons/bi";
 import Swal from "sweetalert2";
 
-const CalculoCosto = ({children, estado, CambiarEstado}) => {
+const CalculoCosto = ({children, estado2, cambiarEstado2, idEdit}) => {
     const saveSweetalert = () => {
         Swal.fire({
           position: "top-center",
@@ -15,7 +15,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
           //background:'black'
         }).then((result) => {
           if (result.isConfirmed) {
-            CambiarEstado(false);
+            cambiarEstado2(false);
           }
         });
       };
@@ -36,21 +36,59 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
               "Cancelado",
               "El registro ha sido cancelado",
               "success",
-              CambiarEstado(false)
+              cambiarEstado2(false)
             );
+            //history.push("/production_cost");
           }
         });
       };
-    
-      //para capturar Datos
+      //let op;
+      
+      //Array de registros
+      const [data, setData] = useState([]);
+
+      //funcion para obtener la lista de datos
+
+      const getData = async(id) =>{
+        const response = await fetch(
+          `http://localhost:4000/production_cost/${id}`,
+          {
+            headers:{
+              token: localStorage.token,
+            },
+          }
+        );
+        const data = await response.json();
+        setData(data);
+        setDataProduction({
+          cantidad: data.cantidad,
+          precio_venta: data.precio_venta,
+          costo_por_libra: data.costo_por_libra,
+          id_empaque: data.tipo_empaque,
+          id_tipo_materia: data.materia_prima,
+          id_unidad_medida: data.unidad_de_medida,
+          id_servicio_cafe: data.servicio,
+        });
+      };
+      console.log(data)
+
+      //funcion para llamar y cargar datos
+      useEffect(()=>{
+        if (idEdit){
+          getData(idEdit);
+        }
+
+      },[idEdit]);
+
+         //para capturar Datos
       const [dataProduction, setDataProduction] = useState({
-        cantidad: "",
-    precio_venta: "",
-    costo_por_libra: "",
+        cantidad: 0,
+    precio_venta: 0,
+    costo_por_libra: 0,
     id_empaque: "",
     id_tipo_materia: "",
     id_unidad_medida: "",
-    id_servicio_cafe: ""
+    id_servicio_cafe: "",
 
       });
 
@@ -66,8 +104,9 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
         console.log(dataProduction);
         try{
           const response = await fetch(
-             "http://localhost:4000/production_cost",{
-              method: "POST",
+            
+          `http://localhost:4000/production_cost/${idEdit}`,{
+              method: "PUT",
               body: JSON.stringify(dataProduction),
               headers:{
                 "Content-Type":"application/json",
@@ -75,18 +114,24 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
               },
              }
              );
+             const data = await response.json();
+             console.log(data)
              console.log(response);
+
         }catch(error){
           console.log(error.massage);
         }
       };
+
+
+      // tipo producto = cafe 
      
 
 
     return (
     <>
     
-    {estado &&(
+    {estado2 &&(
         <Overlay>
             <Contenedor>
                 <h1><BiEdit size="2rem" color=" rgb(104, 22, 8)" />
@@ -100,8 +145,9 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
               <div className="boddy">
                  <select className='selec1'
                  name='id_tipo_materia'
-                 onChange={(e)=>onChangeData(e)}>
-                    <option value="">Seleccione materi prima..</option>
+                  onChange={(e)=>onChangeData(e)}>
+
+                    <option value=""> {data.materia_prima} </option>
                 <option value="1">Cafe pergamino</option>
                 <option value="2">Cafe grano</option>
                 </select>
@@ -121,14 +167,16 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                   className="txt1"
                   type="number"
                   name="cantidad"
+                  value={dataProduction.cantidad}
                   placeholder=" Ingrese cantidad"
                   onChange={(e)=> onChangeData(e)}
                 />
                 <select className='select1'
                 name='id_unidad_medida'
                 onChange={(e)=> onChangeData(e)}>
-                    <option value="">Seleccione la medida...</option>
-                    <option value="1">Quintal</option>
+
+                <option value="">{data.unidad_de_medida}</option>
+                <option value="1">Quintal</option>
                 <option value="2">1 libra</option>
                 <option value="3">1/2 libra</option>
                 </select>
@@ -148,7 +196,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                 name='id_empaque'
                 onChange={(e)=> onChangeData(e)}
                 >
-                    <option value="">Seleccionar empaque...</option>
+                    <option value="">{data.tipo_empaque}</option>
                     <option value="1">Empaqu válvula</option>
                     <option value="2">Empaque triliminado</option>
                     <option value="3">Empaque con zip y válvula</option>
@@ -158,7 +206,8 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                 <select className='select1'
                 name='id_servicio_cafe'
                 onChange={(e)=> onChangeData(e)}>
-                    <option value="">Seleccionar servicio</option>
+
+                    <option value="">{data.servicio}</option>
                     <option value="1">Tueste</option>
                     <option value="2">Empaque triliminado</option>
                     <option value="3">Empaque con zip y válvula</option>
@@ -180,6 +229,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                   type="text"
                   name="precio_venta"
                   placeholder=" venta por libra"
+                  value={dataProduction.precio_venta}
                   onChange={(e)=>onChangeData(e)}
 
                 />
@@ -188,6 +238,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                   type="text"
                   name="costo_por_libra"
                   placeholder=" Costo lb producida"
+                  value={dataProduction.costo_por_libra}
                   onChange={(e)=>onChangeData(e)}
                 />
               </div>

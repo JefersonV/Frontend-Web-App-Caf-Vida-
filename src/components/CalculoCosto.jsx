@@ -44,9 +44,9 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
     
       //para capturar Datos
       const [dataProduction, setDataProduction] = useState({
-        cantidad:"",
-    precio_venta:"",
-    costo_por_libra:"",
+        cantidad:0,
+    precio_venta:0,
+    costo_por_libra:0,
     id_empaque: "",
     id_tipo_materia: "",
     id_unidad_medida: "",
@@ -128,6 +128,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                 <select className='select1'
                 name='id_unidad_medida'
                 onChange={(e)=> onChangeData(e)}>
+
                     <option value="">Seleccione la medida...</option>
                     <option value="1">Quintal</option>
                 <option value="2">1 libra</option>
@@ -180,6 +181,7 @@ const CalculoCosto = ({children, estado, CambiarEstado}) => {
                   className="txt5"
                   type="text"
                   name="precio_venta"
+                  //value={precio_venta}
                   placeholder=" venta por libra"
                   onChange={(e)=>onChangeData(e)}
 

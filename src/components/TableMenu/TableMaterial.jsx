@@ -1,19 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import '../../assets/styles/MenuCostos.css'
+import '../../assets/styles/styleTablesMenu.css'
 import * as BiIcons from 'react-icons/bi'
 import * as AiIcons from 'react-icons/ai'
 import { Link } from "react-router-dom"
 import { useResultsSearchContext } from '../../providers/SidebarProvider'
 import NewMaterialP from '../../components/NewMaterialP'
+import NewMaterialPUpdate from '../ModalesUpdate/NewMaterialPUpdate'
+import Swal from "sweetalert2";
 
 const TableMaterial =({children})=>{
-      //Array de los registros
+      
+  const deleteSweet = (id) => {
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres eliminar el registro!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminalo!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Eliminado!", "El registro se ha elimando", "success");
+        materialDelete(id);
+      }
+    });
+  };
+  
+  //Array de los registros
   const [data, setData] = useState([]);
 
   //Funcion para obtener la lista de datos
   const getData = async () => {
     const response = await fetch( 
-      "http://localhost:4000/menu_costo/raw_material",
+      "http://localhost:4000/production_cost/menu_costo/raw_material",
       {
         headers: {
           token: localStorage.token,
@@ -29,18 +50,38 @@ const TableMaterial =({children})=>{
     getData();
   }, []);
 
+
+
+  //Funcion para elminar registro
+  const materialDelete = async (id) => {
+    console.log("click -> Id: ", id);
+    await fetch(`http://localhost:4000/production_cost/menu_costo/raw_material/${id}`, {
+      method: "DELETE",
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    setData(data.filter((data) => data.id_materia_prima !== id));
+  };
+
     //const sidebar = useSidebarContext()
     //data del estado global
-  const results= useResultsSearchContext()
+  //const results= useResultsSearchContext()
   //Estado para llamar el modal para los nuevos ingresos
   const[estadoRegistro5,cambiarEstadoRegistro5]=useState(false);
+  const [estadoUpdate, cambiarEstadoUpdate]=useState(false);
+  const [idEdit,setIdEdit] = useState("");
 
     return(
         <>
         
             {/**Tabla del listado de MAteria Prima */}
             <label htmlFor="lab" id="label1">Materia Prima</label>
-            <Link><button className="link4" onClick={()=> cambiarEstadoRegistro5(!estadoRegistro5)}> Agregar Nueva Materia Prima</button></Link><table className="table table-striped w-80 thead-light ">
+            <Link><button className="link4" onClick={()=> cambiarEstadoRegistro5(!estadoRegistro5)}> Agregar Nueva Materia Prima</button> 
+            </Link>
+            <div className="wrapper-exterior" >
+   <div className="table-wrapper" > 
+        <table className="table table-striped w-80 thead-light ">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -54,20 +95,26 @@ const TableMaterial =({children})=>{
         </thead>
         <tbody>
             {/**Data que trae el Hook Fetch */}
-            {results.map((data,index)=>{
+            {data.map((data,index)=>{
                 return(
-            <tr key={index}>
-                <th>{data.id_materia_prima}</th>
+            <tr key={data.id_materia_prima}>
+                <th>{index + 1}</th>
                 <td>{data.fecha}</td>
                 <td>{data.tipo_materia}</td>
                 <td>{data.cantidad}</td>
                 <td>{data.unidad_medida}</td>
                 <td>{data.costo}</td>
             <td>
-            <Link to = "#">
+            <button className='btn-editar'
+            onClick={()=> {cambiarEstadoUpdate(!estadoUpdate);
+            setIdEdit(data.id_materia_prima);
+          }}
+            >
                 <BiIcons.BiEdit color="darkblue" className="icon-edit icon-table" title="Editar Dato"/>
-            </Link>
-            <Link to ="#">
+            </button>
+
+            <Link to ="#"
+            onClick={() => deleteSweet(data.id_materia_prima)}>
                 <AiIcons.AiOutlineDelete color="darkred" className="icon-delete icon-table" title="Eliminar registro"/>
 
             </Link>
@@ -77,9 +124,11 @@ const TableMaterial =({children})=>{
         )
          })
         }
-        
+                 
+       
         </tbody>
         </table>
+ </div>
 
         
         {children}
@@ -89,9 +138,16 @@ const TableMaterial =({children})=>{
         CambiarEstado5={cambiarEstadoRegistro5}
 
         ></NewMaterialP>
+
+<NewMaterialPUpdate
+estado5={estadoUpdate}
+CambiarEstado5={cambiarEstadoUpdate}
+idEdit={idEdit}
+></NewMaterialPUpdate>
+ </div>
         </>
 
-    )
+    );
 
-}
-export default TableMaterial
+};
+export default TableMaterial;

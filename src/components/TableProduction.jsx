@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-
+import React from 'react'
+import {useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import '../assets/styles/TableProduction.css'
 import * as BiIcons from 'react-icons/bi'
 import * as AiIcons from 'react-icons/ai'
 import CalculoCosto from '../components/CalculoCosto'
+import CalculoCostoUpdate from '../components/CalculoCostoUpdate'
 import { useResultsSearchContext, useSearcherContext } from "../providers/SidebarProvider"
 import Swal from "sweetalert2";
 const TableProduction =({children})=>{
@@ -29,8 +30,10 @@ const TableProduction =({children})=>{
 
     //Estado para llamar el modal de calculo de costo
     const [estadoCosto, cambiarEstadoCosto] = useState(false);
+    const [estadoCosto2, cambiarEstadoCosto2] = useState(false);
+    const [idEdit,setIdEdit] = useState("");
     //dato del estado global
-    const results = useResultsSearchContext()
+    //const results = useResultsSearchContext()
     //Función de búsqueda
     const searcher = useSearcherContext()
 
@@ -55,6 +58,7 @@ const TableProduction =({children})=>{
     useEffect(() => {
       getData();
     }, []);
+
   //Funcion eliminar
   const productionDelete = async (id) => {
     console.log("click -> Id: ", id);
@@ -67,7 +71,7 @@ const TableProduction =({children})=>{
     setData(data.filter((data) => data.id_costo_produccion !== id));
   };
 
-    ///funcion para eliminar un registro
+   
 
 
     return(
@@ -85,6 +89,8 @@ const TableProduction =({children})=>{
             </div>
         </div>
 
+        <div className="wrapper-exterior" >
+   <div className="table-wrapper" > 
         <table className="table table-striped w-80 thead-light ">
         <thead>
           <tr>
@@ -106,7 +112,7 @@ const TableProduction =({children})=>{
         </thead>
         <tbody>
             {/**Data que trae el Hook Fetch */}
-            {results.map((data,index)=>{
+            {data.map((data,index)=>{
                 return(
             <tr key={data.id_costo_produccion}>
                 <th>{index + 1}</th>
@@ -124,15 +130,18 @@ const TableProduction =({children})=>{
                 <td>{data.ganancia_neta}</td>
 
             <td>
-            <Link to = "#">
+            <button className='btn-editar'
+            onClick={()=>{cambiarEstadoCosto2(!estadoCosto2);
+            setIdEdit(data.id_costo_produccion);
+          }}>
                 <BiIcons.BiEdit color="darkblue" className="icon-edit icon-table" title="Editar Dato"/>
-            </Link>
+            </button>
 
-            <Link
+            <button
             className='btn-borrar'
              onClick={()=>deleteSweet(data.id_costo_produccion)}
                 ><AiIcons.AiOutlineDelete color="darkred" className="icon-delete icon-table" title="Eliminar registro"/>
-            </Link>
+            </button>
         </td>
         
         </tr>
@@ -142,11 +151,19 @@ const TableProduction =({children})=>{
 
         </tbody>
         </table>
+        </div>
+        </div>
         {children}
         <CalculoCosto
         estado={estadoCosto}
         CambiarEstado ={cambiarEstadoCosto}
         ></CalculoCosto>
+
+        <CalculoCostoUpdate
+        estado2={estadoCosto2}
+        cambiarEstado2={cambiarEstadoCosto2}
+        idEdit={idEdit}
+        ></CalculoCostoUpdate>
 
         </>
 

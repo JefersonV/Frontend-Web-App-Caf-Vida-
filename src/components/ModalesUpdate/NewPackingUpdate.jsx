@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { BiEdit } from "react-icons/bi";
 import Swal from "sweetalert2";
-const NewService=({children, estado4, CambiarEstado4})=>{
+
+const NewMaterialUpdate=({ children, estado2, cambiarEstado2, idEdit })=>{
     const saveSweetalert = () => {
         Swal.fire({
           position: "top-center",
@@ -14,7 +15,7 @@ const NewService=({children, estado4, CambiarEstado4})=>{
           //background:'black'
         }).then((result) => {
           if (result.isConfirmed) {
-            CambiarEstado4(false);
+            cambiarEstado2(false);
           }
         });
       };
@@ -35,120 +36,128 @@ const NewService=({children, estado4, CambiarEstado4})=>{
               "Cancelado",
               "El registro ha sido cancelado",
               "success",
-              CambiarEstado4(false)
+              cambiarEstado2(false)
             );
           }
         });
       };
-    
-//para capturar Datos
-const [dataService, setDataService]=useState({
-      
-  id_tipo_materia:"",
-      id_unidad_medida: "",
-      id_tipo_servicio: "",
-      costo_servicio: 0,
-});
-const onChangeData =(e)=>{
-  setDataService({ ...dataService,[e.target.name]: e.target.value});
-  console.log(e.target.name, e.target.value);
 
+      //Array de los registros
+const [data, setData] = useState([]);
+
+//Funcion para obtener la lista de datos
+const getData = async (id) => {
+  const response = await fetch( 
+    `http://localhost:4000/production_cost/menu_costo/packing_material/${id}`,
+    {
+      headers: {
+        token: localStorage.token,
+      },
+    }
+  );
+  const data = await response.json();
+  setData(data);
+  setDataPacking({
+    tipo_empaque: data.nombre,
+    costo: data.costo,
+  });
 };
+console.log(data);
 
-
-//Enviar formulario
-const onSubmitForm = async(e)=>{
-  e.preventDefault();
-  console.log(dataService);
-  try{
-    const response = await fetch(
-       "http://localhost:4000/production_cost/menu_costo/service",{
-        method: "POST",
-        body: JSON.stringify(dataService),
-        headers:{
-          "Content-Type":"application/json",
-          token: localStorage.token,
-        },
-       }
-       );
-       console.log(response);
-  }catch(error){
-    console.log(error.massage);
+useEffect(() => {
+  if (idEdit) {
+    getData(idEdit);
   }
-};
+}, [idEdit]);
 
 
+      //para capturar Datos
+      const [dataPacking, setDataPacking] = useState({
+        tipo_empaque:"",
+        costo:"",
+      });
 
+      const onChangeData = (e) => {
+        setDataPacking({
+          ...dataPacking,
+          [e.target.name]: e.target.value,
+        });
+        console.log(dataPacking);
+      };
+
+      //Enviar formulario
+      const onSubmitForm = async(e)=>{
+        e.preventDefault();
+        console.log(dataPacking);
+        try{
+          const response = await fetch(
+             `http://localhost:4000/production_cost/menu_costo/packing_material/${idEdit}`,
+             {
+              method: "PUT",
+              body: JSON.stringify(dataPacking),
+              headers:{
+                "Content-Type":"application/json",
+                token: localStorage.token,
+              },
+             }
+             );
+             console.log(response);
+             if (response.status === 204) {
+              
+            }
+        }catch(error){
+          console.log(error.massage);
+        }
+      };
+     
+
+
+    
     return(
         <>
-        {estado4 && (
+        {estado2 &&(
             <Overlay>
             <Contenedor>
                 <h1><BiEdit size="2rem" color=" rgb(104, 22, 8)" />
                 Costos material de empaque</h1>
-
-                <form onSubmit={onSubmitForm}>
+                <form onSubmit={onSubmitForm}> 
                 <Form2>
-             
+
               <label htmlFor="" className="lal3">
                 {" "}
-                Tipo de Servicio{" "}
+                Material de Empaque{" "}
               </label>
               <label htmlFor="" className="labl4">
                 {" "}
-                Costo del servicio{" "}
+                Costo de empaque{" "}
               </label>
 
               <div className="boddy3">
                
-                <select className='select1'
-                name='id_tipo_servicio'
-                onChange={(e)=>onChangeData(e)}>
-                    <option value="">Seleccionar servicio</option>
-                    <option value="1">Tueste</option>
-                    <option value="2">Empaque triliminado</option>
-                    <option value="3">Empaque con zip y válvula</option>
-                    </select>
+                <select className='select1' id=''
+                name='tipo_empaque'
+                 onChange={(e)=>onChangeData(e)}>
+                  
+                  <option value="">{data.nombre}</option>
+                    <option value="1"> Empaque triliminado</option>
+                    <option value="2"> Empaque válvula</option>
+                    <option value="3"> Empaque con zip y válvula</option>
+                </select>
 
                 <input
                   className="txt1"
                   type="number"
-                  name="costo_servicio"
-                  placeholder=" Ingrese el costo"
+                  name="costo"
+                  value={dataPacking.costo}   
+                  placeholder=" Ingrese el costo del empaque"
                   onChange={(e)=>onChangeData(e)}
                   
                 />
               </div>
 
-              <label htmlFor="" className="la4">
-                {" "}
-                Materia Prima
-              </label>
-              <label htmlFor="" className="labl4">
-                {" "}
-                Unidad de Medida{" "}</label>
-              
-              <div className="boddy4">
-                <select className='select2'
-                name='id_tipo_materia'
-                onChange={(e)=>onChangeData(e)}>
-                  <option value="">Seleccionar tipo de materia</option>
-                <option value="1">Cafe pergamino</option>
-                <option value="2">Cafe grano</option>
-                </select>
-
-                <select className='txt1'
-                name='id_unidad_medida'
-                onChange={(e)=>onChangeData(e)}>
-                     <option value="">Seleccione la U.medida</option>
-                <option value="1">Quintal</option>
-                <option value="2">1 libra</option>
-                <option value="3">1/2 libra</option>
-                </select>
-                </div>
-
               <LinkButt>
-                <button className="btn8" onClick={() => saveSweetalert()}>
+                <button className="btn8" 
+                    onClick={(e) => saveSweetalert(e)}>
                   {" "}
                   Guardar
                 </button>
@@ -165,12 +174,12 @@ const onSubmitForm = async(e)=>{
         </Overlay>
 
             
-            
-            )}
+            )
+            }
         </>
     );
 };
-export default NewService
+export default NewMaterialUpdate
 
 const Overlay =styled.div`
 width: 100vw;
@@ -185,13 +194,13 @@ justify-content: center;
 `;
 const Contenedor =styled.div`
 width: 550px;
-  height: 350px;
+  height: 250px;
   padding: 20px;
   background: #fff;
   position: relative;
   margin-right: 80px;
   margin-left: 100px;
-  bottom: 40px;
+  bottom: 80px;
 
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   h1 {
@@ -240,7 +249,7 @@ margin-top: 30px;
 
 `;
 const LinkButt = styled.div`
-  margin-top: 50px;
+  margin-top: 30px;
   .btn9 {
     border-radius: .5em;
     box-shadow: 4px 4px 7px rgb(73, 16, 139);

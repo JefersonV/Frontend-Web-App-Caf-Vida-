@@ -1,15 +1,40 @@
 import React from 'react'
 import '../../assets/styles/MenuCostos.css'
+import '../../assets/styles/styleTablesMenu.css'
 import * as BiIcons from 'react-icons/bi'
 import * as AiIcons from 'react-icons/ai'
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react" 
 import { useResultsSearchContext } from '../../providers/SidebarProvider'
 import NewPacking from '../../components/NewPacking'
+import NewPackingUpdate from '../ModalesUpdate/NewPackingUpdate'
+import Swal from "sweetalert2";
 
 const TablePacking =({children})=>{
     const [estadoRegistro3, cambiarEstadoRegistro3] = useState(false);
-    const results= useResultsSearchContext()
+
+    const [estadoModal2, cambiarEstadoModal2] = useState(false);
+    const [idEdit, setIdEdit] = useState("")
+
+    //const results= useResultsSearchContext()
+
+
+    const deleteSweet = (id) => {
+      Swal.fire({
+        title: "Estas seguro?",
+        text: "Quieres eliminar el registro!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminalo!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Eliminado!", "El registro se ha elimando", "success");
+          packingDelete(id);
+        }
+      });
+    };
 
 //Array de los registros
 const [data, setData] = useState([]);
@@ -17,7 +42,7 @@ const [data, setData] = useState([]);
 //Funcion para obtener la lista de datos
 const getData = async () => {
   const response = await fetch( 
-    "http://localhost:4000/menu_costo/packing_material",
+    "http://localhost:4000/production_cost/menu_costo/packing_material",
     {
       headers: {
         token: localStorage.token,
@@ -34,6 +59,19 @@ useEffect(() => {
 }, []);
 
   
+//Funcion para elminar registro
+const packingDelete = async (id) => {
+  console.log("click -> Id: ", id);
+  await fetch(`http://localhost:4000/production_cost/menu_costo/packing_material/${id}`, {
+    method: "DELETE",
+    headers: {
+      token: localStorage.token,
+    },
+  });
+  setData(data.filter((data) => data.id_empaque !== id));
+};
+
+
     return(
         <>
         {/** Se encuentra la tabla de listado de los materiales de empaque*/}
@@ -41,6 +79,9 @@ useEffect(() => {
           <div><label htmlFor="lab" id="label1">Materiales de Empaque</label> 
         <button className="link7" onClick={()=> cambiarEstadoRegistro3(!estadoRegistro3)} > Agregar nuevo empaque</button> </div>
 
+
+    <div className="wrapper-exterior" >
+   <div className="table-wrapper" > 
    <table className="table table-striped w-80 thead-light ">
         <thead>
           <tr>
@@ -53,19 +94,25 @@ useEffect(() => {
         </thead>
         <tbody>
             {/**Data que trae el Hook Fetch */}
-            {results.map((packing,index)=>{
+            {data.map((data,index)=>{
                 return(
-            <tr key={index}>
-                <th>{packing.id_empaque}</th>
-                <td>{packing.fecha}</td>
-                <td>{packing.nombre}</td>
-                <td>{packing.costo}</td>
+            <tr key={data.id_empaque}>
+                <th>{index + 1}</th>
+                <td>{data.fecha}</td>
+                <td>{data.nombre}</td>
+                <td>{data.costo}</td>
                 
             <td>
-            <Link to = "#">
+            <button className='btn-editar'
+            onClick={() => {
+              cambiarEstadoModal2(!estadoModal2);
+              setIdEdit(data.id_empaque);
+            }}
+            >
                 <BiIcons.BiEdit color="darkblue" className="icon-edit icon-table" title="Editar Dato"/>
-            </Link>
-            <Link to ="#">
+            </button>
+            <Link to ="#"
+            onClick={() => deleteSweet(data.id_empaque)}>
                 <AiIcons.AiOutlineDelete color="darkred" className="icon-delete icon-table" title="Eliminar registro"/>
 
             </Link>
@@ -79,6 +126,8 @@ useEffect(() => {
         </tbody>
         </table>
         </div>
+        </div>
+        </div>
         {children}
 
         <NewPacking
@@ -86,6 +135,13 @@ useEffect(() => {
         CambiarEstado3 ={cambiarEstadoRegistro3}
 
         ></NewPacking>
+        <NewPackingUpdate
+        estado2={estadoModal2}
+        cambiarEstado2={cambiarEstadoModal2}
+        idEdit={idEdit}
+        >
+
+        </NewPackingUpdate>
 
         </>
     )
