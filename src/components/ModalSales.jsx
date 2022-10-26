@@ -20,7 +20,6 @@ import SearchBarDrop from './SearchBarDrop';
 import SideBarMenu from './SideBarMenu';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
-import { Table } from 'react-bootstrap';
 
 const ModalSales = ({ children }) => {
   // Para que se ajuste con respecto a la sidebar
@@ -320,14 +319,16 @@ const ModalSales = ({ children }) => {
     }
 
     setSubTotal(sumaSubtotal)
+    setTotal(sumaSubtotal)
+    setDescuento(0)
   }
 
   /* Manejador del control de pago */
-  const [pay, setPay] = useState({})
+  const [payMethod, setpayMethod] = useState({})
   const onChangePay = e => {
-    setPay( {pay: e.target.value} )
+    setpayMethod( e.target.value )
     console.log('Pago')
-    console.log(pay)
+    console.log(payMethod)
   }
 
 
@@ -380,12 +381,13 @@ const ModalSales = ({ children }) => {
             // calcularTotal(tableData)
             
             const arrayCalculo = []
-            // Le pasamos los datos que tiene el estado además el nuevo que también debe calcular
+            // Le pasamos los datos que tiene el estado(tableData) además el nuevo que también debe calcular
             arrayCalculo.push(...tableData)
             arrayCalculo.push(productoIngresado)
             
             console.log('calculado')
             console.log(arrayCalculo)
+            //Fn CalcularTotal
             calcularTotal(arrayCalculo)
 
           }
@@ -421,22 +423,36 @@ const ModalSales = ({ children }) => {
       )
     return
     }
-    console.log('prueba de return')
+    //Objeto que se mandará en la petición post, sus values deben ser -> estados
     let ventaApiPost = {
-      fecha: '',
-      cantidad: '',
-      descripcion: 'prueba de un post',
-      descuento: 0,
-      subtotal: 150,
-      total: 150,
-      cliente: 1,
-      factura: 2,
-      producto: 1,
-      modo_pago: 2,
-      usuario: 1,
-    }
+    fecha: '', // ?
+    cantidad: '', // 
+    descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
+    descuento: descuento,
+    subtotal: subTotal,
+    total: total,
+    cliente: clientSelected, //
+    factura: 10, // ?
+    producto: '', //
+    modo_pago: payMethod, //
+    usuario: 1, //
+  }
+
+  // En caso de que se haya seleccionado más de 1 producto para la venta
+  if(tableData.length > 0) {
+    const idProductos = tableData.map((producto) => {
+      return producto.id
+    })
+    // console.log('Separado por comas')
+    // console.log(idProductos.join())
+    let productosVarios = idProductos.join()
+    ventaApiPost.producto = productosVarios
+  } 
+
+  console.log(ventaApiPost)
+  console.log(JSON.stringify(ventaApiPost))
     //() => saveConfirmed()
-    const url = "http://localhost:4000/sales"
+    /* const url = "http://localhost:4000/sales"
     const submitDataVenta = async (url) => {
       try {
         const response = await (fetch(url, {
@@ -453,7 +469,7 @@ const ModalSales = ({ children }) => {
         console.log(err.message)
       }
     }
-    submitDataVenta(url)  
+    submitDataVenta(url)   */
   }
 
   const [descuento, setDescuento] = useState(0)
@@ -662,7 +678,8 @@ const ModalSales = ({ children }) => {
                     </select>
                   </div>
                   <div className="metodo-right">
-                    <input type="number" name="descuento" onChange={onChangeDiscount} minLength="1" maxLength="30" placeholder="Descuento en %"/>
+                    <label htmlFor="descuento">Agregar Descuento</label>
+                    <input id="descuento" type="number" name="descuento" onChange={onChangeDiscount} min="1" max="30" placeholder="%"/>
                     {/* <button onClick={aplicarDescuento} className="btn-primary rounded">Aplicar Descuento</button> */}
 
                   </div>
