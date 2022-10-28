@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import "./widget.scss";
 
 const Widget = ({ type }) => {
-  const getSales = async () => {
+  /*const getSales = async () => {
     const res = await fetch("http://localhost:3000/sales/18");
     const data = await res.json();
     console.log(data);
   };
 
   getSales();
+  */
   //temporal
   const ventasMes = 2500;
   const costoMes = 3500;
