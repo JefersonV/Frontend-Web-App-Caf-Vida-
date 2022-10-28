@@ -4,7 +4,7 @@ import "./widget.scss";
 
 const Widget = ({ type }) => {
   const getSales = async () => {
-    const res = await fetch("http://localhost:3000/sales/18");
+    const res = await fetch("http://localhost:4000/sales/9");
     const data = await res.json();
     console.log(data);
   };

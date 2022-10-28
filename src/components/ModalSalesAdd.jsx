@@ -150,7 +150,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
                   placeholder=" Ingrese Dirección"
                   value={direccion}
                   onChange={(e) => onChangeData(e)}
-                />
+                /> 
               </div>
 
               <label htmlFor="" className="lal5">
