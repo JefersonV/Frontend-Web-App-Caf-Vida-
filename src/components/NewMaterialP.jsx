@@ -62,7 +62,7 @@ const NewMaterialP=({children, estado5, CambiarEstado5})=>{
         console.log(dataMaterial);
         try{
           const response = await fetch(
-             "http://localhost:4000/production_cost/menu_costo/raw_material",{
+             "http://localhost:3000/production_cost/menu_costo/raw_material",{
               method: "POST",
               body: JSON.stringify(dataMaterial),
               headers:{

@@ -34,7 +34,7 @@ const TableMaterial =({children})=>{
   //Funcion para obtener la lista de datos
   const getData = async () => {
     const response = await fetch( 
-      "http://localhost:4000/production_cost/menu_costo/raw_material",
+      "http://localhost:3000/production_cost/menu_costo/raw_material",
       {
         headers: {
           token: localStorage.token,
@@ -55,7 +55,7 @@ const TableMaterial =({children})=>{
   //Funcion para elminar registro
   const materialDelete = async (id) => {
     console.log("click -> Id: ", id);
-    await fetch(`http://localhost:4000/production_cost/menu_costo/raw_material/${id}`, {
+    await fetch(`http://localhost:3000/production_cost/menu_costo/raw_material/${id}`, {
       method: "DELETE",
       headers: {
         token: localStorage.token,

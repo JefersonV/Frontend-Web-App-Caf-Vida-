@@ -59,7 +59,7 @@ const NewMaterial=({children, estado3, CambiarEstado3})=>{
         console.log(dataPacking);
         try{
           const response = await fetch(
-             "http://localhost:4000/production_cost/menu_costo/packing_material",{
+             "http://localhost:3000/production_cost/menu_costo/packing_material",{
               method: "POST",
               body: JSON.stringify(dataPacking),
               headers:{

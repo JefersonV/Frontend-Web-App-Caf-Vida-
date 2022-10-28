@@ -47,7 +47,7 @@ const NewMaterialPUpdate=({children, estado5, CambiarEstado5, idEdit,})=>{
       //Funcion para obtener la lista de datos
       const getData = async (id) => {
         const response = await fetch( 
-          `http://localhost:4000/production_cost/menu_costo/raw_material/${id}`,
+          `http://localhost:3000/production_cost/menu_costo/raw_material/${id}`,
           {
             headers: {
               token: localStorage.token,
@@ -94,7 +94,7 @@ const NewMaterialPUpdate=({children, estado5, CambiarEstado5, idEdit,})=>{
         console.log(dataMaterial);
         try{
           const response = await fetch(
-             `http://localhost:4000/production_cost/menu_costo/raw_material/${idEdit}`,
+             `http://localhost:3000/production_cost/menu_costo/raw_material/${idEdit}`,
               {method: "PUT",
               body: JSON.stringify(dataMaterial),
               headers:{

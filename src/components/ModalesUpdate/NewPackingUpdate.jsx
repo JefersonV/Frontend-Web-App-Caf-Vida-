@@ -48,7 +48,7 @@ const [data, setData] = useState([]);
 //Funcion para obtener la lista de datos
 const getData = async (id) => {
   const response = await fetch( 
-    `http://localhost:4000/production_cost/menu_costo/packing_material/${id}`,
+    `http://localhost:3000/production_cost/menu_costo/packing_material/${id}`,
     {
       headers: {
         token: localStorage.token,
@@ -91,7 +91,7 @@ useEffect(() => {
         console.log(dataPacking);
         try{
           const response = await fetch(
-             `http://localhost:4000/production_cost/menu_costo/packing_material/${idEdit}`,
+             `http://localhost:3000/production_cost/menu_costo/packing_material/${idEdit}`,
              {
               method: "PUT",
               body: JSON.stringify(dataPacking),

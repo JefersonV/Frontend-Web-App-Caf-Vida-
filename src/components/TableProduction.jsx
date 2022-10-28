@@ -43,7 +43,7 @@ const TableProduction =({children})=>{
     //Funcion para obtener la lista de datos
     const getData = async () => {
       const response = await fetch( 
-        "http://localhost:4000/production_cost",
+        "http://localhost:3000/production_cost",
         {
           headers: {
             token: localStorage.token,
@@ -62,7 +62,7 @@ const TableProduction =({children})=>{
   //Funcion eliminar
   const productionDelete = async (id) => {
     console.log("click -> Id: ", id);
-    await fetch(`http://localhost:4000/production_cost/${id}`, {
+    await fetch(`http://localhost:3000/production_cost/${id}`, {
       method: "DELETE",
       headers: {
         token: localStorage.token,

@@ -46,7 +46,7 @@ const NewServiceUpdate=({children, estado4, CambiarEstado4, idEdit})=>{
       //Funcion para obtener la lista de datos
       const getData = async (id) => {
         const response = await fetch( 
-          `http://localhost:4000/production_cost/menu_costo/service/${id}`,
+          `http://localhost:3000/production_cost/menu_costo/service/${id}`,
           {
             headers: {
               token: localStorage.token,
@@ -94,7 +94,7 @@ const onSubmitForm = async(e)=>{
   console.log(dataService);
   try{
     const response = await fetch(
-       `http://localhost:4000/production_cost/menu_costo/service/${idEdit}`,{
+       `http://localhost:3000/production_cost/menu_costo/service/${idEdit}`,{
         method: "PUT",
         body: JSON.stringify(dataService),
         headers:{

@@ -62,7 +62,7 @@ const onSubmitForm = async(e)=>{
   console.log(dataService);
   try{
     const response = await fetch(
-       "http://localhost:4000/production_cost/menu_costo/service",{
+       "http://localhost:3000/production_cost/menu_costo/service",{
         method: "POST",
         body: JSON.stringify(dataService),
         headers:{

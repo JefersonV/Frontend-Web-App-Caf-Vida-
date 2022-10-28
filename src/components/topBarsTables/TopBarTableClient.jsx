@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/styles/Sales.css";
+// import "../../assets/styles/Sales.css";
 import { useSearcherContext } from "../../providers/SidebarProvider";
 import { useState } from "react";
 import ModalAddClient from "../modals/ModalAddClient";

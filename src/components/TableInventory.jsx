@@ -27,10 +27,10 @@ const TableInventory = () => {
         <tbody>
           {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
           {results.map((item, index) => {
-            // let fechaArray = item.fecha.split("T");
+            /* // let fechaArray = item.fecha.split("T");
             let opcion;
             if (item.cliente == null) opcion = item.proveedor;
-            else opcion = item.cliente;
+            else opcion = item.cliente; */
 
             return (
               <tr key={index}>

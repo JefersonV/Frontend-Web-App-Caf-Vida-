@@ -42,7 +42,7 @@ const [data, setData] = useState([]);
 //Funcion para obtener la lista de datos
 const getData = async () => {
   const response = await fetch( 
-    "http://localhost:4000/production_cost/menu_costo/packing_material",
+    "http://localhost:3000/production_cost/menu_costo/packing_material",
     {
       headers: {
         token: localStorage.token,
@@ -62,7 +62,7 @@ useEffect(() => {
 //Funcion para elminar registro
 const packingDelete = async (id) => {
   console.log("click -> Id: ", id);
-  await fetch(`http://localhost:4000/production_cost/menu_costo/packing_material/${id}`, {
+  await fetch(`http://localhost:3000/production_cost/menu_costo/packing_material/${id}`, {
     method: "DELETE",
     headers: {
       token: localStorage.token,
