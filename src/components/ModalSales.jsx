@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import ModalSalesAdd from './ModalSalesAdd';
 import SearchBarDrop from './SearchBarDrop';
 import SideBarMenu from './SideBarMenu';
+import { useHistory } from 'react-router-dom';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
 
@@ -53,90 +54,28 @@ const ModalSales = ({ children }) => {
     getProducts()
     console.log('productos fetch')
     console.log(fetchProducts)
+    
   }, [])
 
-  const clientes = [
-    {
-      id: 1,
-      nombre: 'Jeferson Velásquez',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 2,
-      nombre: 'Juan Pérez',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 3,
-      nombre: 'Esther López',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 4,
-      nombre: 'Marina García',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 5,
-      nombre: 'Mario Gómez',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 6,
-      nombre: 'Esteban López',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 7,
-      nombre: 'Juan Gonzáles',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 8,
-      nombre: 'Marina López',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 9,
-      nombre: 'María Rodríguez',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-    {
-      id: 10,
-      nombre: 'Marino Gómez',
-      telefono: 12345678,
-      correo: 'jvelasquezc@example.com',
-      direccion: 'Panajachel, zona 1',
-      nit: 23154668
-    },
-  ]
+  const [fetchClients, setFetchClients] = useState([])
+  const getClients = async () => {
+    const response = await fetch("http://localhost:4000/costumers", {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    console.log('respuesta')
+    console.log(response)
+    const data = await response.json()
+    setFetchClients(data)
+    // setFetchClients(fetchProducts => [defaultOptionProduct, ...fetchProducts])  
+  }
+
+  useEffect(() => {
+    getClients()
+    console.log('Clientes fetch')
+    console.log(fetchClients)
+  }, [])
   
   /* Sweet alert */
   const cancelSweet = () => {
@@ -197,8 +136,8 @@ const ModalSales = ({ children }) => {
   // console.log(clientes.length)
   /* Opciones que aparecerán en el buscador */
   const defaultOptions = [];
-  for (let i = 0; i < clientes.length-1; i++) {
-    defaultOptions.push(`${clientes[i].nombre}`);
+  for (let i = 0; i < fetchClients.length-1; i++) {
+    defaultOptions.push(`${fetchClients[i].nombre}`);
   }
   
   // Estado del buscador
@@ -216,7 +155,7 @@ const ModalSales = ({ children }) => {
     console.log(clientSelected)
     console.log('acción cliente')
     //Verificamos que el cliente exista, según los datos de la API
-    const clienteEncontrado = clientes.find((cliente) => 
+    const clienteEncontrado = fetchClients.find((cliente) => 
       cliente.nombre === clientSelected.client
     )
 
@@ -233,6 +172,7 @@ const ModalSales = ({ children }) => {
   }
   // Comprueba si hay datos que agregar a la tabla
   const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0 
+
   // onSubmit de cliente
   const onSubmitClient = e => {
     e.preventDefault();
@@ -253,7 +193,6 @@ const ModalSales = ({ children }) => {
     console.log(clientSelected)
   }
 
-  
   //Estado de Select option de producto
   const [productSelected, setProductSelected] = useState({});
 
@@ -349,7 +288,6 @@ const ModalSales = ({ children }) => {
     console.log(payMethod)
   }
 
-
   // Cantidad de producto seleccionado con sweetAlert
   const productoSeleccionado = (tableData, productSelected) => {
     // La primera opción por defecto no cuenta
@@ -417,7 +355,6 @@ const ModalSales = ({ children }) => {
   console.log(tableData)
   
   /* ------------- Finalizar venta ---------*/
- 
   const finalizarVenta = () => {
     // Validaciones
     if(tableData.length < 1 && clientObjectIsEmpty(clientTable)) {
@@ -446,15 +383,34 @@ const ModalSales = ({ children }) => {
       return producto.id
     })
     // Fn para validar que no aparezcan productos repetidos para la venta.
-    const esProductoUnico = (valor,index,lista) => {
+    const esUnProductoUnico = (valor,index,lista) => {
       return !(lista.indexOf(valor) === index)
     }
     // Objeto a enviar en caso de que cumpla con las validaciones
     let ventaApiPost = {}
     
     let productosVarios = idProductos
+    
+    if(tableData.length === 1) {
+      ventaApiPost = {
+        fecha: '', // ?
+        cantidad: '', // 
+        descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
+        descuento: descuento,
+        subtotal: subTotal,
+        total: total,
+        cliente: clientSelected, //
+        factura: 10, // ?
+        producto: tableData[0].id, //
+        modo_pago: payMethod, //
+        usuario: 1, //
+      }
+      console.log(ventaApiPost)
+      console.log(JSON.stringify(ventaApiPost))
+      return
+    }
     // En caso de que se haya seleccionado más de 1 producto para la venta
-    if(tableData.length > 1 && productosVarios.some(esProductoUnico) === false) {
+    if(tableData.length > 1 && productosVarios.some(esUnProductoUnico) === false) {
       console.log('NO se repiten todo bien :)')
       ventaApiPost = {
         fecha: '', // ?
@@ -471,31 +427,17 @@ const ModalSales = ({ children }) => {
       }
       // Captura de los productos seleccionados
       ventaApiPost.producto = productosVarios.join()
+      console.log(ventaApiPost)
+      console.log(JSON.stringify(ventaApiPost))
     } else {
+      setTimeout(() => {
+        history.push("/sales")
+      }, 2000)
       Swal.fire('Productos Repetidos',
       'No se puede ',
       'error')
     }
     
-    if(tableData.length === 1) {
-      ventaApiPost = {
-        fecha: '', // ?
-        cantidad: '', // 
-        descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
-        descuento: descuento,
-        subtotal: subTotal,
-        total: total,
-        cliente: clientSelected, //
-        factura: 10, // ?
-        producto: tableData[0].id, //
-        modo_pago: payMethod, //
-        usuario: 1, //
-      }
-
-    }
-    
-    console.log(ventaApiPost)
-    console.log(JSON.stringify(ventaApiPost))
     //() => saveConfirmed()
     /* const url = "http://localhost:4000/sales"
     const submitDataVenta = async (url) => {
@@ -528,7 +470,7 @@ const ModalSales = ({ children }) => {
     // setTotal = total - (inputValue / 100)
     console.log('descuento capturado')
     console.log(typeof descuento)
-
+    
     /*----- Cálculo del total después de capturar el descuento ----- */
     if(descuento > 0) {
       // totalAux = sumaSubtotal - descuento
@@ -589,23 +531,23 @@ const ModalSales = ({ children }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    { clientObjectIsEmpty(clientTable) ? (
+                    {typeof(clientTable) === undefined || typeof(clientTable) === null  || clientObjectIsEmpty(clientTable) ? (
                       <tr>
                         <td>No hay ningún cliente registrado</td>
                       </tr>
                     ) : (
-                        clientTable.map((cliente, index) => {
-                          return (
-                            <tr key={index}>
-                              <th scope="row">{index+1}</th>
-                              <td>{cliente.nombre}</td>
-                              <td>{cliente.telefono}</td>
-                              <td>{cliente.correo}</td>
-                              <td>{cliente.direccion}</td>
-                              <td>{cliente.nit}</td>
-                            </tr>
-                          )
-                        })
+                      clientTable.map((cliente, index) => {
+                        return (
+                          <tr key={index}>
+                            <th scope="row">{index+1}</th>
+                            <td>{cliente.nombre}</td>
+                            <td>{cliente.telefono}</td>
+                            <td>{cliente.correo}</td>
+                            <td>{cliente.direccion}</td>
+                            <td>{cliente.nit}</td>
+                          </tr>
+                        )
+                      })
                     )}
                   </tbody>
                 </table>

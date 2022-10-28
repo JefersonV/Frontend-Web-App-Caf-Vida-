@@ -15,13 +15,14 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient 
     //Evento para que se desaparezca la lista de botones, al hacer click por fuera del elemento
     document.addEventListener('click', (event) => {
       ulRef.current.style.display = 'none';
+      // ulRef.current.style={display: 'none'}
     });
   }, []);
   
   return (
     <div className="search-bar-dropdown">
 
-    <FcIcons.FcSearch/>
+    {/* <FcIcons.FcSearch/> */}
     <div className="input-group mb-3">
       <input 
         id="search-bar" 
@@ -37,7 +38,7 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient 
       />
       <div className="input-group-append">
         <input type="submit" value="Aceptar" form="CustomerForm" className="btn btn-outline-primary" id="customer-btn"
-        onSubmit={onSubmitClient}/>
+        />
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
@@ -54,6 +55,7 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient 
                 inputRef.current.value = option;
               }}
               className="list-group-item list-group-item-action"
+              id="buttons-actions"
               >
               {/* <AiIcons.AiOutlineSearch /> */}
               {option}

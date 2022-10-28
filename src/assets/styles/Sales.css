@@ -257,3 +257,9 @@
 .options-hide {
 	display: none;
 }
+
+@media screen and (max-width) {
+	#customer-btn {
+		margin-left: 2em;
+	}
+}
