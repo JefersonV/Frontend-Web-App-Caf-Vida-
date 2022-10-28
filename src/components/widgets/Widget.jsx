@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./widget.scss";
 
 const Widget = ({ type }) => {
-
   // const getSales = async () => {
   //   const res = await fetch("http://localhost:3000/sales/18");
   //   const data = await res.json();
@@ -13,6 +12,7 @@ const Widget = ({ type }) => {
   //getSales();
   const getSales = async () => {
     const res = await fetch("http://localhost:3000/sales/9");
+
     const data = await res.json();
     console.log(data);
   };
