@@ -18,7 +18,7 @@
 .BodyDate {
 	margin-left: .5em;
 }
- 
+
 .buttons-saleTop {
 	display: flex;
 	justify-content: space-around;
@@ -138,9 +138,20 @@
 
 .metodo {
 	display: flex;
-	justify-content: space-evenly;
+	justify-items: center;
+	align-content: center;
+	gap: 8em;
+	width: 100%;
 }
 
+.metodo label {
+	font-weight: bold;
+	margin-right: 3em;
+}
+
+.metodo select {
+	width: 300px;
+}
 .select3 {
 	margin-left: 10px;
 }
@@ -178,12 +189,6 @@
 .form-product-select select {
 	width: 40%;
 }
-
-/*Tabla producto*/
-/* .table {
-	margin-left: 45vh;
-	margin-top: 5px;
-} */
 
 .table {
 	margin-bottom: .5rem;

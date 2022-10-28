@@ -263,9 +263,11 @@ const ModalSales = ({ children }) => {
   //Estado para desactivar del botón registrar producto
   const [selectDisabled, setSelectDisabled] = useState(false);
   //Se asegura que si se han usado las opciones disponibles, se bloquee el botón Agregar producto
-  const switchSelect = () => {
+  const switchSelect = (e) => {
     if (tableData.length === fetchProducts.length - 1) {
       setSelectDisabled(true);
+      console.log('Option')
+      console.log(e.target)
       //Sweet alert2
       Swal.fire({
         title: 'Todas las opciones disponibles han sido agregadas',
@@ -288,8 +290,24 @@ const ModalSales = ({ children }) => {
     console.log('Seleccionado')
     console.log(productSelected)
     e.stopPropagation();
+
+    if(tableData.length > 0) {
+      console.log('Ya registró el primero')
+      console.log(e.target.selected)
+    }
   };
   
+  //Funcion eliminar
+  const productDelete = async (id) => {
+    console.log("click -> Id: ", id);
+    await fetch(`http://localhost:3000/costumers/${id}`, {
+      method: "DELETE",
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    setData(data.filter((data) => data.id_cliente !== id));
+  };
   // Btn agregar
   let productoEncontrado = {}
   const submitSelected = (e) => {
@@ -389,7 +407,6 @@ const ModalSales = ({ children }) => {
             console.log(arrayCalculo)
             //Fn CalcularTotal
             calcularTotal(arrayCalculo)
-
           }
         }
       })
@@ -400,6 +417,7 @@ const ModalSales = ({ children }) => {
   console.log(tableData)
   
   /* ------------- Finalizar venta ---------*/
+ 
   const finalizarVenta = () => {
     // Validaciones
     if(tableData.length < 1 && clientObjectIsEmpty(clientTable)) {
@@ -423,34 +441,61 @@ const ModalSales = ({ children }) => {
       )
     return
     }
-    //Objeto que se mandará en la petición post, sus values deben ser -> estados
-    let ventaApiPost = {
-    fecha: '', // ?
-    cantidad: '', // 
-    descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
-    descuento: descuento,
-    subtotal: subTotal,
-    total: total,
-    cliente: clientSelected, //
-    factura: 10, // ?
-    producto: '', //
-    modo_pago: payMethod, //
-    usuario: 1, //
-  }
-
-  // En caso de que se haya seleccionado más de 1 producto para la venta
-  if(tableData.length > 0) {
+    // Captura los  id's de los productos seleccionados
     const idProductos = tableData.map((producto) => {
       return producto.id
     })
-    // console.log('Separado por comas')
-    // console.log(idProductos.join())
-    let productosVarios = idProductos.join()
-    ventaApiPost.producto = productosVarios
-  } 
+    // Fn para validar que no aparezcan productos repetidos para la venta.
+    const esProductoUnico = (valor,index,lista) => {
+      return !(lista.indexOf(valor) === index)
+    }
+    // Objeto a enviar en caso de que cumpla con las validaciones
+    let ventaApiPost = {}
+    
+    let productosVarios = idProductos
+    // En caso de que se haya seleccionado más de 1 producto para la venta
+    if(tableData.length > 1 && productosVarios.some(esProductoUnico) === false) {
+      console.log('NO se repiten todo bien :)')
+      ventaApiPost = {
+        fecha: '', // ?
+        cantidad: '', // 
+        descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
+        descuento: descuento,
+        subtotal: subTotal,
+        total: total,
+        cliente: clientSelected, //
+        factura: 10, // ?
+        producto: '', //
+        modo_pago: payMethod, //
+        usuario: 1, //
+      }
+      // Captura de los productos seleccionados
+      ventaApiPost.producto = productosVarios.join()
+    } else {
+      Swal.fire('Productos Repetidos',
+      'No se puede ',
+      'error')
+    }
+    
+    if(tableData.length === 1) {
+      ventaApiPost = {
+        fecha: '', // ?
+        cantidad: '', // 
+        descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
+        descuento: descuento,
+        subtotal: subTotal,
+        total: total,
+        cliente: clientSelected, //
+        factura: 10, // ?
+        producto: tableData[0].id, //
+        modo_pago: payMethod, //
+        usuario: 1, //
+      }
 
-  console.log(ventaApiPost)
-  console.log(JSON.stringify(ventaApiPost))
+    }
+    
+    console.log(ventaApiPost)
+    console.log(JSON.stringify(ventaApiPost))
     //() => saveConfirmed()
     /* const url = "http://localhost:4000/sales"
     const submitDataVenta = async (url) => {
@@ -485,7 +530,7 @@ const ModalSales = ({ children }) => {
     console.log(typeof descuento)
 
     /*----- Cálculo del total después de capturar el descuento ----- */
-    if(descuento !== 0) {
+    if(descuento > 0) {
       // totalAux = sumaSubtotal - descuento
       setTotal(parseFloat(subTotal - descuento))
       console.log('descuento es: ')
