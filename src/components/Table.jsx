@@ -11,7 +11,7 @@ const Table = () => {
 
   return (
     <>
-      <table className="table table-striped w-80 thead-light ">
+      <table className="table table-striped w-80 thead-light table-bordered">
         <thead>
           <tr>
             <th scope="col">#</th>

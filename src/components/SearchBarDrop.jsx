@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/SearchBar.css';
+import * as  FcIcons from 'react-icons/fc';
 
-const SearchBarDrop = ({ options, onInputChange }) => {
+const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient }) => {
   const ulRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
@@ -14,21 +15,34 @@ const SearchBarDrop = ({ options, onInputChange }) => {
     //Evento para que se desaparezca la lista de botones, al hacer click por fuera del elemento
     document.addEventListener('click', (event) => {
       ulRef.current.style.display = 'none';
+      // ulRef.current.style={display: 'none'}
     });
   }, []);
   
   return (
     <div className="search-bar-dropdown">
-      <input
-        id="search-bar"
-        type="search"
-        className="form-control"
+
+    {/* <FcIcons.FcSearch/> */}
+    <div className="input-group mb-3">
+      <input 
+        id="search-bar" 
+        type="search" 
+        className="form-control" 
         placeholder="Nombre del cliente ..."
+        aria-label="Rec safdasf"
+        aria-describedby="basic-addon2" 
         ref={inputRef}
         onChange={onInputChange}
         autoComplete="off"
+        
       />
-      <ul id="results" className="list-group" ref={ulRef}>
+      <div className="input-group-append">
+        <input type="submit" value="Aceptar" form="CustomerForm" className="btn btn-outline-primary" id="customer-btn"
+        />
+      </div>
+    </div>
+      {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
+      <form id="CustomerForm" className="list-group" ref={ulRef} onSubmit={handleCustomer}>
         {options.map((option, index) => {
           return (
             <button
@@ -39,18 +53,17 @@ const SearchBarDrop = ({ options, onInputChange }) => {
               onClick={(e) => {
                 // Aparece el nombre en el value del botón
                 inputRef.current.value = option;
-                // setItemSelected(option.id)  
-                // console.log(itemSelected)
-                // console.log(index)
-                // capturarDatos()
               }}
               className="list-group-item list-group-item-action"
-            >
+              id="buttons-actions"
+              >
+              {/* <AiIcons.AiOutlineSearch /> */}
               {option}
             </button>
           );
         })}
-      </ul>
+      </form>
+      
     </div>
   );
 };
