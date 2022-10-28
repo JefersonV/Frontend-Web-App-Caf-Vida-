@@ -120,9 +120,9 @@ function App() {
             <Route
             path='/menu_costos'
             render={(props)=>
-               isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
-               }
-               ></Route>
+              isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
+              }
+              ></Route>
             
             <Route
               path="/inventory"

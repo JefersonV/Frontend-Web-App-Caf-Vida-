@@ -64,19 +64,19 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      // cuerpo del JSON
-      const body = { nombre, telefono, correo, direccion, nit };
-
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("http://localhost:3000/customers", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify(dataClient),
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
       });
+      console.log(response)
 
-      const resJson = await response.json();
-
-      if(response.status === 200) {
+      if(response.status === 204) {
         //Pendiente
+        saveSweetalert()
       }
 
     } catch (err) {
@@ -174,7 +174,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
                   {" "}
                   Cancelar
                 </button>
-                <button className="btn9" onClick={() => saveSweetalert()}>
+                <button className="btn9" onClick={(e) => onSubmitForm(e)}>
                   {" "}
                   Guardar{" "}
                 </button>
