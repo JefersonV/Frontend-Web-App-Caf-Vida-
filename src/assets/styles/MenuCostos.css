@@ -1,0 +1,70 @@
+.ContenidoM{
+    align-items: center;
+    /*margin: 0 auto;*/
+    height: 10vh;
+    /* position: fixed; */
+    display: flex;
+     margin-left: 300px;
+     
+    
+   }
+   .link4{
+    border-radius: .5em;
+      outline: none;
+      width: 250px;
+    background-color: rgb(5, 54, 127);
+    color: white;
+    margin-left: 750px;
+  
+   }
+   .link5{
+    border-radius: .5em;
+      outline: none;
+      width: 190px;
+      padding: 3px;
+    background-color: rgb(9, 85, 47);
+    color: white;
+    margin-left: 50px;
+    text-align: center;
+    
+  
+   }
+   .link6{
+    border-radius: .5em;
+    outline: none;
+    width: 200px;
+  background-color: rgb(127, 5, 115);
+  color: white;
+  margin-left: 850px;
+    
+
+   }
+   .link7{
+
+    border-radius: .5em;
+    outline: none;
+    width: 200px;
+  background-color: rgb(15, 125, 161);
+  color: white;
+  margin-left: 680px;
+   }
+   #label1{
+    font-size: 26px;
+    margin-top: 20px;
+    text-decoration:underline;
+    margin-left:90px;
+    
+   }
+   #labelTitle{
+    
+    font-size: 26px;
+    margin-top: 20px;
+    text-decoration:underline;
+  
+   }
+.btn-borrar{
+  border: none;
+}
+.btn-editar{
+  border: none;
+}

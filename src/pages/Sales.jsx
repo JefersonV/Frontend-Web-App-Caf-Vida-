@@ -9,7 +9,7 @@ const Sales = () => {
   const sidebar = useSidebarContext();
   const dataApi = useFetch(url, "GET", { token: localStorage.token });
   // console.log(sidebar)
-  // console.log(dataApi)
+  //console.log(dataApi);
   return (
     <>
       {/* wrapper sirve para que se adapte con respecto a la sidebar */}

@@ -9,7 +9,8 @@ import {
 import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
-import ModalSales from "./components/ModalSales";
+import ModalSales from "./components/ModalSales"
+import MenuCostos from "./components/MenuCostos"
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -26,16 +27,20 @@ import Login from "./pages/Login";
 import { SidebarProvider } from "./providers/SidebarProvider";
 import HomeLogin from "./pages/HomeLogin";
 import "./assets/styles/Login.css";
+import FinishedProduct from "./pages/FinishedProduct";
+import RawMaterial from "./pages/RawMaterial";
+import PackingMaterial from "./pages/PackingMaterial";
+
 function App() {
   /* Lógica de autenticación de Usuario */
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const setAuth = (booleand) => {
     setIsAuthenticated(booleand);
   };
 
   async function isAuth() {
     try {
-      const response = await fetch("http://localhost:3000/auth/verify", {
+      const response = await fetch("http://localhost:4000/auth/verify", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -113,6 +118,13 @@ function App() {
               }
             ></Route>
             <Route
+            path='/menu_costos'
+            render={(props)=>
+               isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
+               }
+               ></Route>
+            
+            <Route
               path="/inventory"
               render={(props) =>
                 isAuthenticated ? <Inventory /> : <Redirect to="/login" />
@@ -122,6 +134,25 @@ function App() {
               path="/products"
               render={(props) =>
                 isAuthenticated ? <Products /> : <Redirect to="/login" />
+              }
+            ></Route>
+            {/* Ruta para editar  */}
+            <Route
+              path="/finished_product"
+              render={(props) =>
+                isAuthenticated ? <FinishedProduct /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/raw_material"
+              render={(props) =>
+                isAuthenticated ? <RawMaterial /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/packing_material"
+              render={(props) =>
+                isAuthenticated ? <PackingMaterial /> : <Redirect to="/login" />
               }
             ></Route>
             <Route

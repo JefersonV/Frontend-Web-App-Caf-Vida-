@@ -7,7 +7,7 @@ const HomeLogin = ({ setAuth }) => {
 
   async function getName() {
     try {
-      const response = await fetch("http://localhost:3000/home/", {
+      const response = await fetch("http://localhost:4000/home/", {
         method: "GET",
         headers: { token: localStorage.token },
       });

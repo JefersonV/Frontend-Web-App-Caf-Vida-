@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/SearchBar.css';
+import * as  FcIcons from 'react-icons/fc';
 
-const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
+const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient }) => {
   const ulRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
@@ -14,26 +15,30 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
     //Evento para que se desaparezca la lista de botones, al hacer click por fuera del elemento
     document.addEventListener('click', (event) => {
       ulRef.current.style.display = 'none';
+      // ulRef.current.style={display: 'none'}
     });
   }, []);
   
   return (
     <div className="search-bar-dropdown">
 
-    <div class="input-group mb-3">
+    {/* <FcIcons.FcSearch/> */}
+    <div className="input-group mb-3">
       <input 
         id="search-bar" 
         type="search" 
-        class="form-control" 
+        className="form-control" 
         placeholder="Nombre del cliente ..."
         aria-label="Rec safdasf"
         aria-describedby="basic-addon2" 
         ref={inputRef}
         onChange={onInputChange}
-        autoComplete="off"  
+        autoComplete="off"
+        
       />
-      <div class="input-group-append">
-        <input type="submit" value="Registrar cliente" form="CustomerForm" class="btn btn-outline-secondary" />
+      <div className="input-group-append">
+        <input type="submit" value="Aceptar" form="CustomerForm" className="btn btn-outline-primary" id="customer-btn"
+        />
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
@@ -50,7 +55,9 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer }) => {
                 inputRef.current.value = option;
               }}
               className="list-group-item list-group-item-action"
-            >
+              id="buttons-actions"
+              >
+              {/* <AiIcons.AiOutlineSearch /> */}
               {option}
             </button>
           );
