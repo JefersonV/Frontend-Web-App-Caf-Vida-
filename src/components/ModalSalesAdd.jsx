@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
+  //estado2 --> maneja si el modal está abierto o cerrado
+  //cambiarEstado2 --> función para para cambiar el estado de true a false o viceversa
   const saveSweetalert = () => {
     Swal.fire({
       position: "top-center",
@@ -84,6 +86,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
 
   return (
     <>
+    {/* Si el estado es true, se renderiza */}
       {estado2 && (
         <Overlay1>
           <ContenedorModal>
@@ -166,6 +169,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
               </div>
 
               <LinkButt>
+              {/* Alert */}
                 <button className="btn8" onClick={() => cancelSweet()}>
                   {" "}
                   Cancelar
@@ -176,7 +180,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
                 </button>
               </LinkButt>
 
-              {children}
+              {/* {children} */}
             </Form>
           </ContenedorModal>
         </Overlay1>

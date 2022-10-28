@@ -18,10 +18,12 @@
 .BodyDate {
 	margin-left: .5em;
 }
- 
+
 .buttons-saleTop {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
 #buscar2 {
@@ -136,9 +138,20 @@
 
 .metodo {
 	display: flex;
-	justify-content: space-evenly;
+	justify-items: center;
+	align-content: center;
+	gap: 8em;
+	width: 100%;
 }
 
+.metodo label {
+	font-weight: bold;
+	margin-right: 3em;
+}
+
+.metodo select {
+	width: 300px;
+}
 .select3 {
 	margin-left: 10px;
 }
@@ -160,14 +173,22 @@
 .dev {
 	margin-left: 85vh;
 	color: black;
-
 }
 
-/*Tabla producto*/
-/* .table {
-	margin-left: 45vh;
-	margin-top: 5px;
-} */
+.form-product-select {
+	display: flex;
+	justify-items: center;
+	align-content: center;
+	gap: 3em;
+}
+
+.form-product-select label {
+	font-weight: bold;
+}
+
+.form-product-select select {
+	width: 40%;
+}
 
 .table {
 	margin-bottom: .5rem;
@@ -189,6 +210,12 @@
 	font-size: 1em;
 }
 
+.label-cliente {
+	font-weight: bold;
+	position: relative;
+	margin: -2em;
+}
+
 .table-input {
 	width: 75px;
 }
@@ -202,4 +229,37 @@
 .buttons-bottom button {
 	border: none;
 	background: none;
+}
+
+.btn-prueba {
+	position: relative;
+}
+
+.btn-options-prueba {
+	position: absolute;
+	list-style: none;
+	border: 1px solid #ccc;
+	border-radius: 1em;
+	padding: 1em;
+	bottom: -8.5em;
+}
+
+.btn-options-prueba ul {
+	/* display: none; */
+}
+
+.btn-options-prueba li {
+	display: block;
+	margin: 0 auto;
+}
+
+/* Esconde las opciones  */
+.options-hide {
+	display: none;
+}
+
+@media screen and (max-width) {
+	#customer-btn {
+		margin-left: 2em;
+	}
 }
