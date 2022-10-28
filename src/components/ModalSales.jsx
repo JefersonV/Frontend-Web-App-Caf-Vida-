@@ -37,7 +37,7 @@ const ModalSales = ({ children }) => {
   }
 
   const getProducts = async () => {
-    const response = await fetch("http://localhost:4000/inventory/products", {
+    const response = await fetch("http://localhost:3000/inventory/products", {
       headers: {
         token: localStorage.token,
       },
@@ -59,7 +59,7 @@ const ModalSales = ({ children }) => {
 
   const [fetchClients, setFetchClients] = useState([])
   const getClients = async () => {
-    const response = await fetch("http://localhost:4000/costumers", {
+    const response = await fetch("http://localhost:3000/costumers", {
       headers: {
         token: localStorage.token,
       },

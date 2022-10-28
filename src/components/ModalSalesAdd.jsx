@@ -67,7 +67,7 @@ const ModalSalesAdd = ({ children, estado2, cambiarEstado2 }) => {
       // cuerpo del JSON
       const body = { nombre, telefono, correo, direccion, nit };
 
-      const response = await fetch("http://localhost:4000/", {
+      const response = await fetch("http://localhost:3000/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
