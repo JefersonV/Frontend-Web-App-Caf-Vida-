@@ -60,6 +60,9 @@ const TableProducts = ({ children }) => {
     <>
       <div>
         <div>
+          <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
           <table className="table table-striped w-80 thead-light ">
             <thead>
               <tr>

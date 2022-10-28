@@ -206,7 +206,7 @@ const ModalRawMaterialUpdate = ({
                     onClick={() => saveSweetalert()}
                   >
                     {" "}
-                    Guardar{" "}
+                    Actualizar{" "}
                   </button>
                 </LinkButt>
 

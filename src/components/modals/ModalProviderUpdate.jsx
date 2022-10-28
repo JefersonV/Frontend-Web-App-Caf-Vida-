@@ -137,6 +137,7 @@ const ModalProviderUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre producto"
@@ -167,6 +168,7 @@ const ModalProviderUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                   <input
                     type="text"
                     className="txt1"
+                    autocomplete="off"
                     id=""
                     name="correo"
                     value={dataProvider.correo}
@@ -201,7 +203,7 @@ const ModalProviderUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                     onClick={() => saveSweetalert()}
                   >
                     {" "}
-                    Guardar{" "}
+                    Actualizar{" "}
                   </button>
                 </LinkButt>
                 {children}

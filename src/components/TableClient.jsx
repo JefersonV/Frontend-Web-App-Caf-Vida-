@@ -32,7 +32,7 @@ const TableClient = ({ children }) => {
 
   //Funcion para obtener la lista de datos
   const getData = async () => {
-    const response = await fetch("http://localhost:3000/costumers", {
+    const response = await fetch("http://localhost:3000/customers", {
       headers: {
         token: localStorage.token,
       },
@@ -49,7 +49,7 @@ const TableClient = ({ children }) => {
   //Funcion eliminar
   const productDelete = async (id) => {
     console.log("click -> Id: ", id);
-    await fetch(`http://localhost:3000/costumers/${id}`, {
+    await fetch(`http://localhost:3000/customers/${id}`, {
       method: "DELETE",
       headers: {
         token: localStorage.token,
@@ -62,6 +62,9 @@ const TableClient = ({ children }) => {
     <>
       <div>
         <div>
+          <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
           <table className="table table-striped w-80 thead-light ">
             <thead>
               <tr>

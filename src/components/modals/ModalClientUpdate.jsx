@@ -50,7 +50,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
 
   //Funcion para obtener la lista de datos
   const getData = async (id) => {
-    const response = await fetch(`http://localhost:3000/costumers/${id}`, {
+    const response = await fetch(`http://localhost:3000/customers/${id}`, {
       headers: {
         token: localStorage.token,
       },
@@ -96,7 +96,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/costumers/${idEdit}`,
+        `http://localhost:3000/customers/${idEdit}`,
         {
           method: "PUT",
           body: JSON.stringify(dataCliente),
@@ -114,17 +114,6 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
     } catch (error) {
       console.log(error.massage);
     }
-  };
-
-  //PRUEBA
-  const getNewData = async () => {
-    const newResponse = await fetch(`http://localhost:3000/costumers`, {
-      headers: {
-        token: localStorage.token,
-      },
-    });
-    const newData = newResponse.json();
-    setNewData(newData);
   };
 
   return (
@@ -146,6 +135,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre"
@@ -175,6 +165,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="correo"
                     placeholder=" Ingrese correo"
@@ -189,6 +180,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="direccion"
                     placeholder=" Ingrese direccion"
@@ -222,7 +214,7 @@ const ModalClientUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                     onClick={() => saveSweetalert()}
                   >
                     {" "}
-                    Guardar{" "}
+                    Actualizar{" "}
                   </button>
                 </LinkButt>
 

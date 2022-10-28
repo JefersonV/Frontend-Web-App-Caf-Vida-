@@ -3,7 +3,7 @@ import "../../assets/styles/Sales.css";
 import { useSearcherContext } from "../../providers/SidebarProvider";
 import { useState } from "react";
 import ModalAddClient from "../modals/ModalAddClient";
-import { Link } from "react-router-dom";
+import Logo from "../../assets/images/LOGO_Mesa de trabajo 1.png";
 
 const TopBarTableClient = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -17,7 +17,11 @@ const TopBarTableClient = ({ children }) => {
           <hr />
 
           <div className="barraArriba">
-            <div className="cont1">
+            <img className="logo" src={Logo} width="100px" alt="" />
+            <h4 className="frase">
+              !! Aroma que te hace soñar, sabor que te hace despertar
+            </h4>
+            {/* <div className="cont1">
               <label htmlFor="lbl1" id="lbl1">
                 Visualización por:{" "}
               </label>
@@ -27,14 +31,14 @@ const TopBarTableClient = ({ children }) => {
                 <option value="">Resumen de ventas mensual</option>
                 <option value="">Resumen de todas las ventas</option>
               </select>
-              {/* <input
+              <input
                 type="search"
                 placeholder="Buscar...."
                 name="buscar"
                 id="buscar"
                 onChange={searcher}
-              /> */}
-            </div>
+              />
+            </div> */}
             <button
               className="btn4m"
               onClick={() => cambiarEstadoModal2(!estadoModal2)}

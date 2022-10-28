@@ -63,7 +63,7 @@ const ModalAddClient = ({ children, estado2, cambiarEstado2 }) => {
     //console.log(dataProduct);
 
     try {
-      const response = await fetch("http://localhost:3000/costumers", {
+      const response = await fetch("http://localhost:3000/customers", {
         method: "POST",
         body: JSON.stringify(dataCliente),
         headers: {
@@ -100,6 +100,7 @@ const ModalAddClient = ({ children, estado2, cambiarEstado2 }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre"
@@ -129,6 +130,7 @@ const ModalAddClient = ({ children, estado2, cambiarEstado2 }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="correo"
                     placeholder=" Ingrese correo"
@@ -143,6 +145,7 @@ const ModalAddClient = ({ children, estado2, cambiarEstado2 }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="direccion"
                     placeholder=" Ingrese direccion"

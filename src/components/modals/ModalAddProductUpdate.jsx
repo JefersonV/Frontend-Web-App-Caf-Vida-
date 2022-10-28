@@ -146,6 +146,7 @@ const ModalAddProductUpdate = ({
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre producto"
@@ -266,7 +267,7 @@ const ModalAddProductUpdate = ({
                     onClick={() => saveSweetalert()}
                   >
                     {" "}
-                    Guardar{" "}
+                    Actualizar{" "}
                   </button>
                 </LinkButt>
 

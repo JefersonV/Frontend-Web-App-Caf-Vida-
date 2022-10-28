@@ -167,7 +167,7 @@ const ModalPackingUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
                     onClick={(e) => onSubmitForm(e)}
                   >
                     {" "}
-                    Guardar{" "}
+                    Actualizar{" "}
                   </button>
                 </LinkButt>
 

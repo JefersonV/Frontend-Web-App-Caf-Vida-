@@ -1,6 +1,7 @@
 import React from "react";
 import "../../assets/styles/Sales.css";
 import { useSearcherContext } from "../../providers/SidebarProvider";
+import Logo from "../../assets/images/LOGO_Mesa de trabajo 1.png";
 
 const TopBarTableInventory = () => {
   //Función de búsqueda
@@ -11,7 +12,11 @@ const TopBarTableInventory = () => {
       <hr />
 
       <div className="barraArriba">
-        <div className="cont1">
+        <img className="logo" src={Logo} width="100px" alt="" />
+        <h4 className="frase">
+          !! Aroma que te hace soñar, sabor que te hace despertar
+        </h4>
+        {/* <div className="cont1">
           <label htmlFor="lbl1" id="lbl1">
             Visualización por:{" "}
           </label>
@@ -21,15 +26,15 @@ const TopBarTableInventory = () => {
             <option value="">Resumen de ventas mensual</option>
             <option value="">Resumen de todas las ventas</option>
           </select>
-          {/* <input
+          <input
             type="search"
             placeholder="Buscar...."
             name="buscar"
             id="buscar"
             disabled
             onChange={searcher}
-          /> */}
-        </div>
+          />
+        </div> */}
       </div>
     </>
   );

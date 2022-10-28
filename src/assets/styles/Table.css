@@ -14,3 +14,11 @@ table {
   border-color: transparent;
   background-color: transparent;
 }
+.btn-update-table {
+  margin: 12px;
+  padding: 8px;
+  border-radius: 10px;
+  color: white;
+  background-color: #5bb55a;
+  border: transparent;
+}

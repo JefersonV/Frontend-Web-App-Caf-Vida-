@@ -102,6 +102,7 @@ const ModalAddProvider = ({ children, estado2, cambiarEstado2 }) => {
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre producto"
+                    autocomplete="off"
                     //value={producto}
                     onChange={(e) => onChangeData(e)}
                   />
@@ -129,6 +130,7 @@ const ModalAddProvider = ({ children, estado2, cambiarEstado2 }) => {
                   <input
                     type="text"
                     className="txt1"
+                    autocomplete="off"
                     id=""
                     name="correo"
                     onChange={(e) => onChangeData(e)}

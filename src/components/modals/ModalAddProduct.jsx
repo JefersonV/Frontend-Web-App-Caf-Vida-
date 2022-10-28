@@ -101,6 +101,7 @@ const ModalAddProduct = ({ children, estado2, cambiarEstado2 }) => {
                 <div className="boddy">
                   <input
                     className="txt1"
+                    autocomplete="off"
                     type="text"
                     name="nombre"
                     placeholder=" Ingrese nombre producto"
