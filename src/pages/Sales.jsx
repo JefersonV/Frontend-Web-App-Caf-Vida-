@@ -8,6 +8,7 @@ const Sales = () => {
   const url = "http://localhost:3000/sales";
   const sidebar = useSidebarContext();
   const dataApi = useFetch(url, "GET", { token: localStorage.token });
+
   // console.log(sidebar)
   //console.log(dataApi);
   return (
