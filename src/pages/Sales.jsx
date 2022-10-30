@@ -5,7 +5,7 @@ import useFetch from '../Hooks/useFetch'
 import { useSidebarContext } from '../providers/SidebarProvider'
 import SideBarMenu from '../components/SideBarMenu'
 const Sales = () => {
-  const url = 'http://localhost:4000/sales'
+  const url = 'http://localhost:3000/sales'
   const sidebar = useSidebarContext()
   const dataApi = useFetch(url, "GET", { token: localStorage.token })
   // console.log(sidebar)
