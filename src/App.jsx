@@ -5,6 +5,7 @@ import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
 import ModalSales from "./components/ModalSales"
+// import MenuCostos from "./components/MenuCostos"
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -14,6 +15,7 @@ import Reports from "./pages/Reports";
 import Products from "./pages/Products";
 import Providers from "./pages/Providers";
 import Shopping from "./pages/Shopping";
+import NewShop from "./pages/NewShop";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from './pages/Login';
@@ -106,6 +108,14 @@ function App() {
                 isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
               }
             ></Route>
+
+            {/* <Route
+              path='/menu_costos'
+              render={(props)=>
+                isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
+              }
+            ></Route> */}
+
             <Route
               path="/inventory"
               render={(props) =>
@@ -128,6 +138,12 @@ function App() {
               path="/shopping"
               render={(props) =>
                 isAuthenticated ? <Shopping /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/new_shopping"
+              render={(props) =>
+                isAuthenticated ? <NewShop /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
