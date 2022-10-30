@@ -20,7 +20,6 @@ import Reports from "./pages/Reports";
 import Products from "./pages/Products";
 import Providers from "./pages/Providers";
 import Shopping from "./pages/Shopping";
-import NewShop from "./pages/NewShop";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
 import Login from "./pages/Login";
@@ -30,7 +29,6 @@ import "./assets/styles/Login.css";
 import FinishedProduct from "./pages/FinishedProduct";
 import RawMaterial from "./pages/RawMaterial";
 import PackingMaterial from "./pages/PackingMaterial";
-
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -165,12 +163,6 @@ function App() {
               path="/shopping"
               render={(props) =>
                 isAuthenticated ? <Shopping /> : <Redirect to="/login" />
-              }
-            ></Route>
-            <Route
-              path="/new_shopping"
-              render={(props) =>
-                isAuthenticated ? <NewShop /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
