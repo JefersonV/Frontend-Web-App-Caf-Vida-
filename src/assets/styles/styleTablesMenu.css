@@ -1,59 +1,12 @@
-.TopBar {
-  font-size: 1.1em;
-}
-
-.Contenido {
-  align-items: center;
-  /*margin: 0 auto;*/
-  height: 10vh;
-  /* position: fixed; */
-  display: flex;
-  margin-left: 100px;
-}
-
-.search {
-  margin-left: 45px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-#lab {
-  font-size: 40px;
-  margin-top: 20px;
-
-}
-
-.link1 {
-  border-radius: .5em;
-  background-color: rgb(4, 4, 4);
-  width: 250px;
-  color: rgb(236, 232, 232);
-  margin-left: 230px;
-  padding: 4px;
-
-}
-
-.link2 {
-  border-radius: .5em;
-  outline: none;
-  width: 200px;
-  background-color: rgb(5, 54, 127);
-  color: white;
-  margin-left: 50px;
-
-}
-
-#Buscar {
-  margin-left: 50px;
-  width: 350px;
+/* td {
+  font-size: .8em;
 }
 
 .icon-table {
   font-size: 1.8em;
   margin-right: .3em;
 }
-
-/* table {
+table {
   margin-left: 0;
 }
 
@@ -68,12 +21,11 @@ thead {
   max-width: fit-content;
   max-height: fit-content;
 }
-
 .table-wrapper {
   overflow-y: scroll;
   overflow-x: scroll;
   height: fit-content;
-  max-height: 46vh;
+  max-height: 66vh;
   margin-top: 22px;
   margin: 15px;
   padding-bottom: 20px;
@@ -83,9 +35,9 @@ thead {
   min-width: max-content;
 }
 
-table th {
-  position: sticky;
-  top: 0px;
+table th{
+  position: sticky; 
+  top: 0px; 
   background-color: #ccc;
   color: black;
   text-align: center;
@@ -93,10 +45,10 @@ table th {
   font-size: 18px;
   outline: 0.7px solid black;
   border: 1.5px solid black;
-}
 
-table th,
-table td {
+} 
+
+table th, table td {
   padding: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
