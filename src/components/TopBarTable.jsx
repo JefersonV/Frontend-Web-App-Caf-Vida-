@@ -1,5 +1,6 @@
 import React from 'react'
 import '../assets/styles/Sales.css'
+import '../assets/styles/SalesBtn.css'
 import { useSearcherContext } from '../providers/SidebarProvider'
 import { Link } from 'react-router-dom'
 
@@ -23,7 +24,7 @@ const TopBarTable = () => {
           <input type="search" placeholder='Buscar....' name="buscar" id="buscar" onChange={searcher}/>
         </div>
 
-        <Link to="/new" className="btn2" id="btn2">Nueva Venta</Link>
+        <Link to="/new" className="btn4m" id="btn2">Nueva Venta</Link>
 
       </div>
     </>

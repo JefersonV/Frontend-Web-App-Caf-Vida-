@@ -60,7 +60,7 @@ const TableProduction = ({ children }) => {
   //Funcion eliminar
   const productionDelete = async (id) => {
     console.log("click -> Id: ", id);
-    await fetch(`http://localhost:000/production_cost/${id}`, {
+    await fetch(`http://localhost:3000/production_cost/${id}`, {
       method: "DELETE",
       headers: {
         token: localStorage.token,

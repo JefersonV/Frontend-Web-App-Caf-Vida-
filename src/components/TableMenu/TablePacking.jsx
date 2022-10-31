@@ -41,7 +41,7 @@ const TablePacking = ({ children }) => {
   //Funcion para obtener la lista de datos
   const getData = async () => {
     const response = await fetch(
-      "http://localhost:4000/production_cost/menu_costo/packing_material",
+      "http://localhost:3000/production_cost/menu_costo/packing_material",
       {
         headers: {
           token: localStorage.token,
@@ -61,7 +61,7 @@ const TablePacking = ({ children }) => {
   const packingDelete = async (id) => {
     console.log("click -> Id: ", id);
     await fetch(
-      `http://localhost:4000/production_cost/menu_costo/packing_material/${id}`,
+      `http://localhost:3000/production_cost/menu_costo/packing_material/${id}`,
       {
         method: "DELETE",
         headers: {
