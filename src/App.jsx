@@ -22,6 +22,9 @@ import Login from './pages/Login';
 import { SidebarProvider } from './providers/SidebarProvider'
 import HomeLogin from './pages/HomeLogin';
 import './assets/styles/Login.css'
+import FinishedProduct from './pages/FinishedProducts';
+import RawMaterial from './pages/RawMaterial';
+import PackingMaterial from './pages/PackingMaterial'
 function App() {
   /* Lógica de autenticación de Usuario */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -126,6 +129,24 @@ function App() {
               path="/products"
               render={(props) =>
                 isAuthenticated ? <Products /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/finished_product"
+              render={(props) =>
+                isAuthenticated ? <FinishedProduct /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/raw_material"
+              render={(props) =>
+                isAuthenticated ? <RawMaterial /> : <Redirect to="/login" />
+              }
+            ></Route>
+            <Route
+              path="/packing_material"
+              render={(props) =>
+                isAuthenticated ? <PackingMaterial /> : <Redirect to="/login" />
               }
             ></Route>
             <Route

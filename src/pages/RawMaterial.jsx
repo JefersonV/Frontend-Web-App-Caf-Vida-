@@ -1,11 +1,12 @@
 import React from "react";
-import SideBarMenu from "../components/SideBarMenu";
+import useFetch from "../Hooks/useFetch";
 import { useSidebarContext } from "../providers/SidebarProvider";
-import TableProducts from "../components/TableProducts";
-import TopBarTableProduct from "../components/topBarsTables/TopBarTableProduct";
+import SideBarMenu from "../components/SideBarMenu";
+import TableRawMaterial from "../components/TableRawMaterial";
+import TopBarTableRawMaterial from "../components/topBarsTables/TopBarTableRawMaterial";
 
-const Products = () => {
-  //const url = "http://localhost:3000/inventory/products";
+const RawMaterial = () => {
+  //const url = "http://localhost:3000/inventory/raw_material";
   const sidebar = useSidebarContext();
   //const dataApi = useFetch(url, "GET", { token: localStorage.token });
 
@@ -18,12 +19,12 @@ const Products = () => {
       <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
-        <TopBarTableProduct />
-        {/* <TableProducts dataApi={dataApi} /> */}
-        <TableProducts />
+        <TopBarTableRawMaterial />
+        <TableRawMaterial />
+        {/* <TableRawMaterial dataApi={dataApi} /> */}
       </div>
     </>
   );
 };
 
-export default Products;
+export default RawMaterial;
