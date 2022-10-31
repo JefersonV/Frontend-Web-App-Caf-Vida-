@@ -63,7 +63,7 @@ export const SideBarTypes = [
         icon: <BsIcons.BsFillBagCheckFill />,
         class: "nav-subItem"
       },
-      {
+      /* {
         title: "Devoluciones Clientes",
         path: "/sales_returns",
         icon: <FaIcons.FaCartArrowDown />,
@@ -74,7 +74,7 @@ export const SideBarTypes = [
         path: "/shopping_returns",
         icon: <RiIcons.RiLuggageCartFill />,
         class: "nav-subItem"
-      },
+      }, */
     ],
   },
   {
@@ -92,11 +92,11 @@ export const SideBarTypes = [
     path: "customers",
     icon: <FaIcons.FaHouseUser />,
   },
-  {
+  /*{
     title: "Usuarios",
     path: "/users",
     icon: <BiIcons.BiUserCircle />,
-  },
+  }, */
   {
     title: "Reportes",
     path: "/reports",

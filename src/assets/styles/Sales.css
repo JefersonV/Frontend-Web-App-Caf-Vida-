@@ -205,6 +205,16 @@
 	margin-right: 1em;
 }
 
+/*Boton para agregar nuevo en los top bars*/
+.btn4m {
+  background-color: lightseagreen;
+  border-color: lightseagreen;
+  margin: 12px;
+  padding: 5px;
+  border-radius: 10px;
+	color: white;
+}
+
 .table-total label {
 	font-weight: bold;
 	font-size: 1em;
