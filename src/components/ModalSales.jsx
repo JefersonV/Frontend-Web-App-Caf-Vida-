@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
+import dayjs from 'dayjs/esm/index.js'
+// import dayjs from 'dayjs';'dayjs/locale/es'
 import "../assets/styles/Sales.css";
 /* Icons */
 import { IoPersonAdd } from "react-icons/io5";
@@ -46,7 +48,7 @@ const ModalSales = ({ children }) => {
     console.log(response)
     const data = await response.json()
     setFetchProducts(data)
-    // Aparte de la data de 
+    // Aparte de la data de la api, también la opción por default
     setFetchProducts(fetchProducts => [defaultOptionProduct, ...fetchProducts])  
   }
   
@@ -148,17 +150,27 @@ const ModalSales = ({ children }) => {
   const [clientSelected, setClientSelected] = useState({})
 
   const [disabledClientAdd, setDisabledClientAdd] = useState()
+  // Comprueba si hay datos que agregar a la tabla
+  const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0
   // Botón de registro a la tabla cliente
-  const handleCustomer = e => {
+  const onSubmitCustomer = e => {
     e.preventDefault()
-
+    console.log(e.target.value)
     console.log(clientSelected)
     console.log('acción cliente')
     //Verificamos que el cliente exista, según los datos de la API
     const clienteEncontrado = fetchClients.find((cliente) => 
       cliente.nombre === clientSelected.client
     )
-
+    console.log('tabla clientes')
+    console.log(clientTable)
+    if(clientObjectIsEmpty(clientSelected)) {
+      Swal.fire(
+        'Selección errónea',
+        'Debe seleccionar el cliente y confirmar con un click encima de la búsqueda',
+        'info')
+      return
+    }
     // Solo se puede agregar 1 cliente por venta
     if(clientTable.length > -1 && clientTable.length < 1) {
       setClientTable((clientTable) => clientTable.concat(clienteEncontrado))
@@ -169,9 +181,7 @@ const ModalSales = ({ children }) => {
 
     console.log(typeof clienteEncontrado)
     console.log(clienteEncontrado)
-  }
-  // Comprueba si hay datos que agregar a la tabla
-  const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0 
+  } 
 
   // onSubmit de cliente
   const onSubmitClient = e => {
@@ -345,7 +355,24 @@ const ModalSales = ({ children }) => {
   
   /* ------------- Finalizar venta ---------*/
   const finalizarVenta = () => {
-    // Validaciones
+    const url = "http://localhost:3000/sales"
+    const submitDataVenta = async (url) => {
+      try {
+        const response = await (fetch(url, {
+          method: "POST",
+          body: JSON.stringify(ventaApiPost),
+          headers: {
+            "Content-type": "application/json",
+            token: localStorage.token,
+          },
+        }));
+
+        console.log(response)
+      } catch(err) {
+        console.log(err.message)
+      }
+    }
+    // Validaciones -> sino se han agregado productos a la venta y tampoco se ha seleccionado el cliente
     if(tableData.length < 1 && clientObjectIsEmpty(clientTable)) {
       Swal.fire('Registro incompleto',
       'Debe registrar el cliente y los productos a vender',
@@ -365,31 +392,32 @@ const ModalSales = ({ children }) => {
         'Debe seleccionar o registrar el cliente',
         'info'
       )
-    return
+      return
     }
     // Captura los  id's de los productos seleccionados
     const idProductos = tableData.map((producto) => {
       return producto.id
     })
+    let productosVarios = idProductos
+    
     // Fn para validar que no aparezcan productos repetidos para la venta.
     const esUnProductoUnico = (valor,index,lista) => {
       return !(lista.indexOf(valor) === index)
     }
+    /* Day JS para la fecha */
+    let day = dayjs().format('YYYY-MM-DD')
     // Objeto a enviar en caso de que cumpla con las validaciones
     let ventaApiPost = {}
     
-    let productosVarios = idProductos
-    const date = new Date();
-    let day = date.getDate();
     if(tableData.length === 1) {
       ventaApiPost = {
         fecha: day, // ?
-        cantidad: '', // 
-        descripcion: 'prueba de un post', // detalle || un input donde vayan observaciones
+        cantidad: tableData[0].cantidad, // 
+        descripcion: 'prueba con un solo producto', // detalle || un input donde vayan observaciones
         descuento: descuento,
         subtotal: subTotal,
         total: total,
-        cliente: clientSelected, //
+        cliente: clientTable[0].nombre, //
         factura: 10, // ?
         producto: tableData[0].id, //
         modo_pago: payMethod, //
@@ -397,11 +425,13 @@ const ModalSales = ({ children }) => {
       }
       console.log(ventaApiPost)
       console.log(JSON.stringify(ventaApiPost))
+      // POST invocación de la función
+      submitDataVenta(url)
       return
     }
     // En caso de que se haya seleccionado más de 1 producto para la venta
     if(tableData.length > 1 && productosVarios.some(esUnProductoUnico) === false) {
-      console.log('NO se repiten todo bien :)')
+      console.log('NO se repiten todo bien :D')
       ventaApiPost = {
         fecha: '', // ?
         cantidad: '', // 
@@ -409,7 +439,7 @@ const ModalSales = ({ children }) => {
         descuento: descuento,
         subtotal: subTotal,
         total: total,
-        cliente: clientSelected, //
+        cliente: clientTable[0].nombre, //
         factura: 10, // ?
         producto: '', //
         modo_pago: payMethod, //
@@ -420,33 +450,16 @@ const ModalSales = ({ children }) => {
       console.log(ventaApiPost)
       console.log(JSON.stringify(ventaApiPost))
     } else {
-      setTimeout(() => {
+      /* setTimeout(() => {
         history.push("/sales")
-      }, 2000)
+      }, 2000) */
       Swal.fire('Productos Repetidos',
-      'No se puede ',
+      'No se puede, seleccione diferentes productos',
       'error')
     }
     
     //() => saveConfirmed()
-    /* const url = "http://localhost:4000/sales"
-    const submitDataVenta = async (url) => {
-      try {
-        const response = await (fetch(url, {
-          method: "POST",
-          body: JSON.stringify(ventaApiPost),
-          headers: {
-            "Content-type": "application/json",
-            token: localStorage.token,
-          },
-        }));
-
-        console.log(response)
-      } catch(err) {
-        console.log(err.message)
-      }
-    }
-    submitDataVenta(url)   */
+      
   }
 
   const [descuento, setDescuento] = useState(0)
@@ -485,7 +498,7 @@ const ModalSales = ({ children }) => {
                 {/* <label id='label3' className="label-cliente" htmlFor="search-bar">
                   Buscar cliente
                 </label> */}
-                <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer} onSubmitClient={onSubmitClient}/>
+                <SearchBarDrop options={options} onInputChange={onInputChange} onSubmitCustomer={onSubmitCustomer} onSubmitClient={onSubmitClient}/>
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}

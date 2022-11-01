@@ -6,6 +6,7 @@ import * as FcIcons from "react-icons/fc";
 import { useResultsSearchContext } from "../providers/SidebarProvider";
 import Swal from "sweetalert2";
 import ModalRawMaterialUpdate from "./modals/ModalRawMaterialUpdate";
+import dayjs from 'dayjs/esm/index.js'
 
 const TableRawMaterial = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -85,11 +86,11 @@ const TableRawMaterial = ({ children }) => {
                 return (
                   <tr key={data.id_materia_prima}>
                     <th>{index + 1}</th>
-                    <td>{data.fecha}</td>
+                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
                     <td>{data.tipo_materia}</td>
                     <td>{data.cantidad}</td>
                     <td>{data.unidad_medida}</td>
-                    <td>Q. {data.costo}</td>
+                    <td>Q. {data.costo.toFixed(2)}</td>
                     <td>
                       <button
                         className="btn-borrar" //btn-editar

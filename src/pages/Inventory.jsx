@@ -6,11 +6,8 @@ import TableInventory from "../components/TableInventory";
 import TopBarTableInventory from "../components/topBarsTables/TopBarTableInventory";
 
 const Inventory = () => {
-  const url = "http://localhost:3000/inventory";
-  const sidebar = useSidebarContext();
-  const dataApi = useFetch(url, "GET", { token: localStorage.token });
-
-  // console.log(sidebar)
+  const sidebar = useSidebarContext()
+  console.log(sidebar)
   //console.log(dataApi);
   return (
     <>
@@ -20,7 +17,7 @@ const Inventory = () => {
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
         <TopBarTableInventory />
-        <TableInventory dataApi={dataApi} />
+        <TableInventory />
       </div>
     </>
   );

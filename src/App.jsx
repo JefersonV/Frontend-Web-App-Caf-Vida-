@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import SideBarMenu from "./components/SideBarMenu";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import SideBarMenu from "./components/SideBarMenu"
+import { BrowserRouter as Router,Switch,Route, Redirect} from "react-router-dom";
 import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
@@ -23,17 +18,16 @@ import Shopping from "./pages/Shopping";
 import NewShop from "./pages/NewShop";
 import CustomerReturns from "./pages/CustomerReturns";
 import ProvidersReturns from "./pages/ProvidersReturns";
-import Login from "./pages/Login";
-import { SidebarProvider } from "./providers/SidebarProvider";
-import HomeLogin from "./pages/HomeLogin";
-import "./assets/styles/Login.css";
-import FinishedProduct from "./pages/FinishedProduct";
-import RawMaterial from "./pages/RawMaterial";
-import PackingMaterial from "./pages/PackingMaterial";
-
+import Login from './pages/Login';
+import { SidebarProvider } from './providers/SidebarProvider'
+import HomeLogin from './pages/HomeLogin';
+import './assets/styles/Login.css'
+import FinishedProduct from './pages/FinishedProduct';
+import RawMaterial from './pages/RawMaterial';
+import PackingMaterial from './pages/PackingMaterial'
 function App() {
   /* Lógica de autenticación de Usuario */
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const setAuth = (booleand) => {
     setIsAuthenticated(booleand);
   };
@@ -65,14 +59,14 @@ function App() {
   }
   */
   return (
-    <>
-      <SidebarProvider>
-        <Router>
+  <>
+    <SidebarProvider >
+      <Router>
           <Switch>
-            <Route
-              exact
-              path="/"
-              render={(props) =>
+          <Route  
+              exact 
+              path="/" 
+              render={(props) => 
                 !isAuthenticated ? (
                   <Login {...props} setAuth={setAuth} />
                 ) : (
@@ -81,10 +75,10 @@ function App() {
                 )
               }
             ></Route>
-            <Route
-              exact
-              path="/login"
-              render={(props) =>
+            <Route  
+              exact 
+              path="/login" 
+              render={(props) => 
                 !isAuthenticated ? (
                   <Login {...props} setAuth={setAuth} />
                 ) : (
@@ -93,10 +87,10 @@ function App() {
                 )
               }
             ></Route>
-            <Route
+            <Route 
               exact
               path="/home"
-              render={(props) =>
+              render={(props) => 
                 isAuthenticated ? (
                   <HomeLogin {...props} setAuth={setAuth} />
                 ) : (
@@ -105,30 +99,31 @@ function App() {
               }
             ></Route>
 
-            <Route
+            <Route 
               path="/sales"
-              render={(props) =>
+              render={(props) => 
                 isAuthenticated ? <Sales /> : <Redirect to="/login" />
               }
             ></Route>
-            <Route
+            <Route 
               path="/new"
-              render={(props) =>
+              render={(props) => 
                 isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
               }
             ></Route>
+
             <Route
-            path='/menu_costos'
-            render={(props)=>
-              isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
+              path='/menu_costos'
+              render={(props)=>
+                isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
               }
-              ></Route>
-            
+            ></Route>
+
             <Route
               path="/inventory"
               render={(props) =>
                 isAuthenticated ? <Inventory /> : <Redirect to="/login" />
-              }
+            }
             ></Route>
             <Route
               path="/products"
@@ -136,7 +131,6 @@ function App() {
                 isAuthenticated ? <Products /> : <Redirect to="/login" />
               }
             ></Route>
-            {/* Ruta para editar  */}
             <Route
               path="/finished_product"
               render={(props) =>
@@ -182,11 +176,7 @@ function App() {
             <Route
               path="/shopping_returns"
               render={(props) =>
-                isAuthenticated ? (
-                  <ProvidersReturns />
-                ) : (
-                  <Redirect to="/login" />
-                )
+                isAuthenticated ? <ProvidersReturns /> : <Redirect to="/login" />
               }
             ></Route>
             <Route
@@ -220,10 +210,10 @@ function App() {
               }
             ></Route>
           </Switch>
-        </Router>
-      </SidebarProvider>
-    </>
-  );
+      </Router>
+    </SidebarProvider>
+  </>
+  )
 }
 
-export default App;
+export default App

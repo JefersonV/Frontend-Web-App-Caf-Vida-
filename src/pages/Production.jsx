@@ -12,11 +12,8 @@ const sidebar = useSidebarContext()
   return (
     <>{/* Utilizando wrapper para adaptarlo a la sidebar* */    }
       <SideBarMenu/>
-      
       <div className={sidebar=== true ?"wrapper": "side"}>
         <TableProduction />    
-
-
       </div>
     </>
   );

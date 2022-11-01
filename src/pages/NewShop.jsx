@@ -12,10 +12,21 @@ import { RiSave3Fill } from "react-icons/ri";
 import logo from "../assets/images/LOGO_DARK.png";
 import { useSidebarContext } from "../providers/SidebarProvider";
 import { Link } from "react-router-dom";
-import useFetch from "../Hooks/useFetch";
+import Swal from "sweetalert2";
 
 const NewShopp = () => {
   const sidebar = useSidebarContext();
+
+  const saveSweetalert = () => {
+    Swal.fire({
+      position: "top-center",
+      icon: "success",
+      title: "Registro Guardado!!",
+      showConfirmButton: true,
+      confirmButtonColor: "green",
+      //background:'black'
+    }).then((result) => {});
+  };
 
   //Estado para subtotal y total
   const [esubtotal, setSubtotal] = useState(0);
@@ -87,10 +98,10 @@ const NewShopp = () => {
     total: 0,
     no_comprobante: 0,
     observaciones: "",
-    id_tipo_comprobante: "",
+    id_tipo_comprobante: 1,
     id_proveedor: 1,
     id_producto: 1,
-    id_modo_pago: "",
+    id_modo_pago: 1,
   });
   const {
     cantidad,
@@ -131,6 +142,7 @@ const NewShopp = () => {
         body: JSON.stringify(dataShop),
       });
       const resJson = await response.json();
+      console.log(resJson);
       console.log(dataShop);
     } catch (err) {
       console.log(err.massage);
@@ -243,6 +255,7 @@ const NewShopp = () => {
               <select
                 name="id_modo_pago"
                 id="id_modo_pago"
+                value={dataShop.id_modo_pago}
                 onChange={(e) => onChangeShop(e)}
               >
                 <option value="1">Efectivo</option>
@@ -265,6 +278,7 @@ const NewShopp = () => {
               <select
                 name="id_tipo_comprobante"
                 id="id_tipo_comprobante"
+                /* value={dataShop.id_tipo_comprobante} */
                 onChange={(e) => onChangeShop(e)}
               >
                 <option value="1">Factura</option>
@@ -280,7 +294,7 @@ const NewShopp = () => {
                 type="number"
                 name="no_comprobante"
                 id="no_comprobante"
-                value={no_comprobante}
+                /* value={no_comprobante} */
                 onChange={(e) => onChangeShop(e)}
               />
             </div>
@@ -298,9 +312,16 @@ const NewShopp = () => {
         </div>
 
         <div className="shop-options">
-          <button onClick={(e) => onSubmitForm(e)}>
-            <RiSave3Fill color="darkgreen" size="2rem" />
-            Guardar
+          <button
+            onClick={(e) => {
+              onSubmitForm(e);
+              saveSweetalert();
+            }}
+          >
+            <Link to="/shopping">
+              <RiSave3Fill color="darkgreen" size="2rem" />
+              Guardar
+            </Link>
           </button>
           <button>
             <Link to="/shopping">

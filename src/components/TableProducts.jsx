@@ -4,6 +4,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import Swal from "sweetalert2";
 import ModalAddProductUpdate from "../components/modals/ModalAddProductUpdate";
+import dayjs from 'dayjs/esm/index.js'
 
 const TableProducts = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -63,7 +64,7 @@ const TableProducts = ({ children }) => {
           <button className="btn-update-table" onClick={getData}>
             Actualizar Tabla
           </button>
-          <table className="table table-striped w-80 thead-light ">
+          <table className="table table-striped w-80 table-bordered ">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -85,8 +86,8 @@ const TableProducts = ({ children }) => {
                   <tr key={data.id_producto}>
                     <th>{index + 1}</th>
                     <td>{data.producto}</td>
-                    <td>Q. {data.precio_venta}</td>
-                    <td>Q. {data.costo_compra}</td>
+                    <td>Q. {data.precio_venta.toFixed(2)}</td>
+                    <td>Q. {data.costo_compra.toFixed(2)}</td>
                     <td>{data.stock_actual}</td>
                     <td>{data.stock_minimo}</td>
                     <td>{data.unidad_medida}</td>

@@ -1,19 +1,14 @@
-td {
-  font-size: 0.8em;
-}
 
 .icon-table {
   font-size: 1.8em;
-  margin-right: 0.3em;
-}
-table {
-  margin-left: 0;
+  margin-right: .3em;
 }
 
 .btn-borrar {
   border-color: transparent;
   background-color: transparent;
 }
+
 .btn-update-table {
   margin: 12px;
   padding: 8px;
