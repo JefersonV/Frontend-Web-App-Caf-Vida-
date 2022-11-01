@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/SearchBar.css';
 import * as  FcIcons from 'react-icons/fc';
 
-const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient }) => {
+const SearchBarDrop = ({ options, onInputChange, onSubmitCustomer, onSubmitClient }) => {
   const ulRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
@@ -42,28 +42,28 @@ const SearchBarDrop = ({ options, onInputChange, handleCustomer, onSubmitClient 
       </div>
     </div>
       {/* <input type="submit" value="Elegir cliente"  form="CustomerForm" className="btn btn-primary"/> */}
-      <form id="CustomerForm" className="list-group" ref={ulRef} onSubmit={handleCustomer}>
+      <form id="CustomerForm" className="list-group" ref={ulRef} onSubmit={onSubmitCustomer}>
         {options.map((option, index) => {
           return (
-            <button
-              //Vamos a usar name para saber que número es el que está selccionando
-              name={index}
-              type="button"
-              key={index}
-              onClick={(e) => {
-                // Aparece el nombre en el value del botón
-                inputRef.current.value = option;
-              }}
-              className="list-group-item list-group-item-action"
-              id="buttons-actions"
-              >
-              {/* <AiIcons.AiOutlineSearch /> */}
-              {option}
-            </button>
+            <>
+              <button
+                //Name sirve para saber que número es el que está selccionando
+                name={index}
+                type="button"
+                key={index}
+                onClick={(e) => {
+                  // Aparece el nombre en el value del botón
+                  inputRef.current.value = option;
+                }}
+                className="list-group-item list-group-item-action"
+                id="buttons-actions"
+                >
+                {option}
+              </button>
+            </>
           );
         })}
       </form>
-      
     </div>
   );
 };

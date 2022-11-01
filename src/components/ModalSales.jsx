@@ -48,7 +48,7 @@ const ModalSales = ({ children }) => {
     console.log(response)
     const data = await response.json()
     setFetchProducts(data)
-    // Aparte de la data de 
+    // Aparte de la data de la api, también la opción por default
     setFetchProducts(fetchProducts => [defaultOptionProduct, ...fetchProducts])  
   }
   
@@ -150,17 +150,27 @@ const ModalSales = ({ children }) => {
   const [clientSelected, setClientSelected] = useState({})
 
   const [disabledClientAdd, setDisabledClientAdd] = useState()
+  // Comprueba si hay datos que agregar a la tabla
+  const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0
   // Botón de registro a la tabla cliente
-  const handleCustomer = e => {
+  const onSubmitCustomer = e => {
     e.preventDefault()
-
+    console.log(e.target.value)
     console.log(clientSelected)
     console.log('acción cliente')
     //Verificamos que el cliente exista, según los datos de la API
     const clienteEncontrado = fetchClients.find((cliente) => 
       cliente.nombre === clientSelected.client
     )
-
+    console.log('tabla clientes')
+    console.log(clientTable)
+    if(clientObjectIsEmpty(clientSelected)) {
+      Swal.fire(
+        'Selección errónea',
+        'Debe seleccionar el cliente y confirmar con un click encima de la búsqueda',
+        'info')
+      return
+    }
     // Solo se puede agregar 1 cliente por venta
     if(clientTable.length > -1 && clientTable.length < 1) {
       setClientTable((clientTable) => clientTable.concat(clienteEncontrado))
@@ -171,9 +181,7 @@ const ModalSales = ({ children }) => {
 
     console.log(typeof clienteEncontrado)
     console.log(clienteEncontrado)
-  }
-  // Comprueba si hay datos que agregar a la tabla
-  const clientObjectIsEmpty = (objeto) => Object.keys(objeto).length === 0 
+  } 
 
   // onSubmit de cliente
   const onSubmitClient = e => {
@@ -490,7 +498,7 @@ const ModalSales = ({ children }) => {
                 {/* <label id='label3' className="label-cliente" htmlFor="search-bar">
                   Buscar cliente
                 </label> */}
-                <SearchBarDrop options={options} onInputChange={onInputChange} handleCustomer={handleCustomer} onSubmitClient={onSubmitClient}/>
+                <SearchBarDrop options={options} onInputChange={onInputChange} onSubmitCustomer={onSubmitCustomer} onSubmitClient={onSubmitClient}/>
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}

@@ -10,6 +10,7 @@ import {
   useResultsSearchContext,
   useSearcherContext,
 } from "../providers/SidebarProvider";
+import dayjs from 'dayjs/esm/index.js'
 import Swal from "sweetalert2";
 const TableProduction = ({ children }) => {
   const deleteSweet = (id) => {
@@ -131,7 +132,7 @@ const TableProduction = ({ children }) => {
                 return (
                   <tr key={data.id_costo_produccion}>
                     <th>{index + 1}</th>
-                    <td>{data.fecha}</td>
+                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
                     <td>{data.cantidad}</td>
                     <td>{data.materia_prima}</td>
                     <td>{data.costo_materia}</td>

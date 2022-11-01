@@ -5,6 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import Swal from "sweetalert2";
 import ModalShopUp from "./ModalShopUp";
+import dayjs from 'dayjs/esm/index.js'
 
 const TableShop = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -91,8 +92,8 @@ const TableShop = ({ children }) => {
                   <tr key={data.id_compra}>
                     <th>{data.id_compra}</th>
                     <td>{data.proveedor}</td>
-                    <td>{data.fecha}</td>
-                    <td>{data.total}</td>
+                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
+                    <td>Q.{data.total.toFixed(2)}</td>
                     <td>{data.tipo_comprbante}</td>
                     <td>{data.modo_pago}</td>
                     <td>

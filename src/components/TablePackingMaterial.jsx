@@ -6,6 +6,8 @@ import * as FcIcons from "react-icons/fc";
 import { useResultsSearchContext } from "../providers/SidebarProvider";
 import Swal from "sweetalert2";
 import ModalPackingUpdate from "./modals/ModalPackingUpdate";
+import dayjs from 'dayjs/esm/index.js'
+
 
 const TablePackingMaterial = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -70,7 +72,7 @@ const TablePackingMaterial = ({ children }) => {
           <button className="btn-update-table" onClick={getData}>
             Actualizar Tabla
           </button>
-          <table className="table table-striped w-80 thead-light ">
+          <table className="table table-striped w-80 table-bordered">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -86,9 +88,9 @@ const TablePackingMaterial = ({ children }) => {
                 return (
                   <tr key={data.id_empaque}>
                     <th>{index + 1}</th>
-                    <td>{data.fecha}</td>
+                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
                     <td>{data.nombre}</td>
-                    <td>Q. {data.costo}</td>
+                    <td>Q. {data.costo.toFixed(2)}</td>
                     <td>
                       <button
                         className="btn-borrar" //btn-editar

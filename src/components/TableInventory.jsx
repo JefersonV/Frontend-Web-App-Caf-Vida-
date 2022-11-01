@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/styles/Table.css";
 import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
+import dayjs from 'dayjs/esm/index.js'
 // import { useResultsSearchContext } from "../providers/SidebarProvider";
 
 const TableInventory = () => {
@@ -28,7 +29,7 @@ const TableInventory = () => {
   }, [])
   return (
     <>
-      <table className="table table-striped w-80 thead-light ">
+      <table className="table table-striped w-80 table-bordered ">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -54,7 +55,7 @@ const TableInventory = () => {
               <tr key={index}>
                 <th>{index + 1}</th>
                 {/* <td>{fechaArray[0]}</td> */}
-                <td>{item.fecha}</td>
+                <td>{dayjs(item.fecha).format('DD/MM/YYYY')}</td>
                 <td>{item.responsable}</td>
                 <td>{item.tipo_operacion}</td>
                 <td>{opcion}</td>
