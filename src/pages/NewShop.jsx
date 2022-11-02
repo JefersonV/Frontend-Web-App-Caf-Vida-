@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import SideBarMenu from "../components/SideBarMenu";
 import "../assets/styles/Shopping.css";
 import {
   HiUserAdd,
@@ -151,7 +150,6 @@ const NewShopp = () => {
 
   return (
     <>
-      <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         <div className="Baner-Title">
           <img src={logo} width="75px" />

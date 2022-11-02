@@ -2,7 +2,6 @@ import React from "react";
 import generateSales from "../generatePDF/generateSales";
 // const dateOfReport = "del mes de agosto de 2022";
 import { useSidebarContext } from '../providers/SidebarProvider'
-import SideBarMenu from "../components/SideBarMenu";
 const sales = [
   {
     id_venta: 9,
@@ -152,7 +151,6 @@ const Reports = () => {
   const sidebar = useSidebarContext()
   return (
     <>
-      <SideBarMenu/>
       <div className={sidebar === true ? "wrapper" : "side"}>
         <button
             onClick={() =>

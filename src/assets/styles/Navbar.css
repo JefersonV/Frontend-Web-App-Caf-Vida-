@@ -76,6 +76,7 @@ h1 {
   z-index: 100;
   border-radius: 1em;
   width: 150px;
+  box-shadow:  5px 4px 2px #b5b5b5
 }
 
 .options-user-hide {
@@ -147,6 +148,8 @@ h1 {
   background-color: var(--item-selected);
   overflow: hidden;
   border-left: 4px solid var(--border-menu);
+  text-decoration: none;
+  color: var(--white);
 }
 
 .nav-item div {

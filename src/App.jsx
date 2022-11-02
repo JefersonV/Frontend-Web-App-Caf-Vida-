@@ -92,7 +92,10 @@ function App() {
               path="/home"
               render={(props) => 
                 isAuthenticated ? (
-                  <HomeLogin {...props} setAuth={setAuth} />
+                  <>
+                    <SideBarMenu {...props} setAuth={setAuth} />
+                    <HomeLogin />
+                  </>
                 ) : (
                   <Redirect to="/login" />
                 )
@@ -107,114 +110,207 @@ function App() {
                 <>
                   <SideBarMenu {...props} setAuth={setAuth} />
                   <Sales />
-                </>) : (
-                  <Redirect to="/login" />
-                )
-              }
+                </>
+                ) : (
+                <Redirect to="/login" />
+              )}
             ></Route>
             <Route 
               path="/new"
               render={(props) => 
-                isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <ModalSales /> 
+                </>
+                ) : (
+                <Redirect to="/login" />
+              )}
             ></Route>
 
             <Route
               path='/menu_costos'
               render={(props)=>
-                isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <MenuCostos />
+                </>
+                ) : (
+                <Redirect to="/login"/>
+              )}
             ></Route>
 
             <Route
               path="/inventory"
               render={(props) =>
-                isAuthenticated ? <Inventory /> : <Redirect to="/login" />
-            }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Inventory />
+                </> 
+                ) : (
+                  <Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/products"
               render={(props) =>
-                isAuthenticated ? <Products /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Products /> 
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/finished_product"
               render={(props) =>
-                isAuthenticated ? <FinishedProduct /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <FinishedProduct /> 
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/raw_material"
               render={(props) =>
-                isAuthenticated ? <RawMaterial /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <RawMaterial />   
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/packing_material"
               render={(props) =>
-                isAuthenticated ? <PackingMaterial /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <PackingMaterial /> 
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/providers"
               render={(props) =>
-                isAuthenticated ? <Providers /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Providers /> 
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/shopping"
               render={(props) =>
-                isAuthenticated ? <Shopping /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Shopping /> 
+                </>
+                
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/new_shopping"
               render={(props) =>
-                isAuthenticated ? <NewShop /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <NewShop /> 
+                </>
+                
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/sales_returns"
               render={(props) =>
-                isAuthenticated ? <CustomerReturns /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                  <>
+                    <SideBarMenu {...props} setAuth={setAuth} />
+                    <CustomerReturns /> 
+                  </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/shopping_returns"
               render={(props) =>
-                isAuthenticated ? <ProvidersReturns /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                  <>
+                    <SideBarMenu {...props} setAuth={setAuth} />
+                    <ProvidersReturns /> 
+                  </>
+                  ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/orders"
               render={(props) =>
-                isAuthenticated ? <Orders /> : <Redirect to="/login" />
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Orders /> 
+                </>
+                ) : <Redirect to="/login" />
               }
             ></Route>
             <Route
               path="/production_cost"
               render={(props) =>
-                isAuthenticated ? <Production /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Production /> 
+                </>
+                
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/customers"
               render={(props) =>
-                isAuthenticated ? <Customers /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Customers /> 
+                </>
+
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/users"
               render={(props) =>
-                isAuthenticated ? <AdminUsers /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <AdminUsers />
+                </>
+                
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
             <Route
               path="/reports"
               render={(props) =>
-                isAuthenticated ? <Reports /> : <Redirect to="/login" />
-              }
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Reports /> 
+                </>
+                ) : (<Redirect to="/login" />
+              )}
             ></Route>
           </Switch>
       </Router>

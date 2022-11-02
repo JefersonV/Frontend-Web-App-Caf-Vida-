@@ -1,5 +1,4 @@
 import React from "react";
-import SideBarMenu from "../components/SideBarMenu";
 import { useSidebarContext } from "../providers/SidebarProvider";
 import TableProducts from "../components/TableProducts";
 import TopBarTableProduct from "../components/topBarsTables/TopBarTableProduct";
@@ -15,7 +14,6 @@ const Products = () => {
     <>
       {/* wrapper sirve para que se adapte con respecto a la sidebar */}
 
-      <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
         <TopBarTableProduct />

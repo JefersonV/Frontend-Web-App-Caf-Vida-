@@ -38,6 +38,7 @@ function SideBarMenu( {setAuth} ) {
   useEffect(() => {
     getName();
   }, []);
+  /* Authtentication */
 
   const sidebar = useSidebarContext()
   const sidebarFn = useSidebarToggleContext()
@@ -58,11 +59,11 @@ function SideBarMenu( {setAuth} ) {
             <FaUserTie />
           </button>
         </header>
-
+        {/* Componente que se muestra y oculta para cerrar sesión */}
           <div className={showLogin === true ? "options-user options-user-hide" : "options-user"}>
             <p>Name</p>
             <p>Email</p>
-            <button onClick={(e) => logout(e)}>Salir</button>
+            <button onClick={(e) => logout(e)}>Cerrar Sesión</button>
           </div>
         {/* Lógica del sidebar */}
         {sidebar === true ?

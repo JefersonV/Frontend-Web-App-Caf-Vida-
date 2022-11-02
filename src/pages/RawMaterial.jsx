@@ -1,7 +1,6 @@
 import React from "react";
 import useFetch from "../Hooks/useFetch";
 import { useSidebarContext } from "../providers/SidebarProvider";
-import SideBarMenu from "../components/SideBarMenu";
 import TableRawMaterial from "../components/TableRawMaterial";
 import TopBarTableRawMaterial from "../components/topBarsTables/TopBarTableRawMaterial";
 
@@ -15,8 +14,6 @@ const RawMaterial = () => {
   return (
     <>
       {/* wrapper sirve para que se adapte con respecto a la sidebar */}
-
-      <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
         <TopBarTableRawMaterial />

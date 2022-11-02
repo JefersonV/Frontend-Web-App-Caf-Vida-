@@ -3,7 +3,6 @@ import TableShop from "../components/TableShop";
 import TopBarTableShop from "../components/TopBarTableShop";
 import useFetch from "../Hooks/useFetch";
 import { useSidebarContext } from "../providers/SidebarProvider";
-import SideBarMenu from "../components/SideBarMenu";
 
 const Shopping = () => {
   const url = "http://localhost:3000/sales";
@@ -16,7 +15,6 @@ const Shopping = () => {
     <>
       {/* wrapper sirve para que se adapte con respecto a la sidebar */}
 
-      <SideBarMenu />
       <div className={sidebar === true ? "wrapper" : "side"}>
         {/* La data está definida en el componente Table */}
         <TopBarTableShop />
