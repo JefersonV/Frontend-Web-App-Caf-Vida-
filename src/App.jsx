@@ -63,17 +63,17 @@ function App() {
     <SidebarProvider >
       <Router>
           <Switch>
-          <Route  
-              exact 
-              path="/" 
-              render={(props) => 
-                !isAuthenticated ? (
-                  <Login {...props} setAuth={setAuth} />
-                ) : (
-                  // home ????
-                  <Redirect to="/home" />
-                )
-              }
+            <Route  
+                exact 
+                path="/" 
+                render={(props) => 
+                  !isAuthenticated ? (
+                    <Login {...props} setAuth={setAuth} />
+                  ) : (
+                    // home ????
+                    <Redirect to="/home" />
+                  )
+                }
             ></Route>
             <Route  
               exact 
@@ -100,9 +100,16 @@ function App() {
             ></Route>
 
             <Route 
+              exact
               path="/sales"
               render={(props) => 
-                isAuthenticated ? <Sales /> : <Redirect to="/login" />
+                isAuthenticated ? (
+                <>
+                  <SideBarMenu {...props} setAuth={setAuth} />
+                  <Sales />
+                </>) : (
+                  <Redirect to="/login" />
+                )
               }
             ></Route>
             <Route 
