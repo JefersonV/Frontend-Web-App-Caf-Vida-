@@ -1,31 +1,72 @@
+import React, { useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./widget.scss";
 
 const Widget = ({ type }) => {
-  // const getSales = async () => {
-  //   const res = await fetch("http://localhost:3000/sales/18");
-  //   const data = await res.json();
-  //   console.log(data);
-  // };
+  //Urls para las peticiones
+  const urlSuma = "http://localhost:3000/dashboard/suma";
+  const urlBolsasVend = "http://localhost:3000/dashboard/bolsas-vendidas";
+  const urlBolsasDisp = "http://localhost:3000/dashboard/bolsas-disponibles";
+  const urlClientesFrec = "http://localhost:3000/dashboard/clientes-frec";
 
-  //getSales();
-  const getSales = async () => {
-    const res = await fetch("http://localhost:3000/sales/9");
+  //estado para la suma de todas las ventas del mes
+  const [venta, setVenta] = useState([]);
+  //estado para las bolsas vendidas durante el mes
+  const [bolsasVendidas, setBolsasVendidas] = useState([]);
+  //estado para las bolsas disponibles para la venta
+  const [bolsasDispon, setBolsasDispon] = useState([]);
+  //estado para clientes frecuentas
+  const [clientesFrec, setClientesFrec] = useState([]);
 
-    const data = await res.json();
-    console.log(data);
+  //Funcion para obtener la lista de datos
+  const getSumaVenta = async (url) => {
+    const response = await fetch(url, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const data = await response.json();
+    setVenta(data[0]);
   };
+  //Funcion para obtener la lista de datos
+  const getBolsasVend = async (url) => {
+    const response = await fetch(url, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const data = await response.json();
+    setBolsasVendidas(data[0]);
+  };
+  //Funcion para obtener la lista de datos
+  const getBolsasDisp = async (url) => {
+    const response = await fetch(url, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const data = await response.json();
+    setBolsasDispon(data[0]);
+  };
+  //Funcion para obtener la lista de datos
+  const getClientesFrec = async (url) => {
+    const response = await fetch(url, {
+      headers: {
+        token: localStorage.token,
+      },
+    });
+    const data = await response.json();
+    setClientesFrec(data);
+  };
+  //funcion useffect para llamar y cargar los datos
+  useEffect(() => {
+    getSumaVenta(urlSuma);
+    getBolsasVend(urlBolsasVend);
+    getBolsasDisp(urlBolsasDisp);
+    getClientesFrec(urlClientesFrec);
+  }, []);
 
-  // getSales();
-  
-  //temporal
-  const ventasMes = 2500;
-  const costoMes = 3500;
-  const bolsasVend = 123;
-  const clientesFrec = 12;
-  const bolsasDispo = 15;
-  const porcentaje = 20;
   let data = {};
 
   switch (type) {
@@ -35,7 +76,7 @@ const Widget = ({ type }) => {
         isMoney: true,
         link: "Ver todas las ventas",
         path: "/sales",
-        monto: ventasMes,
+        monto: venta.suma_total,
         icon: (
           <FaIcons.FaShoppingCart
             className="icon"
@@ -47,31 +88,13 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "costoMes":
-      data = {
-        title: "COSTOS DEL MES",
-        isMoney: true,
-        link: "Ver todos los costos",
-        path: "/production_cost",
-        monto: costoMes,
-        icon: (
-          <FaIcons.FaMoneyBill
-            className="icon"
-            style={{
-              backgroundColor: "rgba(0, 128, 0, 0.2)",
-              color: "green",
-            }}
-          />
-        ),
-      };
-      break;
     case "bolsasVend":
       data = {
         title: "BOLSAS VENDIDAS",
         isMoney: false,
         link: "Ver todas...",
         path: "/sales",
-        monto: bolsasVend,
+        monto: bolsasVendidas.bolsas_vendidas,
         icon: (
           <FaIcons.FaShoppingCart
             className="icon"
@@ -89,7 +112,7 @@ const Widget = ({ type }) => {
         isMoney: false,
         link: "Ver todos...",
         path: "/customers",
-        monto: clientesFrec,
+        monto: clientesFrec.clientes_frecuentes,
         icon: (
           <FaIcons.FaUserAlt
             className="icon"
@@ -107,7 +130,7 @@ const Widget = ({ type }) => {
         isMoney: false,
         link: "Ver todos...",
         path: "/products",
-        monto: bolsasDispo,
+        monto: bolsasDispon.bolsas_disponibles,
         icon: (
           <FaIcons.FaShoppingBasket
             className="icon"
@@ -138,7 +161,6 @@ const Widget = ({ type }) => {
       <div className="right">
         <div className="percentage positive">
           <FaIcons.FaAngleUp />
-          {porcentaje}%
         </div>
         {data.icon}
       </div>
