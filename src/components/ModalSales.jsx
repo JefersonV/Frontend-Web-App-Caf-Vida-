@@ -19,7 +19,6 @@ import Swal from "sweetalert2";
 /* ---> Importamos el modal */
 import ModalSalesAdd from './ModalSalesAdd';
 import SearchBarDrop from './SearchBarDrop';
-import SideBarMenu from './SideBarMenu';
 import { useHistory } from 'react-router-dom';
 // import logo from '../assets/images/logo-white.png'
 import { useSidebarContext } from '../providers/SidebarProvider'
@@ -410,17 +409,22 @@ const ModalSales = ({ children }) => {
     let ventaApiPost = {}
     
     if(tableData.length === 1) {
+      /* "cantidad": 2,
+      "descripcion": "OKS",
+      "descuento": 0,
+      "id_factura": 1,
+      "id_cliente": 3,
+      "id_producto": 2,
+      "id_modo_pago": 2,
+      "id_usuario": 1 */
       ventaApiPost = {
-        fecha: day, // ?
         cantidad: tableData[0].cantidad, // 
         descripcion: 'prueba con un solo producto', // detalle || un input donde vayan observaciones
         descuento: descuento,
-        subtotal: subTotal,
-        total: total,
-        cliente: clientTable[0].nombre, //
-        factura: 10, // ?
+        factura: 1, // ?
+        cliente: clientTable[0].id_cliente, //
         producto: tableData[0].id, //
-        modo_pago: payMethod, //
+        modo_pago: 1, //
         usuario: 1, //
       }
       console.log(ventaApiPost)
@@ -487,7 +491,6 @@ const ModalSales = ({ children }) => {
 
   return (
     <>
-      <SideBarMenu />
       <div className={sidebar ? "wrapper" : "side"}>
         <main className="overlay">
           <div className="contenedorModal">
@@ -682,8 +685,9 @@ const ModalSales = ({ children }) => {
                     <VscNewFile size="2rem" color="rgb(155, 74, 8)" /> Nueva Venta
                   </button>
                   <button className="btn6" onClick={finalizarVenta}>
-                    {" "}
-                    <IoIosSave size="2rem" color="darkblue" /> Registrar Venta
+                    {/* <Link to="/sales">
+                    </Link> */}
+                      <IoIosSave size="2rem" color="darkblue" /> Registrar Venta
                   </button>
                   <button className="btn7" onClick={() => cancelSweet()}>
                     {" "}

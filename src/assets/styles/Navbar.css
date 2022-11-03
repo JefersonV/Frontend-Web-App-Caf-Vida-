@@ -17,7 +17,6 @@
   font-family: var(--font-lato);
 }
 
-
 .wrapper {
   margin-left: 250px;
   transition: 350ms;
@@ -53,7 +52,7 @@ h1 {
   background: var(--aside-bg-color);
   height: 60px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -61,13 +60,36 @@ h1 {
   margin-left: 1.8em;
 }
 
+.header button {
+  height: auto;
+  background-color: transparent;
+  border: none;
+  margin-right: 2em;
+  position: relative;
+}
+
+.options-user {
+  position: absolute;
+  right: 0;
+  padding: 1em .5em;
+  background-color: #ededed;
+  z-index: 100;
+  border-radius: 1em;
+  width: 150px;
+  box-shadow:  5px 4px 2px #b5b5b5
+}
+
+.options-user-hide {
+  display: none;
+}
+
 .nav-icon {
   margin-left: .7em;
   font-size: 2em;
   color: var(--white);
   height: 80px;
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
 }
 
 .navbar-left {
@@ -126,6 +148,8 @@ h1 {
   background-color: var(--item-selected);
   overflow: hidden;
   border-left: 4px solid var(--border-menu);
+  text-decoration: none;
+  color: var(--white);
 }
 
 .nav-item div {

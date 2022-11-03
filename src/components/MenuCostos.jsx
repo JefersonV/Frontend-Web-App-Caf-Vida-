@@ -1,5 +1,4 @@
 import React from "react";
-import SideBarMenu from "../components/SideBarMenu";
 import "../assets/styles/MenuCostos.css";
 import { Link } from "react-router-dom";
 import { useSidebarContext } from "../providers/SidebarProvider";
@@ -13,7 +12,6 @@ const MenuCostos = () => {
   //const dataApi = useFetch(url);
   return (
     <>
-      <SideBarMenu />
       {/**Sirve para que se adapte respecto a la sidebar */}
       <div className={sidebar === true ? "wrapper" : "side"}>
         <div className="ContenidoM">
