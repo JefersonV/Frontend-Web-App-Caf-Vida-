@@ -40,7 +40,8 @@ export function useSetFetchContext() {
 
 export const SidebarProvider = ({ children }) => {
   // dataApi Fetch
-  const [dataApi, setDataApi] = useState([]);
+  const [dataApi, setDataApi] = useState([])
+  
   // sidebar
   const [sidebar, setSidebar] = useState(true);
   let showSidebar = () => setSidebar(!sidebar);

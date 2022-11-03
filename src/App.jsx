@@ -9,7 +9,8 @@ import {
 import Sales from "./pages/Sales";
 /* El renderizado del home está en el componente <HomeLogin /> */
 import Home from "./pages/Home";
-import ModalSales from "./components/ModalSales";
+import ModalSales from "./components/ModalSales"
+import MenuCostos from "./components/MenuCostos"
 import Orders from "./pages/Orders";
 import Production from "./pages/Production";
 import Inventory from "./pages/Inventory";
@@ -30,7 +31,7 @@ import RawMaterial from "./pages/RawMaterial";
 import PackingMaterial from "./pages/PackingMaterial";
 function App() {
   /* Lógica de autenticación de Usuario */
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const setAuth = (booleand) => {
     setIsAuthenticated(booleand);
   };
@@ -114,6 +115,13 @@ function App() {
                 isAuthenticated ? <ModalSales /> : <Redirect to="/login" />
               }
             ></Route>
+            <Route
+            path='/menu_costos'
+            render={(props)=>
+               isAuthenticated ? <MenuCostos/>:<Redirect to="/login"/>
+               }
+               ></Route>
+            
             <Route
               path="/inventory"
               render={(props) =>
