@@ -12,6 +12,7 @@ import {
 } from "../providers/SidebarProvider";
 import dayjs from 'dayjs/esm/index.js'
 import Swal from "sweetalert2";
+
 const TableProduction = ({ children }) => {
   const deleteSweet = (id) => {
     Swal.fire({
@@ -92,16 +93,10 @@ const TableProduction = ({ children }) => {
           </button>
         </div>
         <div className="search">
-          <label htmlFor="lab2" id="lab2">
-            {" "}
-            Buscar
-          </label>
-          <input
-            type="search"
-            placeholder="Buscar..."
-            id="Buscar"
-            onChange={searcher}
-          />
+        <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
+
         </div>
       </div>
 
@@ -121,7 +116,7 @@ const TableProduction = ({ children }) => {
                 <th scope="col">Servicio</th>
                 <th scope="col">Costo de Servicio</th>
                 <th scope="col"> Precio Venta</th>
-                <th scope="col">Costo por venta</th>
+                <th scope="col">Costo por libra</th>
                 <th scope="col">Ganancia Adquirida</th>
                 <th scope="col">Acciones</th>
               </tr>
@@ -168,6 +163,7 @@ const TableProduction = ({ children }) => {
                           color="darkred"
                           className="icon-delete icon-table"
                           title="Eliminar registro"
+                          
                         />
                       </button>
                     </td>

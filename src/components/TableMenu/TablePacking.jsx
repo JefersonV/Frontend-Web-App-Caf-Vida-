@@ -9,6 +9,7 @@ import { useResultsSearchContext } from "../../providers/SidebarProvider";
 import NewPacking from "../../components/NewPacking";
 import NewPackingUpdate from "../ModalesUpdate/NewPackingUpdate";
 import Swal from "sweetalert2";
+import dayjs from 'dayjs/esm/index.js'
 
 const TablePacking = ({ children }) => {
   const [estadoRegistro3, cambiarEstadoRegistro3] = useState(false);
@@ -80,6 +81,9 @@ const TablePacking = ({ children }) => {
           <label htmlFor="lab" id="label1">
             Materiales de Empaque
           </label>
+          <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
           <button
             className="link7"
             onClick={() => cambiarEstadoRegistro3(!estadoRegistro3)}
@@ -107,9 +111,9 @@ const TablePacking = ({ children }) => {
                   return (
                     <tr key={data.id_empaque}>
                       <th>{index + 1}</th>
-                      <td>{data.fecha}</td>
+                      <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
                       <td>{data.nombre}</td>
-                      <td>{data.costo}</td>
+                      <td>Q. {data.costo_empaque}</td>
 
                       <td>
                         <button

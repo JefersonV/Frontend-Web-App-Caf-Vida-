@@ -10,6 +10,7 @@ import { useResultsSearchContext } from "../../providers/SidebarProvider";
 import NewService from "../../components/NewService";
 import NewServiceUpdate from "../ModalesUpdate/NewServiceUpdate";
 import Swal from "sweetalert2";
+import dayjs from 'dayjs/esm/index.js'
 
 const TableService = ({ children }) => {
   //const results= useResultsSearchContext()
@@ -80,6 +81,9 @@ const TableService = ({ children }) => {
           <label htmlFor="lab" id="label1">
             Servicio
           </label>
+          <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
           <button
             className="link6"
             onClick={() => cambiarEstadoRegistro4(!estadoRegistro4)}
@@ -109,11 +113,11 @@ const TableService = ({ children }) => {
                   return (
                     <tr key={data.id_servicio_cafe}>
                       <th>{index + 1}</th>
-                      <td>{data.fecha}</td>
+                      <td>{dayjs (data.fecha).format('DD/MM/YYYY')}</td>
                       <td>{data.servicio}</td>
                       <td>{data.materia_prima}</td>
                       <td>{data.unidad_de_medida}</td>
-                      <td>{data.costo_servicio}</td>
+                      <td>Q. {data.costo_servicio}</td>
 
                       <td>
                         <button
@@ -131,7 +135,7 @@ const TableService = ({ children }) => {
                         </button>
                         <Link
                           to="#"
-                          onClick={() => deleteSweet(item.id_servicio_cafe)}
+                          onClick={() => deleteSweet(data.id_servicio_cafe)}
                         >
                           <AiIcons.AiOutlineDelete
                             color="darkred"

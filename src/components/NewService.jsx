@@ -104,7 +104,7 @@ const NewService = ({ children, estado4, CambiarEstado4 }) => {
                   >
                     <option value="">Seleccionar servicio</option>
                     <option value="1">Tueste</option>
-                    <option value="2">Empaque triliminado</option>
+                    <option value="2">Tostado de Café</option>
                     <option value="3">Empaque con zip y válvula</option>
                   </select>
 

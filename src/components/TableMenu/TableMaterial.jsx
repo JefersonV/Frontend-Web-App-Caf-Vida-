@@ -8,6 +8,7 @@ import { useResultsSearchContext } from "../../providers/SidebarProvider";
 import NewMaterialP from "../../components/NewMaterialP";
 import NewMaterialPUpdate from "../ModalesUpdate/NewMaterialPUpdate";
 import Swal from "sweetalert2";
+import dayjs from 'dayjs/esm/index.js'
 
 const TableMaterial = ({ children }) => {
   const deleteSweet = (id) => {
@@ -78,6 +79,9 @@ const TableMaterial = ({ children }) => {
       <label htmlFor="lab" id="label1">
         Materia Prima
       </label>
+      <button className="btn-update-table" onClick={getData}>
+            Actualizar Tabla
+          </button>
       <button
         className="link4"
         onClick={() => cambiarEstadoRegistro5(!estadoRegistro5)}
@@ -106,11 +110,11 @@ const TableMaterial = ({ children }) => {
                 return (
                   <tr key={data.id_materia_prima}>
                     <th>{index + 1}</th>
-                    <td>{data.fecha}</td>
+                    <td>{dayjs (data.fecha).format('DD/MM/YYYY')}</td>
                     <td>{data.tipo_materia}</td>
                     <td>{data.cantidad}</td>
                     <td>{data.unidad_medida}</td>
-                    <td>{data.costo}</td>
+                    <td>Q. {data.costo}</td>
                     <td>
                       <button
                         className="btn-editar"

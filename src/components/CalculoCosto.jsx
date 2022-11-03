@@ -46,7 +46,6 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
   const [dataProduction, setDataProduction] = useState({
     cantidad: 0,
     precio_venta: 0,
-    costo_por_libra: 0,
     id_empaque: "",
     id_tipo_materia: "",
     id_unidad_medida: "",
@@ -66,7 +65,7 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
       const response = await fetch("http://localhost:3000/production_cost", {
         method: "POST",
         body: JSON.stringify(dataProduction),
-        headers: {
+        headers: { 
           "Content-Type": "application/json",
           token: localStorage.token,
         },
@@ -98,7 +97,7 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
                     name="id_tipo_materia"
                     onChange={(e) => onChangeData(e)}
                   >
-                    <option value="">Seleccione materi prima..</option>
+                    <option value="">Seleccione materia prima..</option>
                     <option value="1">Cafe pergamino</option>
                     <option value="2">Cafe grano</option>
                   </select>
@@ -127,9 +126,9 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
                     onChange={(e) => onChangeData(e)}
                   >
                     <option value="">Seleccione la medida...</option>
-                    <option value="1">Quintal</option>
-                    <option value="2">1 libra</option>
-                    <option value="3">1/2 libra</option>
+                    <option value="1">1/2 libra</option>
+                    <option value="2">1  libra</option>
+                    <option value="3">Quintal</option>
                   </select>
                 </div>
 
@@ -159,19 +158,15 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
                     onChange={(e) => onChangeData(e)}
                   >
                     <option value="">Seleccionar servicio</option>
-                    <option value="1">Tueste</option>
-                    <option value="2">Empaque triliminado</option>
-                    <option value="3">Empaque con zip y válvula</option>
+                    <option value="1">Tueste de café</option>
+                    <option value="2">Trillado de Café</option>
                   </select>
                 </div>
                 <label htmlFor="" className="lal5">
                   {" "}
                   Precio venta por Libra{" "}
                 </label>
-                <label htmlFor="" className="labl6">
-                  {" "}
-                  Costo por libra producida{" "}
-                </label>
+               
 
                 <div className="boddy5">
                   <input
@@ -182,14 +177,7 @@ const CalculoCosto = ({ children, estado, CambiarEstado }) => {
                     placeholder=" venta por libra"
                     onChange={(e) => onChangeData(e)}
                   />
-                  <input
-                    className="txt6"
-                    type="text"
-                    name="costo_por_libra"
-                    placeholder=" Costo lb producida"
-                    onChange={(e) => onChangeData(e)}
-                  />
-                </div>
+                 </div>
 
                 <LinkButt>
                   <button className="btn8" onClick={() => saveSweetalert()}>

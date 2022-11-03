@@ -129,9 +129,9 @@ const NewMaterialP = ({ children, estado5, CambiarEstado5 }) => {
                     onChange={(e) => onChangeData(e)}
                   >
                     <option value="">Seleccione la U.medida</option>
-                    <option value="1">Quintal</option>
-                    <option value="2">1 libra</option>
-                    <option value="3">1/2 libra</option>
+                    <option value="1"> 1 Libra</option>
+                      <option value="2"> 1/2 Libra</option>
+                      <option value="3"> 1 Quintal</option>
                   </select>
                 </div>
 

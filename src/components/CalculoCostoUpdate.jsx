@@ -63,7 +63,6 @@ const CalculoCosto = ({ children, estado2, cambiarEstado2, idEdit }) => {
     setDataProduction({
       cantidad: data.cantidad,
       precio_venta: data.precio_venta,
-      costo_por_libra: data.costo_por_libra,
       id_empaque: data.tipo_empaque,
       id_tipo_materia: data.materia_prima,
       id_unidad_medida: data.unidad_de_medida,
@@ -81,9 +80,8 @@ const CalculoCosto = ({ children, estado2, cambiarEstado2, idEdit }) => {
 
   //para capturar Datos
   const [dataProduction, setDataProduction] = useState({
-    cantidad: 0,
-    precio_venta: 0,
-    costo_por_libra: 0,
+    cantidad: "",
+    precio_venta: "",
     id_empaque: "",
     id_tipo_materia: "",
     id_unidad_medida: "",
@@ -213,11 +211,7 @@ const CalculoCosto = ({ children, estado2, cambiarEstado2, idEdit }) => {
                   {" "}
                   Precio venta por Libra{" "}
                 </label>
-                <label htmlFor="" className="labl6">
-                  {" "}
-                  Costo por libra producida{" "}
-                </label>
-
+               
                 <div className="boddy5">
                   <input
                     className="txt5"
@@ -227,15 +221,7 @@ const CalculoCosto = ({ children, estado2, cambiarEstado2, idEdit }) => {
                     value={dataProduction.precio_venta}
                     onChange={(e) => onChangeData(e)}
                   />
-                  <input
-                    className="txt6"
-                    type="text"
-                    name="costo_por_libra"
-                    placeholder=" Costo lb producida"
-                    value={dataProduction.costo_por_libra}
-                    onChange={(e) => onChangeData(e)}
-                  />
-                </div>
+                         </div>
 
                 <LinkButt>
                   <button className="btn8" onClick={() => saveSweetalert()}>
