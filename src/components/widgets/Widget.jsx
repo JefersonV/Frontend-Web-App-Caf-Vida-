@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./widget.scss";
 
 const Widget = ({ type }) => {
-<<<<<<< HEAD
   //Urls para las peticiones
   const urlSuma = "http://localhost:3000/dashboard/suma";
   const urlBolsasVend = "http://localhost:3000/dashboard/bolsas-vendidas";
@@ -68,31 +67,6 @@ const Widget = ({ type }) => {
     getClientesFrec(urlClientesFrec);
   }, []);
 
-=======
-
-  // const getSales = async () => {
-  //   const res = await fetch("http://localhost:3000/sales/18");
-  //   const data = await res.json();
-  //   console.log(data);
-  // };
-
-  //getSales();
-  const getSales = async () => {
-    const res = await fetch("http://localhost:3000/sales/9");
-    const data = await res.json();
-    console.log(data);
-  };
-
-  // getSales();
-  
-  //temporal
-  const ventasMes = 2500;
-  const costoMes = 3500;
-  const bolsasVend = 123;
-  const clientesFrec = 12;
-  const bolsasDispo = 15;
-  const porcentaje = 20;
->>>>>>> a8450059158e3bd615baed09eb3b1687bed13c81
   let data = {};
 
   switch (type) {
