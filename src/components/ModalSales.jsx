@@ -163,10 +163,19 @@ const ModalSales = ({ children }) => {
     )
     console.log('tabla clientes')
     console.log(clientTable)
+    console.log('Encontrado ccc')
+    console.log(clienteEncontrado)
     if(clientObjectIsEmpty(clientSelected)) {
       Swal.fire(
         'Selección errónea',
         'Debe seleccionar el cliente y confirmar con un click encima de la búsqueda',
+        'info')
+      return
+    }
+    if((clientObjectIsEmpty(clienteEncontrado)) || (clienteEncontrado === undefined)) {
+      Swal.fire(
+        'Selección errónea',
+        'Asegúrese que la selección sea correcta y de hacer click encima del texto al finalizar para confirmar.',
         'info')
       return
     }
@@ -183,13 +192,13 @@ const ModalSales = ({ children }) => {
   } 
 
   // onSubmit de cliente
-  const onSubmitClient = e => {
+  /* const onSubmitClient = e => {
     e.preventDefault();
     clientObjectIsEmpty(clientSelected) ?
     console.log('No se encuentra clientSelected')
     : 
     console.log('Si lo capturó clientSelected')
-  }
+  } */
 
   //Manejador de evento del buscador y captura de datos
   const onInputChange = (e) => {
@@ -419,7 +428,7 @@ const ModalSales = ({ children }) => {
       "id_usuario": 1 */
       ventaApiPost = {
         cantidad: tableData[0].cantidad, // 
-        descripcion: 'prueba con un solo producto', // detalle || un input donde vayan observaciones
+        descripcion: 'prueba oks', // detalle || un input donde vayan observaciones
         descuento: descuento,
         factura: 1, // ?
         cliente: clientTable[0].id_cliente, //
@@ -501,7 +510,7 @@ const ModalSales = ({ children }) => {
                 {/* <label id='label3' className="label-cliente" htmlFor="search-bar">
                   Buscar cliente
                 </label> */}
-                <SearchBarDrop options={options} onInputChange={onInputChange} onSubmitCustomer={onSubmitCustomer} onSubmitClient={onSubmitClient}/>
+                <SearchBarDrop options={options} onInputChange={onInputChange} onSubmitCustomer={onSubmitCustomer} />
                   <button
                     className="btn4"
                     onClick={() => cambiarEstadoModal2(!estadoModal2)}

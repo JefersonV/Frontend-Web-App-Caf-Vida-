@@ -5,7 +5,8 @@ import * as AiIcons from "react-icons/ai";
 import * as FcIcons from "react-icons/fc";
 import Swal from "sweetalert2";
 import ModalShopUp from "./ModalShopUp";
-import dayjs from 'dayjs/esm/index.js'
+import dayjs from "dayjs/esm/index.js";
+import generateShop from "../generatePDF/generateShop";
 
 const TableShop = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -71,8 +72,17 @@ const TableShop = ({ children }) => {
           {" "}
           <span>Actualizar Tabla</span>
         </button>
+        <button
+          className="Boton-Actualizar"
+          onClick={() => {
+            generateShop(data);
+          }}
+        >
+          {" "}
+          <span>Imprimir Reporte</span>
+        </button>
         <div>
-          <table className="table table-striped w-80 thead-light ">
+          <table className="table table-striped w-80 table-bordered ">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -92,7 +102,7 @@ const TableShop = ({ children }) => {
                   <tr key={data.id_compra}>
                     <th>{data.id_compra}</th>
                     <td>{data.proveedor}</td>
-                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
+                    <td>{dayjs(data.fecha).format("DD/MM/YYYY")}</td>
                     <td>Q.{data.total.toFixed(2)}</td>
                     <td>{data.tipo_comprbante}</td>
                     <td>{data.modo_pago}</td>
@@ -100,8 +110,8 @@ const TableShop = ({ children }) => {
                       <button
                         className="btn-borrar"
                         onClick={() => {
-                          cambiarEstadoModal2(!estadoModal2);
                           setIdOfEdit(data.id_compra);
+                          cambiarEstadoModal2(!estadoModal2);
                           console.log(
                             "id dentro de la tabla: ",
                             data.id_compra

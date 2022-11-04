@@ -48,9 +48,9 @@ const SearchBarDrop = ({ options, onInputChange, onSubmitCustomer, onSubmitClien
             <>
               <button
                 //Name sirve para saber que número es el que está selccionando
+                key={option.id}
                 name={index}
                 type="button"
-                key={index}
                 onClick={(e) => {
                   // Aparece el nombre en el value del botón
                   inputRef.current.value = option;

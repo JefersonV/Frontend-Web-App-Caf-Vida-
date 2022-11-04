@@ -9,6 +9,11 @@
   background-color: transparent;
 }
 
+td button {
+  border: none;
+  background-color: transparent;
+}
+
 .btn-update-table {
   margin: 12px;
   padding: 8px;

@@ -61,7 +61,7 @@ const TableProviders = ({ children }) => {
           <button className="btn-update-table" onClick={getData}>
             Actualizar Tabla
           </button>
-          <table className="table table-striped w-80 thead-light ">
+          <table className="table table-striped w-80 table-bordered ">
             <thead>
               <tr>
                 <th scope="col">#</th>
