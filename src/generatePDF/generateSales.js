@@ -8,7 +8,7 @@ import autoTable from "jspdf-autotable";
  */
 const generateSales = (
   ventas,
-  datoReporte = "Reporte de ventas sin formato"
+  datoReporte = "Reporte de ventas"
 ) => {
   //Iniciamos una array vacio
   let ventas2 = [];

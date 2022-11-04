@@ -75,7 +75,7 @@ const TableShop = ({ children }) => {
         <button
           className="Boton-Actualizar"
           onClick={() => {
-            generateShop(data);
+            generateShop(data, "Reporte de compras del 01/10/2022 al 15/11/2022");
           }}
         >
           {" "}

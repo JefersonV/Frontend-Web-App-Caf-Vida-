@@ -43,6 +43,7 @@ const TablePackingMaterial = ({ children }) => {
     );
     const data = await response.json();
     setData(data);
+    console.log(data)
   };
 
   //funcion useffect para llamar y cargar los datos
@@ -89,7 +90,7 @@ const TablePackingMaterial = ({ children }) => {
                     <th>{index + 1}</th>
                     <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
                     <td>{data.nombre}</td>
-                    <td>Q. {data.costo.toFixed(2)}</td>
+                    <td>Q. {data.costo_empaque.toFixed(2)}</td>
                     <td>
                       <button
                         className="btn-borrar" //btn-editar
