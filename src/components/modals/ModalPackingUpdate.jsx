@@ -59,7 +59,7 @@ const ModalPackingUpdate = ({ children, estado2, cambiarEstado2, idEdit }) => {
     setData(data);
     setDataPackMaterial({
       tipo_empaque: data.nombre,
-      costo: data.costo,
+      costo: data.costo_empaque,
     });
   };
   console.log(data);
