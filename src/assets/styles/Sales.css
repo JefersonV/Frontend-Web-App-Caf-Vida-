@@ -216,6 +216,12 @@
 	text-decoration: none;
 }
 
+.btn4m:hover {
+	text-decoration: none;
+	color: var(--white);
+	/* padding: 1em; */
+}
+
 .table-total label {
 	font-weight: bold;
 	font-size: 1em;

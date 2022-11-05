@@ -192,6 +192,8 @@ h1 {
   background-color: var(--item-selected);
   overflow: hidden;
   border-left: 4px solid var(--border-menu);
+  text-decoration: none;
+  color: var(--white);
 }
 
 .subSubNav {

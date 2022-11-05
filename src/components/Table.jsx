@@ -32,7 +32,6 @@ const Table = () => {
             <th scope="col">Cliente</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Producto</th>
-            <th scope="col">Vendedor</th>
             <th scope="col">Método Pago</th>
             <th scope="col">Total</th>
             <th scope="col">Acciones</th>
@@ -48,7 +47,6 @@ const Table = () => {
                 <td>{item.cliente}</td>
                 <td>{item.cantidad}</td>
                 <td>{item.producto}</td>
-                <td>{item.usuario}</td>
                 <td>{item.modo_pago}</td>
                 <td>Q.{item.total.toFixed(2)}</td>
                 <td>

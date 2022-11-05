@@ -75,7 +75,10 @@ const TableShop = ({ children }) => {
         <button
           className="Boton-Actualizar"
           onClick={() => {
-            generateShop(data, "Reporte de compras del 01/10/2022 al 15/11/2022");
+            generateShop(
+              data,
+              "Reporte de compras del 01/10/2022 al 15/11/2022"
+            );
           }}
         >
           {" "}
@@ -97,10 +100,10 @@ const TableShop = ({ children }) => {
             <tbody>
               {/* La data que trae el Hook Fetch se mapea y se creará una fila para cada item. */}
               {/* {results.map((item, index) => { */}
-              {data.map((data) => {
+              {data.map((data, index) => {
                 return (
                   <tr key={data.id_compra}>
-                    <th>{data.id_compra}</th>
+                    <th>{index + 1}</th>
                     <td>{data.proveedor}</td>
                     <td>{dayjs(data.fecha).format("DD/MM/YYYY")}</td>
                     <td>Q.{data.total.toFixed(2)}</td>

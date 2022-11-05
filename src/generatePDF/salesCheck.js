@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import dayjs from "dayjs/esm/index.js";
 const generateSalesCheck = (data) => {
   //Instanciamos el constructor del PDF
 
@@ -30,7 +30,7 @@ const generateSalesCheck = (data) => {
   doc.line(15, 60, 200, 60);
 
   doc.text(130, 70, `Factura No. ${data.factura}`);
-  doc.text(130, 75, `Fecha: ${fecha[0]}`);
+  doc.text(130, 75, `Fecha: ${dayjs(fecha[0]).format('DD/MM/YYYY')}`);
 
   doc.text(30, 75, "Datos del receptor: ");
   doc.text(30, 80, `Nombre: ${data.cliente}`);

@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import dayjs from "dayjs/esm/index.js";
 /**
  * La función generateSales acepta los siguientes tipos de datos
  * ventas: es una variable Json, la función se encarga de convertirlo a array
@@ -21,7 +21,7 @@ const generateShop = (
     //ventas2[[id_ventaas, fecha, cantidad...]]
     compra2[i].push(compras[i].id_compra);
     compra2[i].push(compras[i].proveedor);
-    compra2[i].push(compras[i].fecha);
+    compra2[i].push(dayjs(compras[i].fecha).format('DD/MM/YYYY'));
     compra2[i].push(compras[i].total);
     compra2[i].push(compras[i].tipo_comprobante);
     compra2[i].push(compras[i].modo_pago);

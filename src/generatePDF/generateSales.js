@@ -1,6 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import dayjs from "dayjs/esm/index.js";
 /**
  * La función generateSales acepta los siguientes tipos de datos
  * ventas: es una variable Json, la función se encarga de convertirlo a array
@@ -20,7 +20,7 @@ const generateSales = (
     //Hacemos push a cada dato del json
     //ventas2[[id_ventaas, fecha, cantidad...]]
     ventas2[i].push(ventas[i].id_venta);
-    ventas2[i].push(ventas[i].fecha);
+    ventas2[i].push(dayjs(ventas[i].fecha).format('DD/MM/YYYY'));
     ventas2[i].push(ventas[i].cantidad);
     ventas2[i].push(ventas[i].descripcion);
     ventas2[i].push(ventas[i].descuento);
