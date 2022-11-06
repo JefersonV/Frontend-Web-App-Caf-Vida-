@@ -6,7 +6,7 @@ import * as FcIcons from "react-icons/fc";
 import { useResultsSearchContext } from "../providers/SidebarProvider";
 import Swal from "sweetalert2";
 import ModalPackingUpdate from "./modals/ModalPackingUpdate";
-import dayjs from 'dayjs/esm/index.js'
+import dayjs from "dayjs/esm/index.js";
 
 const TablePackingMaterial = ({ children }) => {
   const [estadoModal2, cambiarEstadoModal2] = useState(false);
@@ -43,7 +43,7 @@ const TablePackingMaterial = ({ children }) => {
     );
     const data = await response.json();
     setData(data);
-    console.log(data)
+    console.log(data);
   };
 
   //funcion useffect para llamar y cargar los datos
@@ -88,9 +88,9 @@ const TablePackingMaterial = ({ children }) => {
                 return (
                   <tr key={data.id_empaque}>
                     <th>{index + 1}</th>
-                    <td>{dayjs(data.fecha).format('DD/MM/YYYY')}</td>
+                    <td>{dayjs(data.fecha).format("DD/MM/YYYY")}</td>
                     <td>{data.nombre}</td>
-                    <td>Q. {data.costo_empaque.toFixed(2)}</td>
+                    <td>Q. {data.costo_empaque}</td>
                     <td>
                       <button
                         className="btn-borrar" //btn-editar
