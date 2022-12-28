@@ -18,7 +18,7 @@ const Sales = () => {
         <div className={sidebar === true ? "wrapper" : "side"}>
           {/* La data está definida en el componente Table */}
           <TopBarTable />
-          <Table dataApi={dataApi} /> 
+          {/* <Table dataApi={dataApi} />  */}
         </div>
 
     </>

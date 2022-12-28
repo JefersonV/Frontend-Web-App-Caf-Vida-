@@ -483,8 +483,21 @@ const ModalSales = ({ children }) => {
     //() => saveConfirmed()
   };
 
-  const [descuento, setDescuento] = useState(0);
-  const onChangeDiscount = (e) => {
+  const [descuento, setDescuento] = useState(0)
+  const onChangeDiscount = e => {
+    let descuentoAux = 0;
+
+    parseFloat(descuentoAux = e.target.value)
+    parseFloat(descuentoAux)
+    console.log('Auxiliar')
+    console.log(typeof descuentoAux)
+    let descuentoRes = 0
+    descuentoRes = parseFloat(total * (descuentoAux / 100))
+    setDescuento(descuentoRes.toFixed(2))
+    // setTotal = total - (inputValue / 100)
+    console.log('descuento capturado')
+    console.log(typeof descuento)
+    
     /*----- Cálculo del total después de capturar el descuento ----- */
     if (e.target.value === 0) {
       setTotal(subTotal.toFixed(2));

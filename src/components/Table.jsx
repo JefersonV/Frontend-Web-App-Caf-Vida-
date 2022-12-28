@@ -9,6 +9,9 @@ import generateSales from "../generatePDF/generateSales";
 
 const Table = () => {
   //Datos del estado global
+  /* ---------------------------------------------------------------------- */
+  /* NOTA: se decidió dejar toda la lógica en el componente TopBarTable.jsx */
+  /* ---------------------------------------------------------------------- */
   const results = useResultsSearchContext();
   let day = dayjs().format("YYYY-MM-DD");
   return (
