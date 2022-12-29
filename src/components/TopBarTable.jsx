@@ -174,6 +174,19 @@ const TopBarTable = () => {
 
   // console.log(filtradoAnual)
 
+  /* Strings de Fechas en que se extienden en los reportes */
+  // Mensual
+  let firstDayMonth = dayjs().date(1).format('DD/MM/YYYY')
+  let lastDayMonth = dayjs().endOf('month').format('DD/MM/YYYY')
+
+  // Trimestral
+  let firstDayTrimester = dayjs().subtract(2, "month").startOf("month")
+  let firstDayTrimester2 = firstDayTrimester.format('DD/MM/YYYY')
+
+  // Anual
+  let firstDayYear = dayjs().startOf("year").format('DD/MM/YYYY')
+  let lastDayYear = dayjs().endOf("year").format('DD/MM/YYYY')
+
   return (
     <>
       <h1 className="top-bar-title">
@@ -215,7 +228,7 @@ const TopBarTable = () => {
         onClick={() =>
           generateSales(
             filtradosMesActualReport,
-            "Reporte de ventas del 27/09/2022 al 30/09/2022"
+            `Reporte de ventas del ${firstDayMonth} al ${lastDayMonth}`
           )
         }
       >
@@ -227,7 +240,7 @@ const TopBarTable = () => {
         onClick={() =>
           generateSales(
             filtradosTrimestre,
-            "Reporte de ventas del 27/09/2022 al 30/09/2022"
+            `Reporte de ventas del ${firstDayTrimester2} al ${lastDayMonth}`
           )
         }
       >
@@ -239,7 +252,7 @@ const TopBarTable = () => {
         onClick={() =>
           generateSales(
             filtradoAnualReport,
-            "Reporte de ventas del 27/09/2022 al 30/09/2022"
+            `Reporte de ventas del ${firstDayYear} al ${lastDayYear}`
           )
         }
       >
